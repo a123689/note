@@ -1,15 +1,13 @@
-package com.example.dat.app_note
+package com.example.dat.app_note.ui.fragment
 
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.dat.app_note.R
+import com.example.dat.app_note.ui.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_splash.*
 
 
