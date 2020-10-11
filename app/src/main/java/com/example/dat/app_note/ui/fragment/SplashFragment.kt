@@ -1,5 +1,6 @@
 package com.example.dat.app_note.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -7,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.dat.app_note.R
-import com.example.dat.app_note.ui.fragment.BaseFragment
+import com.example.dat.app_note.ui.MainActivity
 import kotlinx.android.synthetic.main.fragment_splash.*
 
 
@@ -17,15 +18,21 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
     }
 
-    lateinit var  navController:NavController
+    private lateinit var  navController:NavController
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
         Glide.with(requireActivity()).load(R.drawable.icon_splash).into(imIcon)
-        Handler().postDelayed({
-            if(navController != null && navController.currentDestination?.id == R.id.splashFragment){
-                navController.navigate(R.id.action_splashFragment_to_mainFragment)
+
+        val splashTread: Thread = object : Thread() {
+            override fun run() {
+               sleep(3000)
+                if (navController != null && navController.currentDestination?.id == R.id.splashFragment) {
+                    navController.navigate(R.id.action_splashFragment_to_mainFragment)
+                }
             }
-        },3000)
+        }
+        splashTread.start()
+
     }
 }

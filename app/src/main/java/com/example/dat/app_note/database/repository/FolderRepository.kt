@@ -8,12 +8,12 @@ class FolderRepository(app: Application) {
     private val folderDao:FolderDao
     init {
         val noteDatabase:NoteDatabase = NoteDatabase.getInstance(app)
-        folderDao = noteDatabase.getNoteDao()
+        folderDao = noteDatabase.getFolderDao()
     }
 
     suspend fun insertNote(folder: Folder) = folderDao.insertFolder(folder)
     suspend fun updateNote(folder: Folder) = folderDao.updateFolder(folder)
     suspend fun deleteNote(folder: Folder) = folderDao.deleteFolder(folder)
 
-    fun getAllNote(): LiveData<List<Folder>> = folderDao.getAllNote()
+    fun getAllFolder(): LiveData<MutableList<Folder>> = folderDao.getAllFolder()
 }

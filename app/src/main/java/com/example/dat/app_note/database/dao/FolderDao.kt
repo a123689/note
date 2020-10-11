@@ -17,7 +17,7 @@ interface  FolderDao {
     suspend fun deleteFolder(note: Folder)
 
     @Query("select * from folder_table")
-    fun getAllNote(): LiveData<List<Folder>>
+    fun getAllFolder(): LiveData<MutableList<Folder>>
 
 
 }

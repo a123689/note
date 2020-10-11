@@ -15,7 +15,7 @@ abstract class BaseFragment(
     @LayoutRes layout: Int
 ) : Fragment(layout) {
 
-    lateinit var glide: RequestManager
+     lateinit var glide: RequestManager
 
     abstract fun onFragmentBackPressed()
 
@@ -24,7 +24,6 @@ abstract class BaseFragment(
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this, true) {
             onFragmentBackPressed()
         }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
