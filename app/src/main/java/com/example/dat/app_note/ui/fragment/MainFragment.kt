@@ -2,6 +2,8 @@ package com.example.dat.app_note.ui.fragment
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -21,11 +24,20 @@ import com.daimajia.androidanimations.library.YoYo
 import com.example.dat.app_note.R
 import com.example.dat.app_note.model.Folder
 import com.example.dat.app_note.ui.adapter.FolderAdapter
+import com.example.dat.app_note.utils.Common
 import com.example.dat.app_note.utils.setPreventDoubleClick
 import com.example.dat.app_note.viewmodel.FolderViewmodel
 import com.example.dat.app_note.viewmodel.NoteViewmodel
 import kotlinx.android.synthetic.main.dialog_add_folder.view.*
+import kotlinx.android.synthetic.main.dialog_add_folder.view.edNameFolder
+import kotlinx.android.synthetic.main.dialog_add_folder.view.tvCancel
+import kotlinx.android.synthetic.main.dialog_add_folder.view.tvEntername
+import kotlinx.android.synthetic.main.dialog_add_folder.view.tvNewfolder
+import kotlinx.android.synthetic.main.dialog_add_folder.view.tvSave
+import kotlinx.android.synthetic.main.dialog_add_folder.view.view1
+import kotlinx.android.synthetic.main.dialog_rename.view.*
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_setting.*
 import kotlinx.android.synthetic.main.layout_dialog_bottom.*
 import kotlinx.android.synthetic.main.layout_dialog_bottom.view.*
 import kotlinx.coroutines.GlobalScope
@@ -39,9 +51,14 @@ import java.lang.Exception
 class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     override fun onFragmentBackPressed() {
-        activity?.finish()
-    }
+        if(layoutDialogBottom.visibility == View.VISIBLE){
+            setAnimationDialog()
+        }else{
+            activity?.finish()
+        }
 
+    }
+    private lateinit var sharedPreference : SharedPreferences
     lateinit var folder:Folder
     lateinit var  noteAdapter:FolderAdapter
     lateinit var navController: NavController
@@ -50,9 +67,12 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     }
     var idFolder = 0
     var list:MutableList<Folder> = mutableListOf()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
+        sharedPreference = activity?.getSharedPreferences("NOTE", Context.MODE_PRIVATE)!!
+        var  editor = sharedPreference.edit()
         initControl()
 
         ivNewFolder.setPreventDoubleClick(300) {
@@ -122,6 +142,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 navController.navigate(R.id.action_mainFragment_to_settingFragment)
             }
         }
+
         ivAddNote.setPreventDoubleClick(300){
             if(navController.currentDestination?.id == R.id.mainFragment){
                 val job: Job = GlobalScope.launch {
@@ -133,6 +154,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 val job2: Job = GlobalScope.launch {
                     job.join()
                     delay(50)
+                    Common.checkMain = true
+                    Common.checkScreen = false
                     val bundle = Bundle()
                     bundle.putInt("id",idFolder)
                     navController.navigate(R.id.action_mainFragment_to_writeNoteFragment,bundle)
@@ -141,18 +164,70 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             }
         }
 
+        if(!sharedPreference.getBoolean("data",false)){
+            var folder = Folder()
+            folder.name = "My folder"
+            folderViewmodel.insertFolder(folder)
+            editor.putBoolean("data",true)
+            editor.apply()
+
+        }
+
         ivAddNote2.setPreventDoubleClick(300){
             if(navController.currentDestination?.id == R.id.mainFragment){
-
+                Common.checkMain = true
+                Common.checkScreen = false
                 val bundle = Bundle()
                 bundle.putInt("id",idFolder)
                 navController.navigate(R.id.action_mainFragment_to_writeNoteFragment,bundle)
             }
         }
+
+        Common.checkInterface = sharedPreference.getBoolean("interface",false)
+        if(Common.checkInterface){
+            interfaceBlack()
+        }
+
     }
 
 
 
+
+    private fun interfaceBlack(){
+        layoutMain.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.cololorBlack))
+        ivSetting.setImageResource(R.drawable.ic_settings_white)
+        tvFolder.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+        edSearch.setBackgroundResource(R.drawable.custom_background_edittext_black)
+        edSearch.setHintTextColor(ContextCompat.getColor(requireContext(),R.color.colorSearchText))
+        edSearch.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+        layoutBottom.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorToolbarBlack))
+        layoutFolder.setBackgroundResource(R.drawable.custom_background_reyclewview)
+
+        layoutDialogBottom2.setBackgroundResource(R.drawable.custom_background_edittext_black)
+        tvNameFolder.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+        layoutShare.setBackgroundResource(R.drawable.ripper_top_black)
+        layoutAddFolder.setBackgroundResource(R.drawable.ripper_background_white)
+        layoutMove.setBackgroundResource(R.drawable.ripper_background_white)
+        layoutRename.setBackgroundResource(R.drawable.ripper_background_white)
+        layoutDelete.setBackgroundResource(R.drawable.ripper_bottom_black)
+        tvShare.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+        tvAdd.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+        tvMove.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+        tvRename.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+        tvDelete.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+        ivShare.setImageResource(R.drawable.ic_share_white)
+        ivAddFolderDialog.setImageResource(R.drawable.ic_add_folder_white)
+        ivMove.setImageResource(R.drawable.ic_folder_white)
+        ivRename.setImageResource(R.drawable.ic_rename_white)
+        ivDeleteDialog.setImageResource(R.drawable.ic_delete_white)
+        layout.setBackgroundResource(R.drawable.custom_background_dialog2_black)
+        viewDialog6.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorView1))
+        viewDialog2.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorView2))
+        viewDialog3.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorView2))
+        viewDialog4.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorView2))
+        viewDialog5.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorView2))
+        ivCancel.setImageResource(R.drawable.ic_cancel_black)
+    }
 
     private fun setDialogDelete(){
         AlertDialog.Builder(context)
@@ -197,6 +272,18 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         if (!dialog.isShowing) {
+            if(Common.checkInterface){
+                view.layourDialogAddFolder.setBackgroundResource(R.drawable.custom_background_dialog_add_folder_black)
+                view.tvNewfolder.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+                view.tvEntername.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+                view.edNameFolder.setBackgroundResource(R.drawable.custom_background_edittext_black)
+                view.edNameFolder.setHintTextColor(ContextCompat.getColor(requireContext(),R.color.colorTextDialogBack))
+                view.edNameFolder.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+                view.tvSave.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorTextDialogBack))
+                view.view1.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBorder))
+                view.view2.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBorder))
+            }
+
             dialog.show()
         }
         view.tvCancel.setOnClickListener {
@@ -216,6 +303,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     }
 
+
     private fun setDialogRename(){
         val dialog: Dialog
         val view: View = LayoutInflater.from(context).inflate(R.layout.dialog_rename, null)
@@ -224,8 +312,20 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         dialog = builder.create()
         dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         if (!dialog.isShowing) {
+            if(Common.checkInterface){
+                view.layoutDialogReanme.setBackgroundResource(R.drawable.custom_background_dialog_add_folder_black)
+                view.tvNewfolders.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+                view.tvEnternames.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+                view.edNameFolders.setBackgroundResource(R.drawable.custom_background_edittext_black)
+                view.edNameFolders.setHintTextColor(ContextCompat.getColor(requireContext(),R.color.colorTextDialogBack))
+                view.edNameFolders.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+                view.tvSave.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorTextDialogBack))
+                view.view1.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBorder))
+                view.view3.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBorder))
+            }
+
             dialog.show()
-            view.edNameFolder.setText(folder.name)
+            view.edNameFolders.setText(folder.name)
         }
 
         view.tvCancel.setOnClickListener {
@@ -233,10 +333,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         }
 
         view.tvSave.setOnClickListener {
-            if(view.edNameFolder.text.toString().isEmpty()){
+            if(view.edNameFolders.text.toString().isEmpty()){
                 Toast.makeText(activity, getString(R.string.enternamefolder), Toast.LENGTH_SHORT).show()
             }else{
-                rename(view.edNameFolder.text.toString())
+                rename(view.edNameFolders.text.toString())
                 dialog.dismiss()
             }
         }

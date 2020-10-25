@@ -3,11 +3,13 @@ package com.example.dat.app_note.ui.fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.dat.app_note.R
 import com.example.dat.app_note.model.Note
+import com.example.dat.app_note.utils.Common
 import com.example.dat.app_note.utils.setPreventDoubleClick
 import com.example.dat.app_note.viewmodel.FolderViewmodel
 import com.example.dat.app_note.viewmodel.NoteViewmodel
@@ -20,10 +22,18 @@ import java.util.*
 
 class WriteNoteFragment : BaseFragment(R.layout.fragment_write_note) {
     override fun onFragmentBackPressed() {
-        findNavController().popBackStack()
+        edContent.clearFocus()
+
+        if(Common.checkMain){
+            Common.checkMain = false
+            findNavController().popBackStack()
+        }else{
+            findNavController().popBackStack(R.id.listNoteFragment,false)
+        }
+
     }
     var idFolder = 0
-     var  note = Note()
+     lateinit var  note:Note
     private val noteViewmodel: NoteViewmodel by lazy {
         ViewModelProvider(this, NoteViewmodel.NoteViewmodelFactory(requireActivity().application))[NoteViewmodel::class.java]
     }
@@ -33,7 +43,14 @@ class WriteNoteFragment : BaseFragment(R.layout.fragment_write_note) {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.with(requireActivity()).load(R.drawable.background_write).into(ivBackground)
+
+        if(Common.checkInterface){
+            layoutWrite.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.cololorBlack))
+        }else{
+            Glide.with(requireActivity()).load(R.drawable.background_write).into(ivBackground)
+        }
+
+        edContent.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
         try {
             idFolder = requireArguments().getInt("id")
             note = requireArguments().getParcelable<Note>("note")!!
@@ -46,16 +63,27 @@ class WriteNoteFragment : BaseFragment(R.layout.fragment_write_note) {
 
         tvDone.setPreventDoubleClick(300){
             if(edContent.text.toString().isNotEmpty()){
-                val currentDate: String =
-                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+                if(Common.checkScreen){
+                    Log.d("dat123","zxc")
+                    val currentDate: String =
+                        SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+                    note.date = currentDate
+                    note.content = edContent.text.toString()
+                    noteViewmodel.updateNote(note)
 
-                val note = Note(edContent.text.toString(),currentDate,idFolder)
-                noteViewmodel.insertNote(note)
-                noteViewmodel.getAllNote(idFolder).observe(requireActivity(), androidx.lifecycle.Observer {
-                    folderViewmodel.updateFolderById(idFolder,it.size)
-                })
-                edContent.clearFocus()
-                findNavController().popBackStack()
+                }else{
+                    val currentDate: String =
+                        SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+
+                    val note = Note(edContent.text.toString(),currentDate,idFolder)
+                    noteViewmodel.insertNote(note)
+                    noteViewmodel.getAllNote(idFolder).observe(requireActivity(), androidx.lifecycle.Observer {
+                        folderViewmodel.updateFolderById(idFolder,it.size)
+                    })
+                }
+
+                onFragmentBackPressed()
+
 
             }
         }
