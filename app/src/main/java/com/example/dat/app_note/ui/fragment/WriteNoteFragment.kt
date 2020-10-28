@@ -46,11 +46,13 @@ class WriteNoteFragment : BaseFragment(R.layout.fragment_write_note) {
 
         if(Common.checkInterface){
             layoutWrite.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.cololorBlack))
+            edContent.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
         }else{
+            edContent.setTextColor(ContextCompat.getColor(requireActivity(),R.color.cololorBlack))
             Glide.with(requireActivity()).load(R.drawable.background_write).into(ivBackground)
         }
 
-        edContent.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+
         try {
             idFolder = requireArguments().getInt("id")
             note = requireArguments().getParcelable<Note>("note")!!

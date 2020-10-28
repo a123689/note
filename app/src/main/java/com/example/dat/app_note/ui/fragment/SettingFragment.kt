@@ -14,6 +14,7 @@ import android.view.WindowInsets
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.dat.app_note.R
 import com.example.dat.app_note.utils.setPreventDoubleClick
@@ -25,8 +26,10 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
         findNavController().popBackStack()
     }
     private lateinit var sharedPreference : SharedPreferences
+    lateinit var navController: NavController
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = findNavController()
         sharedPreference = activity?.getSharedPreferences("NOTE", Context.MODE_PRIVATE)!!
         val editor = sharedPreference.edit()
 
@@ -60,6 +63,12 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
             }
 
         })
+
+        layoutPolicy.setPreventDoubleClick(300){
+            if(navController.currentDestination?.id == R.id.settingFragment){
+                navController.navigate(R.id.action_settingFragment_to_policyFragment)
+            }
+        }
 
     }
 
