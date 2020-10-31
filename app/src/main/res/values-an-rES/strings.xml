@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello_blank_fragment">Hola fragmento en blanco</string>
+    <string name="note">Nota</string>
+    <string name="folder">Carpeta</string>
+    <string name="search">Buscar</string>
+    <string name="newfolder">Nueva carpeta</string>
+    <string name="enternamefolder">Ingrese el nombre para esta carpeta</string>
+    <string name="name">Nombre</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Salvar</string>
+    <string name="sharefolder">Compartir carpeta</string>
+    <string name="addfolder">Agregar carpeta</string>
+    <string name="movefolder">Mover esta carpeta</string>
+    <string name="rename">Rebautizar</string>
+    <string name="delete">Eliminar</string>
+    <string name="deletefodler">Eliminar carpeta</string>
+    <string name="yes">si</string>
+    <string name="no">No</string>
+    <string name="areyousure">¿Estás seguro que quieres eliminar esta nota?</string>
+    <string name="areyousuremulti">¿Estás seguro de que deseas eliminar estas notas?</string>
+    <string name="feature">Característica en desarrollo</string>
+    <string name="entername">Debes ingresar el nombre de la carpeta</string>
+    <string name="setting">Configuraciones</string>
+    <string name="rating">Clasificación</string>
+    <string name="feedback">Retroalimentación</string>
+    <string name="policy">Política</string>
+    <string name="version">Versión 1.0</string>
+    <string name="darkinterface">Interfaz oscura</string>
+    <string name="done">Hecho</string>
+    <string name="youmustchoosenote">Debes elegir nota</string>
+    <string name="deletenote">Borrar nota</string>
+    <string name="privatenote">Nota privada</string>
+    <string name="enterpasscode">Introduce un código de acceso</string>
+    <string name="forgot">¿olvidó?</string>
+    <string name="theincorrectpassword">Vuelva a ingresar la contraseña incorrecta</string>
+    <string name="enterpasswordagain">Ingrese de nuevo la contraseña</string>
+    <string name="wrongpasscode">Código de acceso incorrecto</string>
+</resources>

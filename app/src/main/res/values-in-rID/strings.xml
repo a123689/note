@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Catatan</string>
+
+    <string name="hello_blank_fragment">Halo fragmen kosong</string>
+    <string name="note">Catatan</string>
+    <string name="folder">Map</string>
+    <string name="search">Cari</string>
+    <string name="newfolder">Folder baru</string>
+    <string name="enternamefolder">Masukkan nama untuk folder ini</string>
+    <string name="name">Nama</string>
+    <string name="cancel">Membatalkan</string>
+    <string name="save">Menyimpan</string>
+    <string name="sharefolder">Bagikan folder</string>
+    <string name="addfolder">Tambah Folder</string>
+    <string name="movefolder">Pindahkan folder ini</string>
+    <string name="rename">Ganti nama</string>
+    <string name="delete">Menghapus</string>
+    <string name="deletefodler">Hapus folder</string>
+    <string name="yes">Iya</string>
+    <string name="no">Tidak</string>
+    <string name="areyousure">Anda yakin ingin menghapus catatan ini?</string>
+    <string name="areyousuremulti">Anda yakin ingin menghapus catatan ini?</string>
+    <string name="feature">Fitur sedang dalam pengembangan</string>
+    <string name="entername">Anda harus memasukkan nama folder</string>
+    <string name="setting">Pengaturan</string>
+    <string name="rating">Peringkat</string>
+    <string name="feedback">Umpan balik</string>
+    <string name="policy">Kebijakan</string>
+    <string name="version">Versi 1.0</string>
+    <string name="darkinterface">Antarmuka gelap</string>
+    <string name="done">Selesai</string>
+    <string name="youmustchoosenote">Anda harus memilih catatan</string>
+    <string name="deletenote">Hapus catatan</string>
+    <string name="privatenote">Catatan Pribadi</string>
+    <string name="enterpasscode">Masukkan kode sandi</string>
+    <string name="forgot">lupa?</string>
+    <string name="theincorrectpassword">Masukkan kembali kata sandi yang salah</string>
+    <string name="enterpasswordagain">Enter password again</string>
+    <string name="wrongpasscode">Kode Sandi Salah</string>
+</resources>

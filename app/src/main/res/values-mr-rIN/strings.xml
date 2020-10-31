@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">टीप</string>
+
+    <string name="hello_blank_fragment">हॅलो रिक्त तुकडा</string>
+    <string name="note">टीप</string>
+    <string name="folder">फोल्डर</string>
+    <string name="search">शोधा</string>
+    <string name="newfolder">नवीन फोल्डर</string>
+    <string name="enternamefolder">या फोल्डरसाठी नाव प्रविष्ट करा</string>
+    <string name="name">नाव</string>
+    <string name="cancel">रद्द करा</string>
+    <string name="save">जतन करा</string>
+    <string name="sharefolder">फोल्डर सामायिक करा</string>
+    <string name="addfolder">फोल्डर जोडा</string>
+    <string name="movefolder">हे फोल्डर हलवा</string>
+    <string name="rename">नाव बदला</string>
+    <string name="delete">हटवा</string>
+    <string name="deletefodler">फोल्डर हटवा</string>
+    <string name="yes">होय</string>
+    <string name="no">नाही</string>
+    <string name="areyousure">आपली खात्री आहे की आपण ही टीप हटवू इच्छिता?</string>
+    <string name="areyousuremulti">आपली खात्री आहे की आपण या टिपा हटवू इच्छिता?</string>
+    <string name="feature">वैशिष्ट्य विकसित होत आहे</string>
+    <string name="entername">आपण फोल्डर नाव प्रविष्ट करणे आवश्यक आहे</string>
+    <string name="setting">Settings</string>
+    <string name="rating">रेटिंग</string>
+    <string name="feedback">अभिप्राय</string>
+    <string name="policy">धोरण</string>
+    <string name="version">आवृत्ती 1.0</string>
+    <string name="darkinterface">गडद इंटरफेस</string>
+    <string name="done">पूर्ण झाले</string>
+    <string name="youmustchoosenote">आपण नोट निवडणे आवश्यक आहे</string>
+    <string name="deletenote">टीप हटवा</string>
+    <string name="privatenote">खाजगी नोट</string>
+    <string name="enterpasscode">पासकोड प्रविष्ट करा</string>
+    <string name="forgot">विसरलात?</string>
+    <string name="theincorrectpassword">चुकीचा संकेतशब्द पुन्हा प्रविष्ट करा</string>
+    <string name="enterpasswordagain">पुन्हा संकेतशब्द प्रविष्ट करा</string>
+    <string name="wrongpasscode">चुकीचा पासकोड</string>
+</resources>

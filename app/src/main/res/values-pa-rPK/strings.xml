@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ਨੋਟ</string>
+
+    <string name="hello_blank_fragment">ਹੈਲੋ ਖਾਲੀ ਭਾਗ</string>
+    <string name="note">ਨੋਟ</string>
+    <string name="folder">ਫੋਲਡਰ</string>
+    <string name="search">ਖੋਜ</string>
+    <string name="newfolder">ਨਵਾਂ ਫੋਲਡਰ</string>
+    <string name="enternamefolder">ਇਸ ਫੋਲਡਰ ਲਈ ਨਾਮ ਦਰਜ ਕਰੋ</string>
+    <string name="name">ਨਾਮ</string>
+    <string name="cancel">ਰੱਦ ਕਰੋ</string>
+    <string name="save">ਸੇਵ</string>
+    <string name="sharefolder">ਫੋਲਡਰ ਸਾਂਝਾ ਕਰੋ</string>
+    <string name="addfolder">ਫੋਲਡਰ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="movefolder">ਇਸ ਫੋਲਡਰ ਨੂੰ ਮੂਵ ਕਰੋ</string>
+    <string name="rename">ਨਾਮ ਬਦਲੋ</string>
+    <string name="delete">ਮਿਟਾਓ</string>
+    <string name="deletefodler">ਫੋਲਡਰ ਹਟਾਓ</string>
+    <string name="yes">ਹਾਂ</string>
+    <string name="no">ਨਹੀਂ</string>
+    <string name="areyousure">ਕੀ ਤੁਸੀਂ ਨਿਸ਼ਚਤ ਰੂਪ ਤੋਂ ਇਸ ਨੋਟ ਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <string name="areyousuremulti">ਕੀ ਤੁਸੀਂ ਯਕੀਨਨ ਇਸ ਨੋਟ ਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <string name="feature">ਵਿਸ਼ੇਸ਼ਤਾ ਵਿਕਾਸ ਅਧੀਨ ਹੈ</string>
+    <string name="entername">ਤੁਹਾਨੂੰ ਫੋਲਡਰ ਦਾ ਨਾਮ ਦੇਣਾ ਪਵੇਗਾ</string>
+    <string name="setting">ਸੈਟਿੰਗਜ਼</string>
+    <string name="rating">ਰੇਟਿੰਗ</string>
+    <string name="feedback">ਸੁਝਾਅ</string>
+    <string name="policy">ਨੀਤੀ ਨੂੰ</string>
+    <string name="version">ਵਰਜਨ 1.0</string>
+    <string name="darkinterface">Dark interface</string>
+    <string name="done">ਹੋ ਗਿਆ</string>
+    <string name="youmustchoosenote">ਤੁਹਾਨੂੰ ਨੋਟ ਚੁਣਨਾ ਚਾਹੀਦਾ ਹੈ</string>
+    <string name="deletenote">ਨੋਟ ਹਟਾਓ</string>
+    <string name="privatenote">ਨਿਜੀ ਨੋਟ</string>
+    <string name="enterpasscode">ਪਾਸਕੋਡ ਦਰਜ ਕਰੋ</string>
+    <string name="forgot">ਭੁੱਲ ਗਏ?</string>
+    <string name="theincorrectpassword">ਗਲਤ ਪਾਸਵਰਡ ਦੁਬਾਰਾ ਦਰਜ ਕਰੋ</string>
+    <string name="enterpasswordagain">ਦੁਬਾਰਾ ਪਾਸਵਰਡ ਦਰਜ ਕਰੋ</string>
+    <string name="wrongpasscode">ਗਲਤ ਪਾਸਕੋਡ</string>
+</resources>

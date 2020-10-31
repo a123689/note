@@ -1,2 +1,5 @@
+
 include ':app'
 rootProject.name = "app_note"
+include ':serverads'
+project(':serverads').projectDir = new File(settingsDir, '../AdServer/serverads')

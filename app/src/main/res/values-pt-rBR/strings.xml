@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Nota</string>
+
+    <string name="hello_blank_fragment">Olá fragmento em branco</string>
+    <string name="note">Nota</string>
+    <string name="folder">Pasta</string>
+    <string name="search">Pesquisa</string>
+    <string name="newfolder">Nova pasta</string>
+    <string name="enternamefolder">Insira o nome para esta pasta</string>
+    <string name="name">Nome</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Salve </string>
+    <string name="sharefolder">Compartilhar pasta</string>
+    <string name="addfolder">Adicionar pasta</string>
+    <string name="movefolder">Mova esta pasta</string>
+    <string name="rename">Renomear</string>
+    <string name="delete">Excluir</string>
+    <string name="deletefodler">Excluir pasta</string>
+    <string name="yes">sim</string>
+    <string name="no">Não</string>
+    <string name="areyousure">Tem certeza de que deseja excluir esta anotação?</string>
+    <string name="areyousuremulti">Tem certeza de que deseja excluir estas notas?</string>
+    <string name="feature">O recurso está em desenvolvimento</string>
+    <string name="entername">Você deve inserir o nome da pasta</string>
+    <string name="setting">Configurações</string>
+    <string name="rating">Avaliação</string>
+    <string name="feedback">Comentários</string>
+    <string name="policy">Política</string>
+    <string name="version">Versão 1.0</string>
+    <string name="darkinterface">Interface escura</string>
+    <string name="done">Feito</string>
+    <string name="youmustchoosenote">Você deve escolher a nota</string>
+    <string name="deletenote">Excluir nota</string>
+    <string name="privatenote">Nota Privada</string>
+    <string name="enterpasscode">Digite a senha</string>
+    <string name="forgot">esqueceu?</string>
+    <string name="theincorrectpassword">Digite novamente a senha incorreta</string>
+    <string name="enterpasswordagain">Coloque a senha novamente</string>
+    <string name="wrongpasscode">Senha errada</string>
+</resources>

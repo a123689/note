@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Запись</string>
+
+    <string name="hello_blank_fragment">Привет пустой фрагмент</string>
+    <string name="note">Запись</string>
+    <string name="folder">Папка</string>
+    <string name="search">Поиск</string>
+    <string name="newfolder">Новая папка</string>
+    <string name="enternamefolder">Введите имя для этой папки</string>
+    <string name="name">имя</string>
+    <string name="cancel">Отмена</string>
+    <string name="save">Сохранить</string>
+    <string name="sharefolder">Поделиться папкой</string>
+    <string name="addfolder">Добавить папку</string>
+    <string name="movefolder">Переместить эту папку</string>
+    <string name="rename">Переименовать</string>
+    <string name="delete">удалять</string>
+    <string name="deletefodler">Удалить папку</string>
+    <string name="yes">да</string>
+    <string name="no">Нет</string>
+    <string name="areyousure">вы уверены, что хотите удалить эту заметку?</string>
+    <string name="areyousuremulti">Вы уверены, что хотите удалить эти заметки?</string>
+    <string name="feature">Функция находится в стадии разработки</string>
+    <string name="entername">Вы должны ввести имя папки</string>
+    <string name="setting">Настройки</string>
+    <string name="rating">Рейтинг</string>
+    <string name="feedback">Обратная связь</string>
+    <string name="policy">Политика</string>
+    <string name="version">Версия 1.0</string>
+    <string name="darkinterface">Темный интерфейс</string>
+    <string name="done">Готово</string>
+    <string name="youmustchoosenote">Вы должны выбрать заметку</string>
+    <string name="deletenote">Удалить заметку</string>
+    <string name="privatenote">Частная заметка</string>
+    <string name="enterpasscode">Введите пароль</string>
+    <string name="forgot">забыли?</string>
+    <string name="theincorrectpassword">Повторно введите неверный пароль</string>
+    <string name="enterpasswordagain">Введите пароль еще раз</string>
+    <string name="wrongpasscode">Неверный пароль</string>
+</resources>

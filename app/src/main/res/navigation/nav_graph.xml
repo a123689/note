@@ -7,16 +7,95 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.dat.app_note.ui.fragment.SplashFragment"
+        android:name="com.dmobileapps.dat.app_note.ui.fragment.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
+
             android:id="@+id/action_splashFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.dat.app_note.ui.fragment.MainFragment"
+        android:name="com.dmobileapps.dat.app_note.ui.fragment.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            android:id="@+id/action_mainFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            android:id="@+id/action_mainFragment_to_listNoteFragment"
+            app:destination="@id/listNoteFragment" />
+        <action
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            android:id="@+id/action_mainFragment_to_writeNoteFragment"
+            app:destination="@id/writeNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.dmobileapps.dat.app_note.ui.fragment.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            android:id="@+id/action_settingFragment_to_policyFragment"
+            app:destination="@id/policyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listNoteFragment"
+        android:name="com.dmobileapps.dat.app_note.ui.fragment.ListNoteFragment"
+        android:label="fragment_list_note"
+        tools:layout="@layout/fragment_list_note" >
+        <action
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            android:id="@+id/action_listNoteFragment_to_writeNoteFragment"
+            app:destination="@id/writeNoteFragment" />
+        <action
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            android:id="@+id/action_listNoteFragment_to_passCodeFragment"
+            app:destination="@id/passCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/writeNoteFragment"
+        android:name="com.dmobileapps.dat.app_note.ui.fragment.WriteNoteFragment"
+        android:label="fragment_write_note"
+        tools:layout="@layout/fragment_write_note" />
+    <fragment
+        android:id="@+id/passCodeFragment"
+        android:name="com.dmobileapps.dat.app_note.ui.fragment.PassCodeFragment"
+        android:label="fragment_pass_code"
+        tools:layout="@layout/fragment_pass_code" >
+        <action
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            android:id="@+id/action_passCodeFragment_to_writeNoteFragment"
+            app:destination="@id/writeNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/policyFragment"
+        android:name="com.dmobileapps.dat.app_note.ui.fragment.PolicyFragment"
+        android:label="fragment_policy"
+        tools:layout="@layout/fragment_policy" />
 </navigation>

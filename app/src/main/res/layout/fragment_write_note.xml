@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layoutWrite"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.WriteNoteFragment">
+    <ImageView
+        android:id="@+id/ivBackground"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent"/>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="36dp"
+                android:padding="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_chevron_left"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="36dp"/>
+
+            <TextView
+                android:id="@+id/tvFolder"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:textColor="#FEC818"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivBack"
+                android:text="@string/folder" />
+            <TextView
+                android:id="@+id/tvDone"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:textColor="#FEC818"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginRight="19dp"
+                android:text="@string/done" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/edContent"
+        android:layout_width="0dp"
+        android:textSize="17sp"
+        android:padding="24dp"
+        android:gravity="top"
+        android:textColor="@color/cololorBlack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolBar"
+        android:layout_height="0dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ghi chú</string>
+
+    <string name="hello_blank_fragment">Xin chào đoạn trống</string>
+    <string name="note">Ghi chú</string>
+    <string name="folder">Thư mục</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="newfolder">Thư mục mới</string>
+    <string name="enternamefolder">Nhập tên cho thư mục này</string>
+    <string name="name">Tên</string>
+    <string name="cancel">Huỷ bỏ</string>
+    <string name="save">Lưu</string>
+    <string name="sharefolder">Chia sẻ thư mục</string>
+    <string name="addfolder">Thêm thư mục</string>
+    <string name="movefolder">Di chuyển thư mục này</string>
+    <string name="rename">Đổi tên</string>
+    <string name="delete">Xóa bỏ</string>
+    <string name="deletefodler">Xóa thư mục</string>
+    <string name="yes">Đúng</string>
+    <string name="no">Không</string>
+    <string name="areyousure">Bạn có chắc chắn muốn xóa ghi chú này không?</string>
+    <string name="areyousuremulti">Bạn có chắc chắn muốn xóa ghi chú này không?</string>
+    <string name="feature">Tính năng đang được phát triển</string>
+    <string name="entername">Bạn phải nhập tên thư mục</string>
+    <string name="setting">Cài đặt</string>
+    <string name="rating">Xếp hạng</string>
+    <string name="feedback">Phản hồi</string>
+    <string name="policy">Chính sách</string>
+    <string name="version">Phiên bản 1.0</string>
+    <string name="darkinterface">Giao diện tối</string>
+    <string name="done">Xong</string>
+    <string name="youmustchoosenote">Bạn phải chọn ghi chú</string>
+    <string name="deletenote">Xóa ghi chú</string>
+    <string name="privatenote">Ghi chú riêng</string>
+    <string name="enterpasscode">Nhập mật mã</string>
+    <string name="forgot">quên mất?</string>
+    <string name="theincorrectpassword">Nhập lại mật khẩu không chính xác</string>
+    <string name="enterpasswordagain">Nhập lại mật khẩu</string>
+    <string name="wrongpasscode">Mật mã sai</string>
+</resources>

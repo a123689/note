@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layoutMain"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorBackground"
     tools:context=".ui.fragment.MainFragment">
@@ -11,7 +12,7 @@
     <ImageView
         android:id="@+id/ivSetting"
         android:layout_width="36dp"
-        android:src="@drawable/ic_setting"
+        android:src="@drawable/ic_settings"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginRight="16dp"
@@ -43,6 +44,7 @@
         android:textColor="@color/cololorBlack"
         android:drawableLeft="@drawable/ic_search"
         android:paddingLeft="6dp"
+        android:textSize="15sp"
         android:background="@drawable/custom_background_edittext"
         app:layout_constraintWidth_percent="0.89"
         android:layout_width="0dp"
@@ -63,25 +65,86 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewFolder"
             android:layout_width="match_parent"
-            android:background="@drawable/custom_background_folder"
+
             android:layout_height="match_parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <FrameLayout
-        android:layout_width="0dp"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/layoutFolder"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintDimensionRatio="328:112"
-        android:layout_marginTop="16dp"
-        android:background="@color/cololorBlack"
-        app:layout_constraintWidth_percent="0.9"
-        android:layout_height="0dp">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ads2"
 
-    </FrameLayout>
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_142sdp"
+        android:layout_marginHorizontal="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:orientation="vertical"
+        app:cardCornerRadius="@dimen/_5sdp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutFolder">
+
+        <LinearLayout
+            android:id="@+id/ll_ads"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_142sdp"
+            android:layout_centerInParent="true"
+            android:orientation="vertical" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/llads2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#EAE6E6">
+
+            <View
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:background="#1A424141" />
+
+            <View
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="#1A424141" />
+
+            <View
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_100sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="#1A424141" />
+
+            <View
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_80sdp"
+                android:background="#1A424141" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_100sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+
+                android:text="AD loading..."
+                android:textColor="#292828"
+                android:textSize="@dimen/_12sdp" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+    </androidx.cardview.widget.CardView>
     <View
         android:layout_width="match_parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/layoutBottom"
         android:background="@color/colorBorder"
         android:layout_height="0.5dp"/>
@@ -99,19 +162,24 @@
             android:layout_width="36dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:padding="6dp"
+            android:padding="4dp"
             android:layout_marginLeft="16dp"
-            android:src="@drawable/ic_add_folder2"
+            android:src="@drawable/ic_add_folder_yellow"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_height="36dp"/>
         <ImageView
+            android:id="@+id/ivAddNote"
             android:layout_width="36dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_edit"
+            android:src="@drawable/ic_add_note"
             android:layout_marginRight="16dp"
             android:padding="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="36dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include layout="@layout/layout_dialog_bottom"
+
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
