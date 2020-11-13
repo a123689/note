@@ -52,96 +52,101 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutFolder"
-        android:layout_width="0dp"
-        android:background="@drawable/custom_background_folder"
+        android:layout_width="match_parent"
+
         app:layout_constraintTop_toBottomOf="@id/edSearch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintDimensionRatio="321:161"
-        app:layout_constraintWidth_percent="0.9"
         android:layout_marginTop="26dp"
-        android:layout_height="0dp">
+        android:layout_height="wrap_content">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewFolder"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:background="@drawable/custom_background_folder"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="321:161"
+            app:layout_constraintWidth_percent="0.9"
+            android:layout_height="0dp"/>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/ads2"
 
-            android:layout_height="match_parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/ads2"
-
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_142sdp"
-        android:layout_marginHorizontal="@dimen/_6sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:orientation="vertical"
-        app:cardCornerRadius="@dimen/_5sdp"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutFolder">
-
-        <LinearLayout
-            android:id="@+id/ll_ads"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_142sdp"
-            android:layout_centerInParent="true"
-            android:orientation="vertical" />
+            android:layout_marginHorizontal="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical"
+            app:cardCornerRadius="@dimen/_5sdp"
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/llads2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#EAE6E6">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recyclerviewFolder">
 
-            <View
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:background="#1A424141" />
+            <LinearLayout
+                android:id="@+id/ll_ads"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_142sdp"
+                android:layout_centerInParent="true"
+                android:orientation="vertical" />
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/llads2"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#EAE6E6">
 
-            <View
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_gravity="bottom|end"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:background="#1A424141" />
+                <View
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:background="#1A424141" />
 
-            <View
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_10sdp"
-                android:layout_gravity="center_vertical|end"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_100sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
-                android:background="#1A424141" />
+                <View
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="#1A424141" />
 
-            <View
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_10sdp"
-                android:layout_gravity="center_vertical|end"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_80sdp"
-                android:background="#1A424141" />
+                <View
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_100sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:background="#1A424141" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_100sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                <View
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_80sdp"
+                    android:background="#1A424141" />
 
-                android:text="AD loading..."
-                android:textColor="#292828"
-                android:textSize="@dimen/_12sdp" />
-        </com.facebook.shimmer.ShimmerFrameLayout>
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_100sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+
+                    android:text="AD loading..."
+                    android:textColor="#292828"
+                    android:textSize="@dimen/_12sdp" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <View
         android:layout_width="match_parent"
         android:visibility="gone"
@@ -181,5 +186,6 @@
 
     <include layout="@layout/layout_dialog_bottom"
 
-        android:visibility="gone"/>
+        android:visibility="invisible"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

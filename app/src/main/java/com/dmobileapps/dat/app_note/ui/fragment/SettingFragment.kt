@@ -101,8 +101,7 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
                 override fun onAdClose(adType: String?) {
                 }
             },
-            lifecycle
-        )
+            lifecycle,9000)
     }
 
     private fun interfaceBlack(){

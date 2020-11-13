@@ -33,7 +33,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
         navController = Navigation.findNavController(view)
         sharedPreference = activity?.getSharedPreferences("NOTE", Context.MODE_PRIVATE)!!
         editor = sharedPreference.edit()
-        AdHolderOnline(activity).isDebugMode = true
+        AdHolderOnline(activity).isDebugMode = false
         getListAD()
         if(sharedPreference.getBoolean("splash",false)){
             if ( navController.currentDestination?.id == R.id.splashFragment) {
@@ -62,7 +62,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
     private fun getListAD() {
         val native_main_note = Stack<AdsChild>()
         val a = AdsChild(
-            "cca-app-pub-4040515803655174/4803496314",
+            "ca-app-pub-4040515803655174/7727739213",
             AdDef.NETWORK.GOOGLE,
             AdDef.GOOGLE_AD_TYPE.NATIVE,
             AdDef.GOOGLE_AD_NATIVE.NATIVE_LARGE,

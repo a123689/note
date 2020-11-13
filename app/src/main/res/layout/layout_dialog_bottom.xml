@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/layoutShare"
-                android:background="@drawable/ripper_top"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_height="0dp">
                 <TextView
                     android:id="@+id/tvShare"
@@ -112,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/layoutAddFolder"
-                android:background="@drawable/ripper_background"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_height="0dp">
                 <TextView
                     android:id="@+id/tvAdd"
@@ -151,7 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/layoutMove"
-                android:background="@drawable/ripper_background"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_height="0dp">
                 <TextView
                     android:id="@+id/tvMove"
@@ -188,7 +188,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/layoutRename"
-                android:background="@drawable/ripper_background"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_height="0dp">
                 <TextView
                     android:id="@+id/tvRename"
@@ -225,7 +225,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/layoutDelete"
-                android:background="@drawable/ripper_bottom"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_height="0dp">
                 <TextView
                     android:id="@+id/tvDelete"
