@@ -202,7 +202,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         edSearch.setHintTextColor(ContextCompat.getColor(requireContext(),R.color.colorSearchText))
         edSearch.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
         layoutBottom.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorToolbarBlack))
-        layoutFolder.setBackgroundResource(R.drawable.custom_background_reyclewview)
+       // layoutFolder.setBackgroundResource(R.drawable.custom_background_reyclewview)
+        recyclerviewFolder.setBackgroundResource(R.drawable.custom_background_reyclewview)
 
         layoutDialogBottom2.setBackgroundResource(R.drawable.custom_background_edittext_black)
         tvNameFolder.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))

@@ -48,7 +48,6 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
 
         tvSwich.setOnCheckedChangeListener(object :CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-
                 if(isChecked){
                     editor.putBoolean("interface",true)
                     showAdsBack()
@@ -59,6 +58,8 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
 
                 }
                 editor.apply()
+
+
             }
 
         })
@@ -78,11 +79,18 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
             getString(R.string.loading_ads_2),
             object : AdmobInterstitialTest.AdHolderCallback {
                 override fun onAdFailToLoad(messageError: String?) {
-                    if(tvSwich.isChecked){
+                    try{
+                        if(tvSwich!= null){
+                            if(tvSwich.isChecked){
+                                interfaceBlack()
+                            }else{
+                                interfaceWhite()
+                            }
+                        }
+                    }catch (e:Exception){
                         interfaceBlack()
-                    }else{
-                        interfaceWhite()
                     }
+
 
 
                 }
@@ -91,11 +99,14 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
                 }
 
                 override fun onAdShow(network: String?, adtype: String?) {
-                    if(tvSwich.isChecked){
-                        interfaceBlack()
-                    }else{
-                        interfaceWhite()
+                    if(tvSwich != null){
+                        if(tvSwich.isChecked){
+                            interfaceBlack()
+                        }else{
+                            interfaceWhite()
+                        }
                     }
+
                 }
 
                 override fun onAdClose(adType: String?) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +8,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorBackground"
     tools:context=".ui.fragment.MainFragment">
-
 
     <ImageView
         android:id="@+id/ivSetting"
@@ -22,9 +22,9 @@
 
     <TextView
         android:id="@+id/tvFolder"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="36dp"
         android:layout_width="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/ivSetting"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
@@ -33,13 +33,14 @@
         android:textStyle="bold"
         android:textColor="@color/cololorBlack"
         android:layout_height="wrap_content"/>
+
     <EditText
         android:id="@+id/edSearch"
         app:layout_constraintDimensionRatio="320:34"
         app:layout_constraintTop_toBottomOf="@id/tvFolder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="26dp"
         android:hint="@string/search"
         android:textColor="@color/cololorBlack"
         android:drawableLeft="@drawable/ic_search"
@@ -53,7 +54,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutFolder"
         android:layout_width="match_parent"
-
         app:layout_constraintTop_toBottomOf="@id/edSearch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,16 +70,15 @@
             app:layout_constraintDimensionRatio="321:161"
             app:layout_constraintWidth_percent="0.9"
             android:layout_height="0dp"/>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/ads2"
-
             android:layout_width="match_parent"
             android:layout_height="@dimen/_142sdp"
             android:layout_marginHorizontal="@dimen/_6sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:orientation="vertical"
             app:cardCornerRadius="@dimen/_5sdp"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recyclerviewFolder">
 
@@ -89,6 +88,7 @@
                 android:layout_height="@dimen/_142sdp"
                 android:layout_centerInParent="true"
                 android:orientation="vertical" />
+
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/llads2"
                 android:visibility="visible"
@@ -137,7 +137,6 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginRight="@dimen/_100sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
-
                     android:text="AD loading..."
                     android:textColor="#292828"
                     android:textSize="@dimen/_12sdp" />
@@ -146,22 +145,23 @@
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <View
         android:layout_width="match_parent"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/layoutBottom"
         android:background="@color/colorBorder"
         android:layout_height="0.5dp"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutBottom"
         android:layout_width="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintDimensionRatio="360:62"
+        app:layout_constraintDimensionRatio="360:52"
         android:background="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="0dp">
+
         <ImageView
             android:id="@+id/ivNewFolder"
             android:layout_width="36dp"
@@ -172,6 +172,7 @@
             android:src="@drawable/ic_add_folder_yellow"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_height="36dp"/>
+
         <ImageView
             android:id="@+id/ivAddNote"
             android:layout_width="36dp"
@@ -182,10 +183,10 @@
             android:padding="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="36dp"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout="@layout/layout_dialog_bottom"
-
         android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
