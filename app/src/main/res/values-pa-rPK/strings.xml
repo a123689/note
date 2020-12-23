@@ -38,4 +38,7 @@
     <string name="theincorrectpassword">ਗਲਤ ਪਾਸਵਰਡ ਦੁਬਾਰਾ ਦਰਜ ਕਰੋ</string>
     <string name="enterpasswordagain">ਦੁਬਾਰਾ ਪਾਸਵਰਡ ਦਰਜ ਕਰੋ</string>
     <string name="wrongpasscode">ਗਲਤ ਪਾਸਕੋਡ</string>
+    <string name="check_list">Check List</string>
+    <string name="add_note">Add Note</string>
+    <string name="title">Title</string>
 </resources>

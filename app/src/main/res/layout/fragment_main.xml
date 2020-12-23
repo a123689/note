@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,7 +17,7 @@
         android:layout_marginRight="16dp"
         android:padding="6dp"
         android:layout_marginTop="22dp"
-        android:layout_height="36dp"/>
+        android:layout_height="36dp" />
 
     <TextView
         android:id="@+id/tvFolder"
@@ -31,8 +30,8 @@
         android:textSize="25sp"
         android:text="@string/folder"
         android:textStyle="bold"
-        android:textColor="@color/cololorBlack"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/colorBlack"
+        android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/edSearch"
@@ -42,14 +41,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="26dp"
         android:hint="@string/search"
-        android:textColor="@color/cololorBlack"
+        android:textColor="@color/colorBlack"
         android:drawableLeft="@drawable/ic_search"
         android:paddingLeft="6dp"
         android:textSize="15sp"
         android:background="@drawable/custom_background_edittext"
         app:layout_constraintWidth_percent="0.89"
         android:layout_width="0dp"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutFolder"
@@ -69,7 +68,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="321:161"
             app:layout_constraintWidth_percent="0.9"
-            android:layout_height="0dp"/>
+            android:layout_height="0dp" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/ads2"
@@ -147,10 +146,90 @@
 
     <View
         android:layout_width="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/layoutBottom"
         android:background="@color/colorBorder"
-        android:layout_height="0.5dp"/>
+        android:layout_height="0.5dp" />
+
+    <LinearLayout
+        android:id="@+id/lnMenu"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:padding="@dimen/img_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/layoutBottom">
+
+        <RelativeLayout
+            android:id="@+id/btnCheckList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/img_padding">
+
+            <ImageView
+                android:id="@+id/imgCheckList"
+                android:padding="@dimen/img_padding"
+                android:layout_width="@dimen/img_size_normal"
+                android:layout_height="@dimen/img_size_normal"
+                android:src="@drawable/ic_checklist_new"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/check_list" />
+
+            <TextView
+                android:id="@+id/tvCheckList"
+                android:textColor="@color/colorBlack"
+                android:ellipsize="end"
+                android:layout_toEndOf="@+id/imgCheckList"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/img_padding"
+                android:text="@string/check_list"
+                android:maxLines="1"
+                android:textSize="@dimen/text_size_14"
+                android:layout_toRightOf="@+id/imgCheckList" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/colorBlack" />
+
+        <RelativeLayout
+            android:id="@+id/btnAddNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/img_padding">
+
+            <ImageView
+                android:id="@+id/imgNote"
+                android:padding="@dimen/img_padding"
+                android:layout_width="@dimen/img_size_normal"
+                android:layout_height="@dimen/img_size_normal"
+                android:src="@drawable/ic_note_new"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/check_list" />
+
+            <TextView
+                android:id="@+id/tvNote"
+                android:textColor="@color/colorBlack"
+                android:ellipsize="end"
+                android:layout_toEndOf="@+id/imgNote"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/img_padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_note"
+                android:maxLines="1"
+                android:textSize="@dimen/text_size_14"
+                android:layout_toRightOf="@+id/imgNote" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutBottom"
@@ -171,7 +250,8 @@
             android:layout_marginLeft="16dp"
             android:src="@drawable/ic_add_folder_yellow"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_height="36dp"/>
+            android:layout_height="36dp" />
+
 
         <ImageView
             android:id="@+id/ivAddNote"
@@ -182,11 +262,12 @@
             android:layout_marginRight="16dp"
             android:padding="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_height="36dp"/>
+            android:layout_height="36dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include layout="@layout/layout_dialog_bottom"
-        android:visibility="invisible"/>
+    <include
+        layout="@layout/layout_dialog_bottom"
+        android:visibility="invisible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

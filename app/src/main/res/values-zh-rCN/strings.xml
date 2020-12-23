@@ -38,4 +38,7 @@
     <string name="theincorrectpassword">重新输入错误的密码</string>
     <string name="enterpasswordagain">再次输入密码</string>
     <string name="wrongpasscode">密码错误</string>
+    <string name="check_list">Check List</string>
+    <string name="add_note">Add Note</string>
+    <string name="title">Title</string>
 </resources>

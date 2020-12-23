@@ -12,6 +12,8 @@
           <set>
             <option value="$PROJECT_DIR$/../AdServer/serverads" />
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/AudioRecoder" />
+            <option value="$PROJECT_DIR$/BrushDraw" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

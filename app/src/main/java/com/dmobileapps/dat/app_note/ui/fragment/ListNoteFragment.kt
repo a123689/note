@@ -111,7 +111,7 @@ class ListNoteFragment : BaseFragment(R.layout.fragment_list_note) {
     }
 
     private fun interfaceBlack(){
-        layoutListnote.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.cololorBlack))
+        layoutListnote.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
         tvFolders.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
         edSearchNote.setBackgroundResource(R.drawable.custom_background_edittext_black)
         edSearchNote.setHintTextColor(ContextCompat.getColor(requireContext(),R.color.colorSearchText))

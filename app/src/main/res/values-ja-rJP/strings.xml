@@ -36,4 +36,7 @@
     <string name="theincorrectpassword">間違ったパスワードを再入力してください</string>
     <string name="enterpasswordagain">パスワードをもう一度入力してください</string>
     <string name="wrongpasscode">間違ったパスコード</string>
+    <string name="check_list">Check List</string>
+    <string name="add_note">Add Note</string>
+    <string name="title">Title</string>
 </resources>

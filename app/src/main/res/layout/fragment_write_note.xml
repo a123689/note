@@ -63,7 +63,7 @@
         android:textSize="17sp"
         android:padding="24dp"
         android:gravity="top"
-        android:textColor="@color/cololorBlack"
+        android:textColor="@color/colorBlack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@android:color/transparent"

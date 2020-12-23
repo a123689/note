@@ -38,4 +38,7 @@
     <string name="theincorrectpassword">잘못된 비밀번호를 다시 입력하십시오.</string>
     <string name="enterpasswordagain">비밀번호를 다시 입력하십시오</string>
     <string name="wrongpasscode">잘못된 비밀번호</string>
+    <string name="check_list">Check List</string>
+    <string name="add_note">Add Note</string>
+    <string name="title">Title</string>
 </resources>

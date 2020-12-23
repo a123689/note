@@ -38,4 +38,7 @@
     <string name="theincorrectpassword">Повторно введите неверный пароль</string>
     <string name="enterpasswordagain">Введите пароль еще раз</string>
     <string name="wrongpasscode">Неверный пароль</string>
+    <string name="check_list">Check List</string>
+    <string name="add_note">Add Note</string>
+    <string name="title">Title</string>
 </resources>

@@ -38,4 +38,7 @@
     <string name="theincorrectpassword">Masukkan kembali kata sandi yang salah</string>
     <string name="enterpasswordagain">Enter password again</string>
     <string name="wrongpasscode">Kode Sandi Salah</string>
+    <string name="check_list">Check List</string>
+    <string name="add_note">Add Note</string>
+    <string name="title">Title</string>
 </resources>

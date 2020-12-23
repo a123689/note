@@ -38,4 +38,7 @@
     <string name="theincorrectpassword">Digite novamente a senha incorreta</string>
     <string name="enterpasswordagain">Coloque a senha novamente</string>
     <string name="wrongpasscode">Senha errada</string>
+    <string name="check_list">Check List</string>
+    <string name="add_note">Add Note</string>
+    <string name="title">Title</string>
 </resources>

@@ -45,10 +45,10 @@ class WriteNoteFragment : BaseFragment(R.layout.fragment_write_note) {
         super.onViewCreated(view, savedInstanceState)
 
         if(Common.checkInterface){
-            layoutWrite.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.cololorBlack))
+            layoutWrite.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
             edContent.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
         }else{
-            edContent.setTextColor(ContextCompat.getColor(requireActivity(),R.color.cololorBlack))
+            edContent.setTextColor(ContextCompat.getColor(requireActivity(),R.color.colorBlack))
             Glide.with(requireActivity()).load(R.drawable.background_write).into(ivBackground)
         }
 

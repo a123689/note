@@ -38,4 +38,7 @@
     <string name="theincorrectpassword">Nhập lại mật khẩu không chính xác</string>
     <string name="enterpasswordagain">Nhập lại mật khẩu</string>
     <string name="wrongpasscode">Mật mã sai</string>
+    <string name="check_list">Check List</string>
+    <string name="add_note">Add Note</string>
+    <string name="title">Title</string>
 </resources>

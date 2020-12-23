@@ -14,7 +14,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.adconfigonline.admob.ads.AdmobInterstitialTest
+//import com.adconfigonline.admob.ads.AdmobInterstitialTest
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.utils.setPreventDoubleClick
 import kotlinx.android.synthetic.main.fragment_setting.*
@@ -73,50 +73,50 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
     }
 
     private fun showAdsBack() {
-        AdmobInterstitialTest().showAdsTimeOut(
-            activity,
-            "ca-app-pub-4040515803655174/7238087960",
-            getString(R.string.loading_ads_2),
-            object : AdmobInterstitialTest.AdHolderCallback {
-                override fun onAdFailToLoad(messageError: String?) {
-                    try{
-                        if(tvSwich!= null){
-                            if(tvSwich.isChecked){
-                                interfaceBlack()
-                            }else{
-                                interfaceWhite()
-                            }
-                        }
-                    }catch (e:Exception){
-                        interfaceBlack()
-                    }
-
-
-
-                }
-
-                override fun onAdOff() {
-                }
-
-                override fun onAdShow(network: String?, adtype: String?) {
-                    if(tvSwich != null){
-                        if(tvSwich.isChecked){
-                            interfaceBlack()
-                        }else{
-                            interfaceWhite()
-                        }
-                    }
-
-                }
-
-                override fun onAdClose(adType: String?) {
-                }
-            },
-            lifecycle,9000)
+//        AdmobInterstitialTest().showAdsTimeOut(
+//            activity,
+//            "ca-app-pub-4040515803655174/7238087960",
+//            getString(R.string.loading_ads_2),
+//            object : AdmobInterstitialTest.AdHolderCallback {
+//                override fun onAdFailToLoad(messageError: String?) {
+//                    try{
+//                        if(tvSwich!= null){
+//                            if(tvSwich.isChecked){
+//                                interfaceBlack()
+//                            }else{
+//                                interfaceWhite()
+//                            }
+//                        }
+//                    }catch (e:Exception){
+//                        interfaceBlack()
+//                    }
+//
+//
+//
+//                }
+//
+//                override fun onAdOff() {
+//                }
+//
+//                override fun onAdShow(network: String?, adtype: String?) {
+//                    if(tvSwich != null){
+//                        if(tvSwich.isChecked){
+//                            interfaceBlack()
+//                        }else{
+//                            interfaceWhite()
+//                        }
+//                    }
+//
+//                }
+//
+//                override fun onAdClose(adType: String?) {
+//                }
+//            },
+//            lifecycle,9000)
     }
 
     private fun interfaceBlack(){
-        layout_setting.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.cololorBlack))
+        layout_setting.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
         ivRate.setImageResource(R.drawable.ic_rate_white)
         ivFeedback.setImageResource(R.drawable.ic_feedback_white)
         ivVersion.setImageResource(R.drawable.ic_version_white)
@@ -130,7 +130,7 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
         ivMore1.setImageResource(R.drawable.ic_more_white)
         ivMore2.setImageResource(R.drawable.ic_more_white)
         ivMore3.setImageResource(R.drawable.ic_more_white)
-        view1.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.cololorBlack))
+        view1.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
         tvSwich.isChecked = true
         toolBar.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorToolbarBlack))
     }
@@ -142,11 +142,11 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
         ivVersion.setImageResource(R.drawable.ic_version)
         ivNight.setImageResource(R.drawable.ic_night)
         ivPolicy.setImageResource(R.drawable.ic_baseline_policy_24)
-        tvRating.setTextColor(ContextCompat.getColor(requireContext(),R.color.cololorBlack))
-        tvFeedback.setTextColor(ContextCompat.getColor(requireContext(),R.color.cololorBlack))
-        tvInterface.setTextColor(ContextCompat.getColor(requireContext(),R.color.cololorBlack))
-        tvVersion.setTextColor(ContextCompat.getColor(requireContext(),R.color.cololorBlack))
-        tvPolicy.setTextColor(ContextCompat.getColor(requireContext(),R.color.cololorBlack))
+        tvRating.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
+        tvFeedback.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
+        tvInterface.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
+        tvVersion.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
+        tvPolicy.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
         ivMore1.setImageResource(R.drawable.ic_more_white)
         ivMore2.setImageResource(R.drawable.ic_more_white)
         ivMore3.setImageResource(R.drawable.ic_more_white)

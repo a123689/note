@@ -5,7 +5,7 @@
     <color name="colorAccent">#FEC818</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBackground">#F1EEF5</color>
-    <color name="cololorBlack">#020202</color>
+    <color name="colorBlack">#020202</color>
     <color name="colorEditext">#E3E2E8</color>
     <color name="colorBorder">#707070</color>
     <color name="colorDialogAddFolder">#ECEDEF</color>
@@ -21,4 +21,5 @@
     <color name="colorRipper">#2C2C2E</color>
     <color name="colorView1">#E4E4E4</color>
     <color name="colorView2">#DFDFDF</color>
+    <color name="grayLight">#f8f6f9</color>
 </resources>

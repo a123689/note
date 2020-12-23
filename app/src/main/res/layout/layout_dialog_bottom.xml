@@ -31,7 +31,7 @@
             app:layout_constraintStart_toEndOf="@id/ivFolder"
             android:textSize="18sp"
             android:text="Name"
-            android:textColor="@color/cololorBlack"
+            android:textColor="@color/colorBlack"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="@id/ivFolder"
             android:layout_marginLeft="16dp"
@@ -84,7 +84,7 @@
                     android:layout_marginLeft="24dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:textColor="@color/cololorBlack"
+                    android:textColor="@color/colorBlack"
                     android:text="@string/sharefolder"
                     android:layout_height="wrap_content"/>
                 <ImageView
@@ -122,7 +122,7 @@
                     android:layout_marginLeft="24dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:textColor="@color/cololorBlack"
+                    android:textColor="@color/colorBlack"
                     android:text="@string/addfolder"
                     android:layout_height="wrap_content"/>
                 <ImageView
@@ -161,7 +161,7 @@
                     android:layout_marginLeft="24dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:textColor="@color/cololorBlack"
+                    android:textColor="@color/colorBlack"
                     android:text="@string/movefolder"
                     android:layout_height="wrap_content"/>
                 <ImageView
@@ -198,7 +198,7 @@
                     android:layout_marginLeft="24dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:textColor="@color/cololorBlack"
+                    android:textColor="@color/colorBlack"
                     android:text="@string/rename"
                     android:layout_height="wrap_content"/>
                 <ImageView
@@ -235,7 +235,7 @@
                     android:layout_marginLeft="24dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:textColor="@color/cololorBlack"
+                    android:textColor="@color/colorBlack"
                     android:text="@string/delete"
                     android:layout_height="wrap_content"/>
                 <ImageView

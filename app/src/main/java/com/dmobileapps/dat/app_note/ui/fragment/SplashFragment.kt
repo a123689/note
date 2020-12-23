@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.adconfigonline.AdHolderOnline
-import com.adconfigonline.server.AdsChild
-import com.adconfigonline.untils.AdDef
+//import com.adconfigonline.AdHolderOnline
+//import com.adconfigonline.server.AdsChild
+//import com.adconfigonline.untils.AdDef
 import com.bumptech.glide.Glide
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.utils.Common
@@ -33,7 +33,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
         navController = Navigation.findNavController(view)
         sharedPreference = activity?.getSharedPreferences("NOTE", Context.MODE_PRIVATE)!!
         editor = sharedPreference.edit()
-        AdHolderOnline(activity).isDebugMode = false
+//        AdHolderOnline(activity).isDebugMode = false
         getListAD()
         if(sharedPreference.getBoolean("splash",false)){
             if ( navController.currentDestination?.id == R.id.splashFragment) {
@@ -58,20 +58,20 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
         splashTread.start()
 
     }
-    private val adsHashMap = HashMap<String, Stack<AdsChild>>()
+//    private val adsHashMap = HashMap<String, Stack<AdsChild>>()
     private fun getListAD() {
-        val native_main_note = Stack<AdsChild>()
-        val a = AdsChild(
-            "ca-app-pub-4040515803655174/7727739213",
-            AdDef.NETWORK.GOOGLE,
-            AdDef.GOOGLE_AD_TYPE.NATIVE,
-            AdDef.GOOGLE_AD_NATIVE.NATIVE_LARGE,
-            AdDef.GOOGLE_AD_NATIVE_TEMPLATE.admob_native_home_pdf
-        )
-        a.backgroundColor = "none"
-        a.borderColor = "none"
-        native_main_note.push(a)
-        adsHashMap[Common.NATIVE_MAIN_NOTE] = native_main_note
-        AdHolderOnline(activity).setListAd(adsHashMap)
+//        val native_main_note = Stack<AdsChild>()
+//        val a = AdsChild(
+//            "ca-app-pub-4040515803655174/7727739213",
+//            AdDef.NETWORK.GOOGLE,
+//            AdDef.GOOGLE_AD_TYPE.NATIVE,
+//            AdDef.GOOGLE_AD_NATIVE.NATIVE_LARGE,
+//            AdDef.GOOGLE_AD_NATIVE_TEMPLATE.admob_native_home_pdf
+//        )
+//        a.backgroundColor = "none"
+//        a.borderColor = "none"
+//        native_main_note.push(a)
+//        adsHashMap[Common.NATIVE_MAIN_NOTE] = native_main_note
+//        AdHolderOnline(activity).setListAd(adsHashMap)
     }
 }

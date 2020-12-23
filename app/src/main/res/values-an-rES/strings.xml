@@ -36,4 +36,7 @@
     <string name="theincorrectpassword">Vuelva a ingresar la contraseña incorrecta</string>
     <string name="enterpasswordagain">Ingrese de nuevo la contraseña</string>
     <string name="wrongpasscode">Código de acceso incorrecto</string>
+    <string name="check_list">Check List</string>
+    <string name="add_note">Add Note</string>
+    <string name="title">Title</string>
 </resources>

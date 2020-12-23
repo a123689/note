@@ -38,4 +38,7 @@
     <string name="theincorrectpassword">चुकीचा संकेतशब्द पुन्हा प्रविष्ट करा</string>
     <string name="enterpasswordagain">पुन्हा संकेतशब्द प्रविष्ट करा</string>
     <string name="wrongpasscode">चुकीचा पासकोड</string>
+    <string name="check_list">Check List</string>
+    <string name="add_note">Add Note</string>
+    <string name="title">Title</string>
 </resources>
