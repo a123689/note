@@ -39,19 +39,20 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="8dp"
                 app:layout_constraintStart_toEndOf="@id/ivBack"
-                app:layout_constraintEnd_toStartOf="@id/tvEditOk"
+                app:layout_constraintEnd_toStartOf="@id/btnSave"
                 app:layout_constraintLeft_toRightOf="@+id/ivBack"
                 android:inputType="text" />
 
 
             <TextView
-
-                android:textSize="16sp"
-                android:textColor="#c73f35"
-                android:id="@+id/tvEditOk"
+                android:id="@+id/btnSave"
+                android:textSize="@dimen/text_size_16"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/bg_btn_radius"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/save"
+                android:padding="@dimen/img_padding_large"
                 android:textAllCaps="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginRight="@dimen/_10sdp"
@@ -68,17 +69,13 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
-        app:layout_constraintTop_toBottomOf="@+id/view">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:paddingBottom="@dimen/space_screen_small"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+            app:layout_constraintTop_toBottomOf="@+id/view">
 
             <TextView
                 android:textSize="@dimen/text_size_16"
@@ -93,7 +90,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvNoteComponent"
+                android:id="@+id/rcvCheckList"
                 android:paddingBottom="@dimen/space_screen_small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,7 +99,7 @@
                 android:layout_marginRight="@dimen/space_screen_small"
                 app:layout_constraintTop_toBottomOf="@+id/tvTime" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
@@ -110,7 +107,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:itemIconTint="@color/colorBlack"
-        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/menu_check_list"
+        app:itemIconSize="18dp"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView.Active"
+        app:itemTextColor="@color/colorBlack"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 

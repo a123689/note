@@ -39,4 +39,12 @@
     <string name="check_list">Check List</string>
     <string name="add_note">Add Note</string>
     <string name="title">Title</string>
+    <string name="add_image">Add Image</string>
+    <string name="add_item">Add Item</string>
+    <string name="add_sound">Add Sound</string>
+    <string name="add_recording">Recording</string>
+    <string name="add_draw">Draw</string>
+    <string name="input_text">Input text...</string>
+    <string name="txt_no_internet_connected">No internet connected</string>
+    <string name="choose_image">Choose Image</string>
 </resources>

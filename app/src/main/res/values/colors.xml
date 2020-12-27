@@ -19,6 +19,8 @@
     <color name="colorTextDialogBack">#777777</color>
     <color name="colorDialogBottom">#212121</color>
     <color name="colorRipper">#2C2C2E</color>
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorTransparent80">#CC000000</color>
     <color name="colorView1">#E4E4E4</color>
     <color name="colorView2">#DFDFDF</color>
     <color name="grayLight">#f8f6f9</color>
