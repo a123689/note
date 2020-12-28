@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class CheckList(
     var id:Int = 0,
     var title: String = "",
-    var images: ArrayList<String> ?=null,
-    var audios: ArrayList<String> ?=null,
+    var images: ArrayList<String> = ArrayList(),
+    var audios: ArrayList<String> =ArrayList(),
 )

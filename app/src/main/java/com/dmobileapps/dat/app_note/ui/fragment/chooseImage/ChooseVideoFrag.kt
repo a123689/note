@@ -1,4 +1,4 @@
-package com.dmobileapps.dat.app_note.ui.fragment.choosevideo
+package com.dmobileapps.dat.app_note.ui.fragment.chooseImage
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.ImageObj
 import com.dmobileapps.dat.app_note.ui.fragment.BaseFragment
+import com.dmobileapps.dat.app_note.ui.fragment.chooseImage.adapter.AdapterImage
 import com.dmobileapps.dat.app_note.utils.DeviceUtil
 import com.dmobileapps.dat.app_note.utils.setPreventDoubleClick
-import com.dmobileapps.dat.app_note.ui.fragment.choosevideo.adapter.AdapterImage
 import kotlinx.android.synthetic.main.fragment_select_image.*
 import kotlinx.android.synthetic.main.toolbar_choose_image.*
 

@@ -1,14 +1,18 @@
-package com.dmobileapps.dat.app_note.ui.fragment.choosevideo
+package com.dmobileapps.dat.app_note.ui.fragment.chooseImage
 
+import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.ImageObj
-import com.dmobileapps.dat.app_note.ui.fragment.choosevideo.adapter.AdapterImage
+import com.dmobileapps.dat.app_note.ui.fragment.chooseImage.adapter.AdapterImage
+import com.dmobileapps.dat.app_note.utils.AppUtil
 import com.dmobileapps.dat.app_note.utils.DeviceUtil
 import com.dmobileapps.dat.app_note.utils.setPreventDoubleClick
 import kotlinx.android.synthetic.main.fragment_select_image.*
@@ -24,11 +28,41 @@ class ChooseImageAct : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_select_image)
         tbBack.setPreventDoubleClick(300) {
-            DeviceUtil.arrImage = null
+            DeviceUtil.arrImage.clear()
             finish()
         }
+        btnDone.setPreventDoubleClick(300) {
+            if (arrImageSelected.isNotEmpty()) {
+                DeviceUtil.arrImage.clear()
+                for (i in 0 until arrImageSelected.size) {
+                    DeviceUtil.arrImage.add(arrImageSelected[i].path.toString())
+                }
+                finish()
+            } else {
+                AppUtil.showToast(this, R.string.please_choose_image)
+            }
+        }
         setRcvImage()
-        getAllImage()
+        requestStoragePermission()
+
+    }
+    private fun requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    STORAGE_REQUEST
+                )
+            }
+        } else {
+
+            getAllImage()
+
+        }
     }
 
     private fun setRcvImage() {
@@ -36,11 +70,19 @@ class ChooseImageAct : AppCompatActivity() {
             val video = arrImageObj[it]
             if (video.isSelected) {
                 arrImageSelected.remove(video)
+
+                arrImageObj[it].isSelected = !arrImageObj[it].isSelected
+                adapterImage.notifyItemChanged(it)
             } else {
-                arrImageSelected.add(video)
+                if (arrImageSelected.size < 5) {
+                    arrImageSelected.add(video)
+                    arrImageObj[it].isSelected = !arrImageObj[it].isSelected
+                    adapterImage.notifyItemChanged(it)
+                } else {
+                    AppUtil.showToast(this, R.string.max_video_selected)
+                }
+
             }
-            arrImageObj[it].isSelected = !arrImageObj[it].isSelected
-            adapterImage.notifyItemChanged(it)
         }
         rcvImage.layoutManager = GridLayoutManager(this, 3, RecyclerView.VERTICAL, false)
         rcvImage.adapter = adapterImage

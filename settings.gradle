@@ -1,5 +1,5 @@
-include ':BrushDraw'
 include ':AudioRecoder'
+include ':BrushDraw'
 include ':app'
 rootProject.name = "app_note"
 include ':serverads'

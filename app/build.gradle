@@ -85,8 +85,8 @@ dependencies {
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
-//    implementation project(':BrushDraw')
-//    implementation project(':AudioRecoder')
+    implementation project(':BrushDraw')
+    implementation project(':AudioRecoder')
 
 
 }

@@ -19,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".ui.fragment.choosevideo.ChooseImageAct"></activity>
+        <activity android:name=".ui.fragment.chooseImage.ChooseImageAct"/>
+        <activity android:name=".ui.fragment.checkList.DrawAct"/>
+        <activity android:name="nv.module.audiorecoder.ui.AudioActivity"/>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

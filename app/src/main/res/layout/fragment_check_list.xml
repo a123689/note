@@ -30,7 +30,7 @@
             <EditText
                 android:textSize="@dimen/text_size_16"
                 android:textColor="@color/colorBlack"
-                android:id="@+id/edtTitle"
+                android:id="@+id/edtTbTitle"
                 android:background="@android:color/transparent"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -69,36 +69,31 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+        app:layout_constraintTop_toBottomOf="@+id/view">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:paddingBottom="@dimen/space_screen_small"
+        <TextView
+            android:textSize="@dimen/text_size_16"
+            android:gravity="center"
+            android:id="@+id/tvTime"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/bottom_nav"
-            app:layout_constraintTop_toBottomOf="@+id/view">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="April 16 11:32 AM"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:textSize="@dimen/text_size_16"
-                android:gravity="center"
-                android:id="@+id/tvTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="April 16 11:32 AM"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcvCheckList"
-                android:paddingBottom="@dimen/space_screen_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_screen_small"
-                android:layout_marginTop="@dimen/space_screen_small"
-                android:layout_marginRight="@dimen/space_screen_small"
-                app:layout_constraintTop_toBottomOf="@+id/tvTime" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvCheckList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_screen_small"
+            app:layout_constraintTop_toBottomOf="@+id/tvTime" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

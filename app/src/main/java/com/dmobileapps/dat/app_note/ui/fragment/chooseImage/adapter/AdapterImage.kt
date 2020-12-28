@@ -1,4 +1,4 @@
-package  com.dmobileapps.dat.app_note.ui.fragment.choosevideo.adapter
+package  com.dmobileapps.dat.app_note.ui.fragment.chooseImage.adapter
 
 import android.view.LayoutInflater
 import android.view.View

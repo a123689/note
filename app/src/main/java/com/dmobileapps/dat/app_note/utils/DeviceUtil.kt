@@ -17,7 +17,7 @@ import kotlin.collections.List
 import kotlin.collections.set
 
 object DeviceUtil {
-     var arrImage: ArrayList<ImageObj> ? = null
+     var arrImage: ArrayList<String> = ArrayList()
 
 
     fun getBitmapFromVectorDrawable(context: Context?, drawableId: Int): Bitmap {
