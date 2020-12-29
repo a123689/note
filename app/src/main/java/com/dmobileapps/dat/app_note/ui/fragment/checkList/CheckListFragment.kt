@@ -3,6 +3,7 @@ package com.dmobileapps.dat.app_note.ui.fragment.checkList
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -62,14 +63,14 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
 
     private fun initRcv() {
         adapterCheckList = CheckListAdapter(arrCheckList, { position, text ->
-        //onFocusText
+            //onFocusText
             POSITION_FOCUS = position
         },
             {
-        // Click Image
+                // Click Image
             },
             { positionItem, oldPositionPlay, positionPlay ->
-            // Click record
+                // Click record
 
                 if (!arrCheckList[positionItem].audios[positionPlay].isPlay) {
                     arrCheckList[positionItem].audios[positionPlay].isPlay = false
@@ -84,17 +85,17 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                 playRecord(positionItem, oldPositionPlay, positionPlay)
             },
             {
-            // delete item
+                // delete item
                 arrCheckList.removeAt(it)
                 adapterCheckList.notifyDataSetChanged()
             },
             { positionCheckList, positionImage ->
-            // onDeleteImage
+                // onDeleteImage
                 arrCheckList[positionCheckList].images.removeAt(positionImage)
                 adapterCheckList.notifyItemChanged(positionCheckList)
             },
             { positionCheckList, positionRecord ->
-            // onDeleteRecord
+                // onDeleteRecord
                 arrCheckList[positionCheckList].audios.removeAt(positionRecord)
                 adapterCheckList.notifyItemChanged(positionCheckList)
 
@@ -117,6 +118,18 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         player.setMediaItem(MediaItem.fromUri(url))
         player.prepare()
     }
+
+
+    private var currentPlay: Int = 0
+    private val handler = Handler()
+    private var runnable: Runnable = object : Runnable {
+        override fun run() {
+            currentPlay =
+                player.currentPosition.toFloat().div(player.duration.toFloat()).times(100f).toInt()
+            handler.postDelayed(this, 200)
+        }
+    }
+
 
     override fun onResume() {
         super.onResume()

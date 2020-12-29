@@ -64,22 +64,9 @@ class CheckListAdapter(
 
 
             itemView.btnDelete.setOnClickListener { onDeleteItem(position) }
-            itemView.edtTitle.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    onFocusEditText(position, itemView.edtTitle.text.toString())
-                }
-
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
+            itemView.edtTitle.setOnFocusChangeListener { v, hasFocus ->
+                onFocusEditText(position, itemView.edtTitle.text.toString())
+            }
         }
     }
 

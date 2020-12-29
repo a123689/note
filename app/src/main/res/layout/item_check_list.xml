@@ -42,6 +42,7 @@
         android:textColor="@color/colorBlack"
         android:hint="@string/input_text"
         android:padding="@dimen/img_padding"
+        android:imeOptions="actionNext"
         android:background="@color/colorWhite"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/icNote"
