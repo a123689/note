@@ -1,5 +1,6 @@
 package  com.dmobileapps.dat.app_note.ui.fragment.checkList.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnTouchListener
@@ -25,7 +26,7 @@ class AdapterRecord(
 
     private var oldPositionPlay = 0
     private var positionPlay = 0
-
+    var currentPlay: Int = 0
     override fun getItemCount(): Int {
         return arrRecord.size
     }
@@ -38,16 +39,19 @@ class AdapterRecord(
 
         fun binDataRecord(position: Int) {
             val record = arrRecord[position]
+            Log.e("TAG", "initRcv: $record" )
             if (record.isPlay) {
                 ImageUtil.setImage(itemView.btnPlay, R.drawable.ic_play)
             } else {
                 ImageUtil.setImage(itemView.btnPlay, R.drawable.ic_pause)
             }
-            itemView.setOnClickListener {
+            itemView.btnPlay.setOnClickListener {
                 positionPlay = position
                 onClickIteRecord(oldPositionPlay, positionPlay)
                 oldPositionPlay = position
             }
+            Log.e("TAG", "binDataRecord: $currentPlay" )
+            itemView.waveformSeekBar.progress = currentPlay
             itemView.waveformSeekBar.setOnTouchListener(OnTouchListener { v, event -> true })
             itemView.btnDeleteRecord.setOnClickListener {
                 onDeleteIteRecord(position)

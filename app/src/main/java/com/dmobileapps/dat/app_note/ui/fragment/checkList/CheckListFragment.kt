@@ -39,6 +39,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     private var IS_CHOOSE = 0
     private var POSITION_FOCUS = 0
     private var isOnClick = false
+    private var isPause = false
 
     private lateinit var player: SimpleExoPlayer
     private var positionCheckListPlay = 0
@@ -71,18 +72,19 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
             },
             { positionItem, oldPositionPlay, positionPlay ->
                 // Click record
-
-                if (!arrCheckList[positionItem].audios[positionPlay].isPlay) {
-                    arrCheckList[positionItem].audios[positionPlay].isPlay = false
-                } else {
-                    arrCheckList[positionItem].audios[oldPositionPlay].isPlay = false
-                    arrCheckList[positionItem].audios[positionPlay].isPlay = true
-                }
-                adapterCheckList.notifyItemChanged(positionItem)
+                Log.e("TAG", "initRcv: ")
                 positionCheckListPlay = positionItem
                 positionRecordPlay = positionPlay
-
-                playRecord(positionItem, oldPositionPlay, positionPlay)
+                if (arrCheckList[positionItem].audios[positionPlay].isPlay) {
+                    stopSound()
+                } else {
+                    adapterCheckList.adapterRecord.currentPlay = 0
+                    arrCheckList[positionItem].audios[oldPositionPlay].isPlay = false
+                    arrCheckList[positionItem].audios[positionPlay].isPlay = true
+                    playRecord(positionItem, oldPositionPlay, positionPlay)
+                }
+                adapterCheckList.adapterRecord.notifyItemChanged(oldPositionPlay)
+                adapterCheckList.adapterRecord.notifyItemChanged(positionPlay)
             },
             {
                 // delete item
@@ -120,12 +122,13 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     }
 
 
-    private var currentPlay: Int = 0
     private val handler = Handler()
     private var runnable: Runnable = object : Runnable {
         override fun run() {
-            currentPlay =
+            adapterCheckList.adapterRecord.currentPlay =
                 player.currentPosition.toFloat().div(player.duration.toFloat()).times(100f).toInt()
+
+            adapterCheckList.adapterRecord.notifyItemChanged(positionRecordPlay)
             handler.postDelayed(this, 200)
         }
     }
@@ -149,6 +152,9 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                 }
             }
             isOnClick = false
+        }
+        if (isPause) {
+            resumeSound()
         }
     }
 
@@ -189,6 +195,34 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         adapterCheckList.notifyDataSetChanged()
     }
 
+    override fun onStop() {
+        super.onStop()
+        isPause = true
+        pauseSound()
+    }
+
+    private fun pauseSound() {
+        if (player.isPlaying) {
+            player.pause()
+        }
+    }
+
+
+    private fun resumeSound() {
+        if (isPause) {
+            player.play()
+            isPause = false
+        }
+    }
+
+    private fun stopSound() {
+        player.stop()
+        adapterCheckList.adapterRecord.currentPlay = 0
+        arrCheckList[positionCheckListPlay].audios[positionRecordPlay].isPlay = false
+        adapterCheckList.adapterRecord.notifyItemChanged(positionRecordPlay)
+        handler.removeCallbacks(runnable)
+    }
+
     private fun initializePlayer(context: Context) {
         val renderersFactory: RenderersFactory =
             DefaultRenderersFactory(context.applicationContext)
@@ -198,6 +232,19 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
             .setMediaSourceFactory(mediaSourceFactory)
             .build()
         player.addListener(object : Player.EventListener {
+
+            override fun onPlayerError(error: ExoPlaybackException) {
+                arrCheckList[positionCheckListPlay].audios[positionRecordPlay].isPlay = false
+                adapterCheckList.adapterRecord.notifyItemChanged(positionRecordPlay)
+            }
+
+            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+                if (playbackState == ExoPlayer.STATE_ENDED) {
+                    stopSound()
+                } else if (playbackState == ExoPlayer.STATE_READY && playWhenReady) {
+                    runnable.run()
+                }
+            }
         })
         player.setAudioAttributes(AudioAttributes.DEFAULT, true)
         player.playWhenReady = true

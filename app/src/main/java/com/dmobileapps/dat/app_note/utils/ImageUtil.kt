@@ -1,14 +1,19 @@
 package com.dmobileapps.dat.app_note.utils
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.dmobileapps.dat.app_note.R
+import com.dmobileapps.dat.app_note.model.ImageObj
 import java.io.*
+import java.nio.channels.FileChannel
+
 
 object ImageUtil {
 
@@ -17,19 +22,17 @@ object ImageUtil {
     }
 
     fun setImage(image: ImageView, url_image: String?) {
-        Glide.with(image.context).load(url_image).
-        placeholder(R.mipmap.ic_launcher4)
+        Glide.with(image.context).load(url_image).placeholder(R.mipmap.ic_launcher4)
             .error(R.mipmap.ic_launcher4).into(image)
     }
 
     fun setImage(image: ImageView, url_image: Uri?) {
-        Glide.with(image.context).load(url_image).
-        placeholder(R.mipmap.ic_launcher4)
+        Glide.with(image.context).load(url_image).placeholder(R.mipmap.ic_launcher4)
             .error(R.mipmap.ic_launcher4).into(image)
     }
+
     fun setImage(image: ImageView, url_image: Bitmap?) {
-        Glide.with(image.context).load(url_image).
-        placeholder(R.mipmap.ic_launcher4)
+        Glide.with(image.context).load(url_image).placeholder(R.mipmap.ic_launcher4)
             .error(R.mipmap.ic_launcher4).into(image)
     }
 
@@ -42,13 +45,14 @@ object ImageUtil {
         return BitmapFactory.decodeResource(res, resId)
     }
 
-      fun imageToBitmap(res: Resources?, resId: Int): ByteArray {
-        val bitmap = convertBitmapFromDrawable(res,resId)
+    fun imageToBitmap(res: Resources?, resId: Int): ByteArray {
+        val bitmap = convertBitmapFromDrawable(res, resId)
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
 
         return stream.toByteArray()
     }
+
     fun convertBitmaptoFile(
         context: Context,
         bitmap: Bitmap,
@@ -75,5 +79,67 @@ object ImageUtil {
             e.printStackTrace()
         }
         return f
+    }
+
+    fun saveToInternalStorage(applicationContext: Context, image: ImageObj): String? {
+        // path to /data/data/yourapp/app_data/imageDir
+        val directory = getInternalPackage(applicationContext)
+
+        // Create imageDir
+        val mypath = File(directory, "${image.id}.png")
+        var fos: FileOutputStream? = null
+        try {
+            fos = FileOutputStream(mypath)
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            image.bitmap!!.compress(Bitmap.CompressFormat.PNG, 100, fos)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            try {
+                fos!!.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+        return directory!!.absolutePath
+    }
+
+    private fun getInternalPackage(applicationContext: Context): File? {
+        val cw = ContextWrapper(applicationContext)
+        return cw.getDir("imageDir", Context.MODE_PRIVATE)
+    }
+
+    fun loadImageFromStorage(path: String): Bitmap? {
+        try {
+            val f = File(path)
+            val b = BitmapFactory.decodeStream(FileInputStream(f))
+            return b
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+            return null
+        }
+    }
+
+    fun deleteFileFromInternalStorage(imagePath: String): Boolean {
+//        val dir = context.filesDir
+        val file = File(imagePath)
+        return file.delete()
+    }
+
+    fun copyFile(context: Context, inputPath: String, id: String): String? {
+        val directory = getInternalPackage(context)
+        val src = File(inputPath)
+        val mypath = File(directory, "${id}.png")
+        val inChannel: FileChannel? = FileInputStream(src).channel
+        val outChannel: FileChannel? = FileOutputStream(mypath).channel
+        try {
+            inChannel!!.transferTo(0, inChannel.size(), outChannel)
+        } catch (e: java.lang.Exception) {
+            Log.e("TAG", "copyFile error: ", e)
+        } finally {
+            if (inChannel != null) inChannel.close()
+            if (outChannel != null) outChannel.close()
+        }
+        return directory!!.absolutePath
     }
 }

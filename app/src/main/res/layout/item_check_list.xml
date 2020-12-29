@@ -37,8 +37,8 @@
     <EditText
         android:id="@+id/edtTitle"
         android:layout_width="0dp"
-        android:textSize="@dimen/text_size_16"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_16"
         android:textColor="@color/colorBlack"
         android:hint="@string/input_text"
         android:padding="@dimen/img_padding"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/icNote"
         app:layout_constraintEnd_toStartOf="@+id/btnDelete"
-        android:inputType="text" />
+        android:inputType="textMultiLine" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvImage"

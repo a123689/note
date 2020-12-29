@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         style="@style/CustomProgressBarHorizontal"
-        android:progress="20" />
+        android:progress="0" />
 
     <ImageView
         android:id="@+id/btnDeleteRecord"

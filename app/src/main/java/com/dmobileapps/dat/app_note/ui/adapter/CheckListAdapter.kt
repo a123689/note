@@ -23,6 +23,7 @@ class CheckListAdapter(
     private val onDeleteImage: (positionCheckList: Int, positionImage: Int) -> Unit,
     private val onDeleteRecord: (positionCheckList: Int, positionRecord: Int) -> Unit
 ) : RecyclerView.Adapter<CheckListAdapter.ViewHolder>() {
+    lateinit var adapterRecord:AdapterRecord
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -51,8 +52,7 @@ class CheckListAdapter(
                 GridLayoutManager(itemView.context, 3, RecyclerView.VERTICAL, false)
             itemView.rcvImage.adapter = adapterImage
 
-            val adapterRecord =
-                AdapterRecord(checkListObj.audios, { oldPositionPlay, positionPlay ->
+            adapterRecord =   AdapterRecord(checkListObj.audios, { oldPositionPlay, positionPlay ->
                     onClickRecord(position, oldPositionPlay, positionPlay)
                 }, {
 //                on delete
