@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="@color/colorWhite"
+    android:id="@+id/layoutNote"
+    android:layout_marginTop="@dimen/space_screen_small"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/icNote"
+        android:layout_width="@dimen/img_size_small"
+        android:layout_height="@dimen/img_size_small"
+        android:layout_marginLeft="@dimen/space_screen_small"
+        android:src="@drawable/ic_note_new"
+        android:scaleType="centerInside"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/btnDelete"
+        android:layout_width="@dimen/img_size_small"
+        android:layout_height="@dimen/img_size_small"
+        android:layout_marginLeft="@dimen/space_screen_small"
+        android:src="@drawable/ic_delete_white"
+        app:tint="@color/colorBlack"
+        android:scaleType="centerInside"
+        android:layout_marginEnd="@dimen/space_screen_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="visible" />
+
+
+    <EditText
+        android:id="@+id/edtTitle"
+        android:layout_width="0dp"
+        android:textSize="@dimen/text_size_16"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:hint="@string/input_text"
+        android:padding="@dimen/img_padding"
+        android:background="@color/colorWhite"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/icNote"
+        app:layout_constraintEnd_toStartOf="@+id/btnDelete"
+        android:inputType="text" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/edtTitle" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvRecord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/rcvImage" />
+
+    <View
+        android:id="@+id/view"
+        app:layout_constraintTop_toBottomOf="@id/rcvRecord"
+        android:layout_width="0dp"
+        android:layout_marginTop="9dp"
+        app:layout_constraintVertical_bias="1"
+        android:background="#CCCCCC"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0.5dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

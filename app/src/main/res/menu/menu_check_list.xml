@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_add"
+        android:icon="@drawable/ic_checklist_new"
+        android:title="@string/add_item" />
+    <item
+        android:id="@+id/menu_image"
+        android:title="@string/add_image"
+        android:icon="@drawable/ic_image"/>
+    <item
+        android:id="@+id/menu_recording"
+        android:title="@string/add_recording"
+        android:icon="@drawable/ic_recording"/>
+    <item
+        android:id="@+id/menu_draw"
+        android:title="@string/add_draw"
+        android:icon="@drawable/ic_drawing"/>
+</menu>
