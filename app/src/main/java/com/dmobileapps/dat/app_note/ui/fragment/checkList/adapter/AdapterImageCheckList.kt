@@ -5,13 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dmobileapps.dat.app_note.R
+import com.dmobileapps.dat.app_note.model.ImageObj
 import com.dmobileapps.dat.app_note.utils.ImageUtil
-import kotlinx.android.synthetic.main.item_image.view.*
 import kotlinx.android.synthetic.main.item_image.view.imgThumb
 import kotlinx.android.synthetic.main.item_image_check_list.view.*
 
 class AdapterImageCheckList(
-    private var arrImageObj: ArrayList<String>,
+    private var arrImageObj: ArrayList<ImageObj>,
     private val onClickItemImage: (position: Int) -> Unit,
     private val onDeleteItemImage: (position: Int) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -19,7 +19,7 @@ class AdapterImageCheckList(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_image_check_list, parent, false)
-        return ItemSetting(view)
+        return ItemImage(view)
     }
 
 
@@ -29,13 +29,17 @@ class AdapterImageCheckList(
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
-        (holder as ItemSetting).binDataRingTone(position)
+        (holder as ItemImage).binDataImage(position)
 
-    private inner class ItemSetting(view: View) : RecyclerView.ViewHolder(view) {
+    private inner class ItemImage(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun binDataRingTone(position: Int) {
+        fun binDataImage(position: Int) {
             val image = arrImageObj[position]
-            ImageUtil.setImage(itemView.imgThumb, image)
+            if (!image.path.isNullOrBlank()) {
+                ImageUtil.setImage(itemView.imgThumb, image.path!!)
+            } else if (image.bitmap != null) {
+                ImageUtil.setImage(itemView.imgThumb, image.bitmap)
+            }
 
             itemView.setOnClickListener {
                 onClickItemImage(position)

@@ -1,5 +1,6 @@
 package com.dmobileapps.dat.app_note.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.dmobileapps.dat.app_note.R

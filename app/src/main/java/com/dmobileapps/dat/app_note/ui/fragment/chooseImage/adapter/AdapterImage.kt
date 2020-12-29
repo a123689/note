@@ -17,7 +17,7 @@ class AdapterImage(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_image, parent, false)
-        return ItemSetting(view)
+        return ItemImage(view)
     }
 
 
@@ -27,11 +27,11 @@ class AdapterImage(
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
-        (holder as ItemSetting).binDataRingTone(position)
+        (holder as ItemImage).binDataImage(position)
 
-    private inner class ItemSetting(view: View) : RecyclerView.ViewHolder(view) {
+    private inner class ItemImage(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun binDataRingTone(position: Int) {
+        fun binDataImage(position: Int) {
             val image = arrImageObj[position]
             ImageUtil.setImage(itemView.imgThumb, image.path)
             if (image.isSelected){

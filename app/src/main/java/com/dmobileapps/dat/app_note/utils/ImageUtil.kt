@@ -27,6 +27,11 @@ object ImageUtil {
         placeholder(R.mipmap.ic_launcher4)
             .error(R.mipmap.ic_launcher4).into(image)
     }
+    fun setImage(image: ImageView, url_image: Bitmap?) {
+        Glide.with(image.context).load(url_image).
+        placeholder(R.mipmap.ic_launcher4)
+            .error(R.mipmap.ic_launcher4).into(image)
+    }
 
     fun setImageByte(image: ImageView, url_image: ByteArray?) {
         Glide.with(image.context).load(url_image).placeholder(R.mipmap.ic_launcher4)

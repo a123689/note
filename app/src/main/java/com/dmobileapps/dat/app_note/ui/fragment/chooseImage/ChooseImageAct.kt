@@ -34,9 +34,7 @@ class ChooseImageAct : AppCompatActivity() {
         btnDone.setPreventDoubleClick(300) {
             if (arrImageSelected.isNotEmpty()) {
                 DeviceUtil.arrImage.clear()
-                for (i in 0 until arrImageSelected.size) {
-                    DeviceUtil.arrImage.add(arrImageSelected[i].path.toString())
-                }
+                    DeviceUtil.arrImage.addAll(arrImageSelected)
                 finish()
             } else {
                 AppUtil.showToast(this, R.string.please_choose_image)

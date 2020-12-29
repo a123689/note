@@ -1,25 +1,14 @@
 package com.dmobileapps.dat.app_note.ui.fragment.checkList
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dmobileapps.dat.app_note.R
-import com.dmobileapps.dat.app_note.ui.fragment.chooseImage.adapter.AdapterImage
+import com.dmobileapps.dat.app_note.model.ImageObj
+import com.dmobileapps.dat.app_note.utils.DeviceUtil
 import nv.module.brushdraw.ui.BrushUtils
 
 class DrawAct : AppCompatActivity() {
-    companion object {
 
-        fun startActivity(activity: Activity) {
-            val intent = Intent(activity, DrawAct::class.java)
-            activity.startActivityForResult(intent, REQUEST_BITMAP)
-        }
-
-        const val REQUEST_BITMAP = 2000
-        const val KEY_BITMAP = "KEY_BITMAP"
-    }
-    private lateinit var adapterImage: AdapterImage
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_draw)
@@ -33,10 +22,14 @@ class DrawAct : AppCompatActivity() {
     private fun initBrush() {
         brushUtils = BrushUtils(this, { bitmap ->
             //save
-
+            DeviceUtil.arrImage.clear()
+            DeviceUtil.arrImage.add(ImageObj("bitmap${System.currentTimeMillis() / 1000}","",null,bitmap,false ))
+            finish()
 //            imgTest.setImageBitmap(bitmap)
         }, {
             //back
+            DeviceUtil.arrImage.clear()
+            finish()
         })
 
         brushUtils?.createBrush(

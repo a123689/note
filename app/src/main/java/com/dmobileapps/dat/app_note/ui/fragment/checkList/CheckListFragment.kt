@@ -1,24 +1,32 @@
 package com.dmobileapps.dat.app_note.ui.fragment.checkList
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.CheckList
+import com.dmobileapps.dat.app_note.model.RecordObj
 import com.dmobileapps.dat.app_note.ui.adapter.CheckListAdapter
 import com.dmobileapps.dat.app_note.ui.fragment.BaseFragment
 import com.dmobileapps.dat.app_note.ui.fragment.chooseImage.ChooseImageAct
 import com.dmobileapps.dat.app_note.utils.DeviceUtil
 import com.dmobileapps.dat.app_note.utils.setPreventDoubleClick
+import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.audio.AudioAttributes
+import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
+import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_check_list.*
 import nv.module.audiorecoder.ui.AudioActivity
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -30,6 +38,12 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     private var IS_CHOOSE = 0
     private var POSITION_FOCUS = 0
     private var isOnClick = false
+
+    private lateinit var player: SimpleExoPlayer
+    private var positionCheckListPlay = 0
+    private var positionRecordPlay = 0
+
+
     override fun onFragmentBackPressed() {
         findNavController().popBackStack()
     }
@@ -42,29 +56,66 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         val currentDate: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
         tvTime.text = currentDate
         initRcv()
-
+        initializePlayer(requireContext())
         bottom_nav.setOnNavigationItemSelectedListener(this)
     }
 
     private fun initRcv() {
-       adapterCheckList =    CheckListAdapter(arrCheckList, { position, text ->
-//                    onFocusText
+        adapterCheckList = CheckListAdapter(arrCheckList, { position, text ->
+        //onFocusText
             POSITION_FOCUS = position
-        }
-            , {
+        },
+            {
+        // Click Image
+            },
+            { positionItem, oldPositionPlay, positionPlay ->
+            // Click record
+
+                if (!arrCheckList[positionItem].audios[positionPlay].isPlay) {
+                    arrCheckList[positionItem].audios[positionPlay].isPlay = false
+                } else {
+                    arrCheckList[positionItem].audios[oldPositionPlay].isPlay = false
+                    arrCheckList[positionItem].audios[positionPlay].isPlay = true
+                }
+                adapterCheckList.notifyItemChanged(positionItem)
+                positionCheckListPlay = positionItem
+                positionRecordPlay = positionPlay
+
+                playRecord(positionItem, oldPositionPlay, positionPlay)
+            },
+            {
+            // delete item
                 arrCheckList.removeAt(it)
                 adapterCheckList.notifyDataSetChanged()
-            }, { positionCheckList, positionImage ->
-//                onDeleteImage
-               arrCheckList[positionCheckList].images.removeAt(positionImage)
-               adapterCheckList.notifyItemChanged(positionCheckList)
-            }, { positionCheckList, positionRecord ->
-//                onDeleteRecord
+            },
+            { positionCheckList, positionImage ->
+            // onDeleteImage
+                arrCheckList[positionCheckList].images.removeAt(positionImage)
+                adapterCheckList.notifyItemChanged(positionCheckList)
+            },
+            { positionCheckList, positionRecord ->
+            // onDeleteRecord
+                arrCheckList[positionCheckList].audios.removeAt(positionRecord)
+                adapterCheckList.notifyItemChanged(positionCheckList)
 
             })
         rcvCheckList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         rcvCheckList.adapter = adapterCheckList
 
+    }
+
+    private fun playRecord(
+        positionItem: Int,
+        oldPositionPlay: Int,
+        positionPlay: Int
+    ) {
+        val url = arrCheckList[positionItem].audios[positionPlay].path
+        if (!File(url).exists()) {
+            Toast.makeText(context, "File doesn't exists", Toast.LENGTH_SHORT).show()
+            return
+        }
+        player.setMediaItem(MediaItem.fromUri(url))
+        player.prepare()
     }
 
     override fun onResume() {
@@ -99,13 +150,16 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                 isOnClick = true
             }
             R.id.menu_draw -> {
-                DrawAct.startActivity(requireActivity())
-                IS_CHOOSE = 2
+                startActivity(Intent(requireActivity(), DrawAct::class.java))
+                IS_CHOOSE = 1
                 isOnClick = true
             }
 
             R.id.menu_recording -> {
-                AudioActivity.startActivity(requireActivity())
+
+                val intent = Intent(context, AudioActivity::class.java)
+                startActivityForResult(intent, AudioActivity.REQUEST_AUDIO)
+// AudioActivity.startActivity(requireActivity())
                 IS_CHOOSE = 3
                 isOnClick = true
             }
@@ -122,10 +176,38 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         adapterCheckList.notifyDataSetChanged()
     }
 
+    private fun initializePlayer(context: Context) {
+        val renderersFactory: RenderersFactory =
+            DefaultRenderersFactory(context.applicationContext)
+                .setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF)
+        val mediaSourceFactory: MediaSourceFactory = DefaultMediaSourceFactory(context)
+        player = SimpleExoPlayer.Builder(context, renderersFactory)
+            .setMediaSourceFactory(mediaSourceFactory)
+            .build()
+        player.addListener(object : Player.EventListener {
+        })
+        player.setAudioAttributes(AudioAttributes.DEFAULT, true)
+        player.playWhenReady = true
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AudioActivity.REQUEST_AUDIO && resultCode == AppCompatActivity.RESULT_OK) {
-            val  requiredValue = data!!.getStringExtra(AudioActivity.KEY_PATH_AUDIO)
+            val requiredValue = data!!.getStringExtra(AudioActivity.KEY_PATH_AUDIO)
+            if (arrCheckList.isEmpty()) {
+                addItemCheckList()
+            }
+            if (!requiredValue.isNullOrBlank()) {
+                arrCheckList[POSITION_FOCUS].audios.add(
+                    RecordObj(
+                        "record${System.currentTimeMillis() / 1000}",
+                        requiredValue,
+                        false
+                    )
+                )
+                adapterCheckList.notifyItemChanged(POSITION_FOCUS)
+            }
         }
+
     }
 }
