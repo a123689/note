@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.Note
 import com.dmobileapps.dat.app_note.utils.PassCodeView
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_pass_code.*
 import java.lang.Exception
 
@@ -31,7 +32,8 @@ class PassCodeFragment : BaseFragment(R.layout.fragment_pass_code) {
         sharedPreference = activity?.getSharedPreferences("NOTE", Context.MODE_PRIVATE)!!
         val editor = sharedPreference.edit()
         try {
-            note = arguments?.getParcelable<Note>("note")!!
+
+            note = Gson().fromJson(requireArguments().getString("note"),Note::class.java)
             check = arguments?.getBoolean("check",false)!!
             idFolder = requireArguments().getInt("id")
         }catch (e:Exception){
@@ -75,7 +77,7 @@ class PassCodeFragment : BaseFragment(R.layout.fragment_pass_code) {
                     if(sharedPreference.getString(note.id.toString(),"") == passCode){
                         if(navController.currentDestination?.id == R.id.passCodeFragment){
                             val  bundle = Bundle()
-                            bundle.putParcelable("note",note)
+                            bundle.putString("note",Gson().toJson(note))
                             bundle.putInt("id",idFolder)
                             navController.navigate(R.id.action_passCodeFragment_to_writeNoteFragment,bundle)
                         }

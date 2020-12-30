@@ -13,6 +13,7 @@ import com.dmobileapps.dat.app_note.utils.Common
 import com.dmobileapps.dat.app_note.utils.setPreventDoubleClick
 import com.dmobileapps.dat.app_note.viewmodel.FolderViewmodel
 import com.dmobileapps.dat.app_note.viewmodel.NoteViewmodel
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_write_note.*
 import kotlinx.android.synthetic.main.fragment_write_note.ivBack
 import kotlinx.android.synthetic.main.fragment_write_note.tvFolder
@@ -55,8 +56,8 @@ class WriteNoteFragment : BaseFragment(R.layout.fragment_write_note) {
 
         try {
             idFolder = requireArguments().getInt("id")
-            note = requireArguments().getParcelable<Note>("note")!!
-            edContent.setText( note.content.toString())
+            note = Gson().fromJson(requireArguments().getString("note"),Note::class.java)
+            edContent?.setText( note.content.toString())
 
         }catch (e:Exception){
 

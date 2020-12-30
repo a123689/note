@@ -21,6 +21,7 @@ import com.dmobileapps.dat.app_note.utils.Common
 import com.dmobileapps.dat.app_note.utils.setPreventDoubleClick
 import com.dmobileapps.dat.app_note.viewmodel.FolderViewmodel
 import com.dmobileapps.dat.app_note.viewmodel.NoteViewmodel
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_list_note.*
 import kotlinx.android.synthetic.main.fragment_list_note.ivBack
 import kotlinx.android.synthetic.main.fragment_list_note.tvFolder
@@ -196,13 +197,13 @@ class ListNoteFragment : BaseFragment(R.layout.fragment_list_note) {
                 Common.checkScreen = true
                 val bundle = Bundle()
                 bundle.putInt("id",idFolder)
-                bundle.putParcelable("note",it)
+                bundle.putString("note", Gson().toJson(it))
                 navController.navigate(R.id.action_listNoteFragment_to_writeNoteFragment,bundle)
             }
         }else{
             if(navController.currentDestination?.id == R.id.listNoteFragment){
                 val  bundle  = Bundle()
-                bundle.putParcelable("note",it)
+                bundle.putString("note", Gson().toJson(it))
                 bundle.putBoolean("check",true)
                 bundle.putInt("id",idFolder)
                 navController.navigate(R.id.action_listNoteFragment_to_passCodeFragment,bundle)
@@ -225,7 +226,7 @@ class ListNoteFragment : BaseFragment(R.layout.fragment_list_note) {
     private val onLock:(Note) -> Unit = {
         if(navController.currentDestination?.id == R.id.listNoteFragment){
             val  bundle  = Bundle()
-            bundle.putParcelable("note",it)
+            bundle.putString("note", Gson().toJson(it))
             bundle.putBoolean("check",false)
             navController.navigate(R.id.action_listNoteFragment_to_passCodeFragment,bundle)
         }

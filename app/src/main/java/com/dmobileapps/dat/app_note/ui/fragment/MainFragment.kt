@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
@@ -163,13 +164,27 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             showMenu(lnMenu.visibility == View.GONE)
         }
         btnCheckList.setPreventDoubleClick(300) {
-//            showMenu(lnMenu.visibility == View.GONE)
 
             if (navController.currentDestination?.id == R.id.mainFragment) {
-
-            navController.navigate(R.id.action_mainFragment_to_checkListFragment)
-        }
+//            val job: Job = GlobalScope.launch {
+                if (list.size == 0) {
+                    var folder = Folder("My folder", 0)
+                    folderViewmodel.insertFolder(folder)
+                }
+//
+//            }
+//            val job2: Job = GlobalScope.launch {
+//                job.join()
+//                delay(50)
+                Common.checkMain = true
+                Common.checkScreen = false
+                val bundle = Bundle()
+                bundle.putInt("id", idFolder)
+                navController.navigate(R.id.action_mainFragment_to_checkListFragment,bundle)
+//            }
+            }
             showMenu(lnMenu.visibility == View.GONE)
+
         }
         ivAddNote.setPreventDoubleClick(300) {
             showMenu(lnMenu.visibility == View.GONE)

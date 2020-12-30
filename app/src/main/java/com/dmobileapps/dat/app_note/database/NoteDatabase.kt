@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.dmobileapps.dat.app_note.database.dao.FolderDao
 import com.dmobileapps.dat.app_note.database.dao.NoteDao
 import com.dmobileapps.dat.app_note.model.Folder
 import com.dmobileapps.dat.app_note.model.Note
 
-@Database(entities = [Folder::class,Note::class],version = 6)
+@Database(entities = [Folder::class,Note::class],version = 7)
+@TypeConverters(Converters::class)
 abstract class NoteDatabase : RoomDatabase(){
     abstract fun getFolderDao(): FolderDao
     abstract fun getNoteDao(): NoteDao

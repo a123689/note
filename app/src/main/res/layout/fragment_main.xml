@@ -157,7 +157,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         android:padding="@dimen/img_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/layoutBottom">

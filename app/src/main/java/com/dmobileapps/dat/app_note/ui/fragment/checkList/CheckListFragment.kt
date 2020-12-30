@@ -9,23 +9,29 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.CheckList
+import com.dmobileapps.dat.app_note.model.Note
 import com.dmobileapps.dat.app_note.model.RecordObj
 import com.dmobileapps.dat.app_note.ui.adapter.CheckListAdapter
 import com.dmobileapps.dat.app_note.ui.fragment.BaseFragment
 import com.dmobileapps.dat.app_note.ui.fragment.chooseImage.ChooseImageAct
-import com.dmobileapps.dat.app_note.utils.DeviceUtil
-import com.dmobileapps.dat.app_note.utils.setPreventDoubleClick
+import com.dmobileapps.dat.app_note.utils.*
+import com.dmobileapps.dat.app_note.viewmodel.FolderViewmodel
+import com.dmobileapps.dat.app_note.viewmodel.NoteViewmodel
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_check_list.*
+import kotlinx.android.synthetic.main.fragment_check_list.ivBack
+import kotlinx.android.synthetic.main.fragment_write_note.*
 import nv.module.audiorecoder.ui.AudioActivity
 import java.io.File
 import java.text.SimpleDateFormat
@@ -34,6 +40,8 @@ import kotlin.collections.ArrayList
 
 class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     BottomNavigationView.OnNavigationItemSelectedListener {
+
+
     private val arrCheckList: ArrayList<CheckList> = ArrayList()
     private lateinit var adapterCheckList: CheckListAdapter
     private var IS_CHOOSE = 0
@@ -45,9 +53,23 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     private var positionCheckListPlay = 0
     private var positionRecordPlay = 0
 
+    var idFolder = 0
+    lateinit var  note: Note
+    private val noteViewmodel: NoteViewmodel by lazy {
+        ViewModelProvider(this, NoteViewmodel.NoteViewmodelFactory(requireActivity().application))[NoteViewmodel::class.java]
+    }
+
+    private val folderViewmodel: FolderViewmodel by lazy {
+        ViewModelProvider(this, FolderViewmodel.NoteViewmodelFactory(requireActivity().application))[FolderViewmodel::class.java]
+    }
 
     override fun onFragmentBackPressed() {
+        if(Common.checkMain){
+        Common.checkMain = false
         findNavController().popBackStack()
+    }else{
+        findNavController().popBackStack(R.id.listNoteFragment,false)
+    }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,11 +77,63 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         ivBack.setPreventDoubleClick(300) {
             onFragmentBackPressed()
         }
+        btnSave.setPreventDoubleClick(300){
+            saveNote()
+        }
         val currentDate: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
         tvTime.text = currentDate
         initRcv()
         initializePlayer(requireContext())
         bottom_nav.setOnNavigationItemSelectedListener(this)
+        getData()
+
+    }
+
+    private fun saveNote() {
+        if(arrCheckList.isNotEmpty()){
+            if(Common.checkScreen){
+                val currentDate: String =  SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+                note.date = currentDate
+
+                for (i in 0 until arrCheckList.size){
+                    for (j in 0 until arrCheckList[i].images.size){
+                        if ( arrCheckList[i].images[j].bitmap!=null){
+                            arrCheckList[i].images[j].path = ImageUtil.saveToInternalStorage(requireContext(),arrCheckList[i].images[j])
+                        }else if (arrCheckList[i].images[j].path !=null){
+                            arrCheckList[i].images[j].path = ImageUtil.copyFile(requireContext(),arrCheckList[i].images[j].path!!,arrCheckList[i].images[j].id)
+                        }
+                   }
+                }
+                note.checkList = arrCheckList
+                noteViewmodel.updateNote(note)
+
+            }else{
+                val currentDate: String =  SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+                note.date = currentDate
+                note.folderId = idFolder
+
+                noteViewmodel.insertNote(note)
+                noteViewmodel.getAllNote(idFolder).observe(requireActivity(), androidx.lifecycle.Observer {
+                    folderViewmodel.updateFolderById(idFolder,it.size)
+                })
+            }
+
+            onFragmentBackPressed()
+
+
+        }else{
+            AppUtil.showToast(context,R.string.please_input_content)
+        }
+    }
+
+    private fun getData() {
+        try {
+            idFolder = requireArguments().getInt("id")
+            note = Gson().fromJson(requireArguments().getString("note"),Note::class.java)
+            arrCheckList.addAll(note.checkList)
+        }catch (e:Exception){
+            Log.e("TAG", "getData: $e" )
+        }
     }
 
     private fun initRcv() {
