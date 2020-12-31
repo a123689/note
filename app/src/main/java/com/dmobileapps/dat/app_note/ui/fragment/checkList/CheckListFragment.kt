@@ -52,6 +52,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     private lateinit var player: SimpleExoPlayer
     private var positionCheckListPlay = 0
     private var positionRecordPlay = 0
+    private var avatarNote = ""
 
     var idFolder = 0
     lateinit var  note: Note
@@ -92,27 +93,23 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     private fun saveNote() {
         if(arrCheckList.isNotEmpty()){
             if(Common.checkScreen){
+                moveImageToInternal()
                 val currentDate: String =  SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
                 note.date = currentDate
-
-                for (i in 0 until arrCheckList.size){
-                    for (j in 0 until arrCheckList[i].images.size){
-                        if ( arrCheckList[i].images[j].bitmap!=null){
-                            arrCheckList[i].images[j].path = ImageUtil.saveToInternalStorage(requireContext(),arrCheckList[i].images[j])
-                        }else if (arrCheckList[i].images[j].path !=null){
-                            arrCheckList[i].images[j].path = ImageUtil.copyFile(requireContext(),arrCheckList[i].images[j].path!!,arrCheckList[i].images[j].id)
-                        }
-                   }
-                }
                 note.checkList = arrCheckList
+                note.avatar =avatarNote
                 noteViewmodel.updateNote(note)
 
             }else{
                 val currentDate: String =  SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
-                note.date = currentDate
-                note.folderId = idFolder
+                val newNote = Note()
 
-                noteViewmodel.insertNote(note)
+                moveImageToInternal()
+                newNote.date = currentDate
+                newNote.folderId = idFolder
+                newNote.checkList = arrCheckList
+                newNote.avatar =avatarNote
+                noteViewmodel.insertNote(newNote)
                 noteViewmodel.getAllNote(idFolder).observe(requireActivity(), androidx.lifecycle.Observer {
                     folderViewmodel.updateFolderById(idFolder,it.size)
                 })
@@ -126,10 +123,31 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         }
     }
 
+    private fun moveImageToInternal() {
+        if (!arrCheckList.isNullOrEmpty()){
+        for (i in 0 until arrCheckList.size){
+            if (!arrCheckList[i].images.isNullOrEmpty()){
+                for (j in 0 until arrCheckList[i].images.size){
+                    if ( arrCheckList[i].images[j].bitmap!=null){
+                        arrCheckList[i].images[j].path = ImageUtil.saveToInternalStorage(requireContext(),arrCheckList[i].images[j])
+                    }else if (arrCheckList[i].images[j].path !=null){
+                        arrCheckList[i].images[j].path = ImageUtil.copyFileToInternal(requireContext(),arrCheckList[i].images[j].path!!,arrCheckList[i].images[j].id)
+                    }
+                    avatarNote =  arrCheckList[i].images[j].path!!
+                }
+            }
+        }
+        }
+    }
+
     private fun getData() {
         try {
             idFolder = requireArguments().getInt("id")
-            note = Gson().fromJson(requireArguments().getString("note"),Note::class.java)
+            val noteString = requireArguments().getString("note")
+            if (!noteString.isNullOrBlank()){
+                note = Gson().fromJson(noteString,Note::class.java)
+            }
+            Log.e("TAG", "getData: $noteString" )
             arrCheckList.addAll(note.checkList)
         }catch (e:Exception){
             Log.e("TAG", "getData: $e" )

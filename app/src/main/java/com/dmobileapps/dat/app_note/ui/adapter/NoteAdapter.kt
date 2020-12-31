@@ -2,6 +2,7 @@ package com.dmobileapps.dat.app_note.ui.adapter
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,8 @@ import com.daimajia.swipe.SwipeLayout
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.Note
 import com.dmobileapps.dat.app_note.utils.Common
+import com.dmobileapps.dat.app_note.utils.ImageUtil
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.item_folder.view.view
 import kotlinx.android.synthetic.main.item_note.view.*
 
@@ -83,7 +86,14 @@ class NoteAdapter(
             }else{
                 radioButton.isChecked = false
             }
+            Log.e("TAG", "onBind: ${Gson().toJson(note)}" )
+        if (!note.avatar.isNullOrBlank()){
+            itemView.imgThumb.visibility = View.VISIBLE
+            ImageUtil.setImage(itemView.imgThumb,note.avatar)
+        }else{
+            itemView.imgThumb.visibility = View.GONE
 
+        }
 
             layout.setOnLongClickListener {
                 notes[position].isCheck = true

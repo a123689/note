@@ -1,6 +1,9 @@
 package com.dmobileapps.dat.app_note.model
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.dmobileapps.dat.app_note.database.Converters
 
 @Entity(tableName = "note_table")
@@ -9,17 +12,18 @@ class Note(
     var content: String? = "",
     @ColumnInfo(name = "date_col")
     var date: String? = "",
+    @ColumnInfo(name = "avatar")
+    var avatar: String? = "",
     @ColumnInfo(name = "folderId_col")
-    var folderId: Int = 0,
+        var folderId: Int = 0,
     var isCheck: Boolean = false,
     @ColumnInfo(name = "date_check_list")
     @TypeConverters(Converters::class)
-    var checkList:ArrayList<CheckList> = ArrayList()
-)  {
+    var checkList: ArrayList<CheckList> = ArrayList()
+) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "note_id_col")
     var id: Int = 0
-
 
 
     //    constructor(parcel: Parcel) : this(

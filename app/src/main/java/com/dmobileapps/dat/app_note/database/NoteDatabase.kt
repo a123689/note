@@ -10,7 +10,7 @@ import com.dmobileapps.dat.app_note.database.dao.NoteDao
 import com.dmobileapps.dat.app_note.model.Folder
 import com.dmobileapps.dat.app_note.model.Note
 
-@Database(entities = [Folder::class,Note::class],version = 7)
+@Database(entities = [Folder::class,Note::class],version = 8)
 @TypeConverters(Converters::class)
 abstract class NoteDatabase : RoomDatabase(){
     abstract fun getFolderDao(): FolderDao

@@ -78,16 +78,13 @@ class WriteNoteFragment : BaseFragment(R.layout.fragment_write_note) {
                     val currentDate: String =
                         SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
 
-                    val note = Note(edContent.text.toString(),currentDate,idFolder)
+                    val note = Note( content= edContent.text.toString(),date =currentDate,folderId=idFolder)
                     noteViewmodel.insertNote(note)
                     noteViewmodel.getAllNote(idFolder).observe(requireActivity(), androidx.lifecycle.Observer {
                         folderViewmodel.updateFolderById(idFolder,it.size)
                     })
                 }
-
                 onFragmentBackPressed()
-
-
             }
         }
         ivBack.setPreventDoubleClick(300){

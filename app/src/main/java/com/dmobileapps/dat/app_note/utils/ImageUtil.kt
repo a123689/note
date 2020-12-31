@@ -126,7 +126,7 @@ object ImageUtil {
         return file.delete()
     }
 
-    fun copyFile(context: Context, inputPath: String, id: String): String? {
+    fun copyFileToInternal(context: Context, inputPath: String, id: String): String? {
         val directory = getInternalPackage(context)
         val src = File(inputPath)
         val mypath = File(directory, "${id}.png")
@@ -137,9 +137,9 @@ object ImageUtil {
         } catch (e: java.lang.Exception) {
             Log.e("TAG", "copyFile error: ", e)
         } finally {
-            if (inChannel != null) inChannel.close()
-            if (outChannel != null) outChannel.close()
+            inChannel?.close()
+            outChannel?.close()
         }
-        return directory!!.absolutePath
+        return mypath.absolutePath
     }
 }
