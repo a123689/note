@@ -17,6 +17,7 @@
     <string name="rename">Rename</string>
     <string name="delete">Delete</string>
     <string name="deletefodler">Delete folder</string>
+    <string name="file_not_exit" translatable="false">File doesn\'t exists</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="areyousure">Are you sure you want to delete this note?</string>
