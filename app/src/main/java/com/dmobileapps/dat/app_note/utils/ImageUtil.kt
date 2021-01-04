@@ -121,7 +121,6 @@ object ImageUtil {
     }
 
     fun deleteFileFromInternalStorage(imagePath: String): Boolean {
-//        val dir = context.filesDir
         val file = File(imagePath)
         return file.delete()
     }

@@ -146,4 +146,8 @@ object AppUtil {
         }
         return file.path
     }
+    fun deleteFileFromInternalStorage(imagePath: String): Boolean {
+        val file = File(imagePath)
+        return file.delete()
+    }
 }

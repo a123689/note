@@ -37,9 +37,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 private const val TAG = "CheckListFragment"
+
 class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     BottomNavigationView.OnNavigationItemSelectedListener {
-
 
     private val arrCheckList: ArrayList<CheckList> = ArrayList()
     private lateinit var adapterCheckList: CheckListAdapter
@@ -47,6 +47,8 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     private var POSITION_FOCUS = 0
     private var isOnClick = false
     private var isPause = false
+
+    var arrDelete: ArrayList<String> = ArrayList()
 
     private lateinit var player: SimpleExoPlayer
     private var positionCheckListPlay = 0
@@ -99,8 +101,9 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         if (arrCheckList.isNotEmpty()) {
             if (Common.checkScreen) {
                 moveImageToInternal()
-                val currentDate: String =  SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
-                if (edtTbTitle.text!=null){
+                val currentDate: String =
+                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+                if (edtTbTitle.text != null) {
                     note.content = edtTbTitle.text.toString()
                 }
                 note.date = currentDate
@@ -113,7 +116,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                     SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
                 val newNote = Note()
                 moveImageToInternal()
-                if (edtTbTitle.text!=null){
+                if (edtTbTitle.text != null) {
                     newNote.content = edtTbTitle.text.toString()
                 }
                 newNote.date = currentDate
@@ -122,12 +125,19 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                 newNote.avatar = avatarNote
                 noteViewmodel.insertNote(newNote)
 
-                    noteViewmodel.getAllNote(idFolder).observe(requireActivity(), androidx.lifecycle.Observer {
-                        folderViewModel.updateFolderById(idFolder,it.size)
+                noteViewmodel.getAllNote(idFolder)
+                    .observe(requireActivity(), androidx.lifecycle.Observer {
+                        folderViewModel.updateFolderById(idFolder, it.size)
                     })
 
 
             }
+            if (!arrDelete.isNullOrEmpty()) {
+                for (path in arrDelete) {
+                    Log.e(TAG, "$path delete: ${AppUtil.deleteFileFromInternalStorage(path)}")
+                }
+            }
+
             AppUtil.hideKeyboard(requireActivity())
             onFragmentBackPressed()
         } else {
@@ -145,7 +155,10 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                                 requireContext(),
                                 arrCheckList[i].images[j]
                             )
-                        } else if (arrCheckList[i].images[j].path != null&&!arrCheckList[i].images[j].path!!.contains("imageDir")) {
+                        } else if (arrCheckList[i].images[j].path != null && !arrCheckList[i].images[j].path!!.contains(
+                                "imageDir"
+                            )
+                        ) {
                             arrCheckList[i].images[j].path = ImageUtil.copyFileToInternal(
                                 requireContext(),
                                 arrCheckList[i].images[j].path!!,
@@ -166,8 +179,12 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
             if (!noteString.isNullOrBlank()) {
                 note = Gson().fromJson(noteString, Note::class.java)
             }
-            if (note!=null&&!note.checkList.isNullOrEmpty()){
-                arrCheckList.addAll(note.checkList)}
+            if (note != null && !note.checkList.isNullOrEmpty()) {
+                arrCheckList.addAll(note.checkList)
+                if (!note.content.isNullOrBlank())
+                    edtTbTitle.setText(note.content!!)
+            }
+
         } catch (e: Exception) {
             Log.e("TAG", "getData: $e")
         }
@@ -178,6 +195,12 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
             //onFocusText
             POSITION_FOCUS = position
         },
+            {
+                // text change
+                    position, text ->
+                arrCheckList[position].title = text
+
+            },
             {
                 // Click Image
             },
@@ -192,23 +215,43 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                     adapterCheckList.adapterRecord.currentPlay = 0
                     arrCheckList[positionItem].audios[oldPositionPlay].isPlay = false
                     arrCheckList[positionItem].audios[positionPlay].isPlay = true
-                    playRecord(positionItem,  positionPlay)
+                    playRecord(positionItem, positionPlay)
                 }
                 adapterCheckList.adapterRecord.notifyItemChanged(oldPositionPlay)
                 adapterCheckList.adapterRecord.notifyItemChanged(positionPlay)
             },
             {
                 // delete item
-                adapterCheckList.notifyItemRemoved(it)
+                val checklist = arrCheckList[it]
+                if (!checklist.audios.isNullOrEmpty()) {
+                    for (audios in checklist.audios) {
+                        arrDelete.add(audios.path)
+                    }
+                }
+                if (!checklist.images.isNullOrEmpty()) {
+                    for (image in checklist.images) {
+                        if (image.path != null && image.path!!.contains("imageDir")) {
+                            arrDelete.add(image.path!!)
+                        }
+                    }
+                }
                 arrCheckList.removeAt(it)
+                adapterCheckList.notifyItemRemoved(it)
+                adapterCheckList.notifyItemRangeChanged(it, arrCheckList.size)
             },
             { positionCheckList, positionImage ->
                 // onDeleteImage
+                val img = arrCheckList[positionCheckList].images[positionImage]
+                if (img.path != null && img.path!!.contains("imageDir")) {
+                    arrDelete.add(img.path!!)
+                }
                 arrCheckList[positionCheckList].images.removeAt(positionImage)
                 adapterCheckList.notifyItemChanged(positionCheckList)
             },
             { positionCheckList, positionRecord ->
                 // onDeleteRecord
+                val record = arrCheckList[positionCheckList].audios[positionRecord]
+                arrDelete.add(record.path)
                 arrCheckList[positionCheckList].audios.removeAt(positionRecord)
                 adapterCheckList.notifyItemChanged(positionCheckList)
 
@@ -224,7 +267,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     ) {
         val url = arrCheckList[positionItem].audios[positionPlay].path
         if (!File(url).exists()) {
-            Toast.makeText(context, "File doesn't exists", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.file_not_exit, Toast.LENGTH_SHORT).show()
             return
         }
         player.setMediaItem(MediaItem.fromUri(url))
@@ -301,8 +344,13 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         if (arrCheckList.size > 0) {
             idCheckList = arrCheckList.size + 1
         }
-        arrCheckList.add(arrCheckList.size, CheckList(id=idCheckList))
-        adapterCheckList.notifyItemInserted(arrCheckList.size)
+        if (POSITION_FOCUS > 0) {
+            arrCheckList.add(POSITION_FOCUS + 1, CheckList(id = idCheckList))
+            adapterCheckList.notifyItemInserted(POSITION_FOCUS + 1)
+        } else {
+            arrCheckList.add(arrCheckList.size, CheckList(id = idCheckList))
+            adapterCheckList.notifyItemInserted(arrCheckList.size + 1)
+        }
     }
 
     override fun onStop() {

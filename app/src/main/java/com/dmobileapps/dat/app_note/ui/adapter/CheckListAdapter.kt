@@ -19,6 +19,7 @@ import java.lang.Exception
 class CheckListAdapter(
     private val arrCheckList: ArrayList<CheckList>,
     private val onFocusEditText: (position: Int, text: String) -> Unit,
+    private val onSetText: (position: Int, text:String) -> Unit,
     private val onClickImage: (position: Int) -> Unit,
     private val onClickRecord: (positionItem: Int, oldPositionPlay: Int, positionPlay: Int) -> Unit,
     private val onDeleteItem: (position: Int) -> Unit,
@@ -73,8 +74,8 @@ class CheckListAdapter(
             itemView.edtTitle.addTextChangedListener(object :TextWatcher{
                 override fun afterTextChanged(s: Editable?) {
                     try {
-                        Log.e("TAG", "afterTextChanged: $position" )
-                        arrCheckList[position].title = itemView.edtTitle.text.toString()
+                        onSetText(position,itemView.edtTitle.text.toString())
+//                        arrCheckList[position].title = itemView.edtTitle.text.toString()
                     }catch (e:Exception){
                         Log.e("TAG", "afterTextChanged: $e" )
                     }
