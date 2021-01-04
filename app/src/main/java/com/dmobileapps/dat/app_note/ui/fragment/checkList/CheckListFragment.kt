@@ -2,6 +2,7 @@ package com.dmobileapps.dat.app_note.ui.fragment.checkList
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -9,10 +10,12 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.CheckList
 import com.dmobileapps.dat.app_note.model.Note
@@ -30,6 +33,8 @@ import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_check_list.*
+import kotlinx.android.synthetic.main.fragment_check_list.ivBack
+import kotlinx.android.synthetic.main.fragment_write_note.*
 import nv.module.audiorecoder.ui.AudioActivity
 import java.io.File
 import java.text.SimpleDateFormat
@@ -82,6 +87,19 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if(Common.checkInterface){
+            ivBack.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorWhite), android.graphics.PorterDuff.Mode.MULTIPLY);
+            toolbar.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
+            edtTbTitle.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+            edtTbTitle.setHintTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+            bottom_nav.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.color_black))
+            bottom_nav.itemTextColor = Color.WHITE
+        }else{
+            edContent.setTextColor(ContextCompat.getColor(requireActivity(),R.color.colorBlack))
+            Glide.with(requireActivity()).load(R.drawable.background_write).into(ivBackground)
+        }
+
         ivBack.setPreventDoubleClick(300) {
             onFragmentBackPressed()
         }

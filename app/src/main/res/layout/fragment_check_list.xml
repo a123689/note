@@ -28,9 +28,9 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
+                android:id="@+id/edtTbTitle"
                 android:textSize="@dimen/text_size_16"
                 android:textColor="@color/colorBlack"
-                android:id="@+id/edtTbTitle"
                 android:background="@android:color/transparent"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
