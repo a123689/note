@@ -24,7 +24,7 @@
             android:src="@drawable/ic_baseline_lock_24"
             android:background="#777BFD"
             android:gravity="center"
-            android:textColor="#fff"/>
+            android:textColor="#fff" />
 
 
         <ImageView
@@ -36,9 +36,10 @@
             android:layout_weight="1"
             android:background="#FC473C"
             android:gravity="center"
-            android:textColor="#fff"/>
+            android:textColor="#fff" />
 
     </LinearLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:focusable="true"
@@ -46,6 +47,7 @@
         android:id="@+id/layoutNote"
         android:foreground="?android:attr/selectableItemBackground"
         android:layout_height="wrap_content">
+
         <RadioButton
             android:id="@+id/rbDelete"
             android:button="@drawable/custom_radio_button"
@@ -57,7 +59,8 @@
             android:layout_marginLeft="14dp"
             android:gravity="center_vertical"
             android:visibility="visible"
-            android:layout_height="0dp"/>
+            android:layout_height="0dp" />
+
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
@@ -70,7 +73,8 @@
             android:layout_marginLeft="10dp"
             android:textColor="@color/colorBlack"
             android:textStyle="bold"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/tvContent"
             android:layout_width="0dp"
@@ -83,7 +87,8 @@
             android:paddingRight="24dp"
             android:textSize="15sp"
             android:textColor="#656467"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
@@ -94,10 +99,10 @@
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
             app:layout_constraintStart_toStartOf="@id/tvTitle"
             android:layout_marginTop="@dimen/img_padding"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
-        <ImageView
-            android:id="@+id/imgThumb"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="2.5:1"
@@ -107,17 +112,25 @@
             android:layout_marginEnd="@dimen/space_screen_large"
             android:visibility="visible"
             android:layout_marginTop="@dimen/img_padding"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/app_name" />
+            app:cardCornerRadius="4dp">
+
+            <ImageView
+                android:id="@+id/imgThumb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/app_name" />
+        </androidx.cardview.widget.CardView>
+
         <View
             android:id="@+id/view"
-            app:layout_constraintTop_toBottomOf="@id/imgThumb"
+            app:layout_constraintTop_toBottomOf="@id/cvImage"
             android:layout_width="0dp"
             android:layout_marginTop="9dp"
             app:layout_constraintVertical_bias="1"
             app:layout_constraintStart_toStartOf="@id/tvDate"
             android:background="#CCCCCC"
-            android:layout_height="0.5dp"/>
+            android:layout_height="0.5dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.daimajia.swipe.SwipeLayout>

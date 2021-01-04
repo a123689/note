@@ -189,8 +189,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         ivAddNote.setPreventDoubleClick(300) {
             showMenu(lnMenu.visibility == View.GONE)
         }
-
-
         if (!sharedPreference.getBoolean("data", false)) {
             var folder = Folder()
             folder.name = "My folder"

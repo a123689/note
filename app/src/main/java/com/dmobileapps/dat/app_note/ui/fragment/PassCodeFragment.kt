@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.Note
+import com.dmobileapps.dat.app_note.utils.Common
 import com.dmobileapps.dat.app_note.utils.PassCodeView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_pass_code.*
@@ -75,11 +76,24 @@ class PassCodeFragment : BaseFragment(R.layout.fragment_pass_code) {
                 }else{
 
                     if(sharedPreference.getString(note.id.toString(),"") == passCode){
-                        if(navController.currentDestination?.id == R.id.passCodeFragment){
-                            val  bundle = Bundle()
-                            bundle.putString("note",Gson().toJson(note))
-                            bundle.putInt("id",idFolder)
-                            navController.navigate(R.id.action_passCodeFragment_to_writeNoteFragment,bundle)
+
+                        if (note.checkList.isNullOrEmpty()) {
+                            if (navController.currentDestination?.id == R.id.passCodeFragment) {
+                                val bundle = Bundle()
+                                bundle.putString("note", Gson().toJson(note))
+                                bundle.putInt("id", idFolder)
+                                navController.navigate(R.id.action_passCodeFragment_to_writeNoteFragment, bundle)
+                            }
+                        } else {
+                            if (navController.currentDestination?.id == R.id.passCodeFragment) {
+                                val bundle = Bundle()
+                                bundle.putInt("id", idFolder)
+                                bundle.putString("note", Gson().toJson(note))
+                                navController.navigate(
+                                    R.id.action_passCodeFragment_to_checkListFragment,
+                                    bundle
+                                )
+                            }
                         }
                     }else{
                         tvWrongPass.text = getString(R.string.wrongpasscode)

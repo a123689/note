@@ -81,6 +81,14 @@
             app:popExitAnim="@anim/to_right"
             android:id="@+id/action_listNoteFragment_to_passCodeFragment"
             app:destination="@id/passCodeFragment" />
+
+        <action
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            android:id="@+id/action_listNoteFragment_to_checkListFragment"
+            app:destination="@id/checkListFragment" />
     </fragment>
     <fragment
         android:id="@+id/writeNoteFragment"
@@ -99,6 +107,13 @@
             app:popExitAnim="@anim/to_right"
             android:id="@+id/action_passCodeFragment_to_writeNoteFragment"
             app:destination="@id/writeNoteFragment" />
+        <action
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            android:id="@+id/action_passCodeFragment_to_checkListFragment"
+            app:destination="@id/checkListFragment" />
     </fragment>
     <fragment
         android:id="@+id/policyFragment"

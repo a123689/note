@@ -24,7 +24,6 @@ import java.util.*
 class WriteNoteFragment : BaseFragment(R.layout.fragment_write_note) {
     override fun onFragmentBackPressed() {
         edContent.clearFocus()
-
         if(Common.checkMain){
             Common.checkMain = false
             findNavController().popBackStack()
@@ -75,9 +74,7 @@ class WriteNoteFragment : BaseFragment(R.layout.fragment_write_note) {
                     noteViewmodel.updateNote(note)
 
                 }else{
-                    val currentDate: String =
-                        SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
-
+                    val currentDate: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
                     val note = Note( content= edContent.text.toString(),date =currentDate,folderId=idFolder)
                     noteViewmodel.insertNote(note)
                     noteViewmodel.getAllNote(idFolder).observe(requireActivity(), androidx.lifecycle.Observer {

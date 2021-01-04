@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.Note
 import com.dmobileapps.dat.app_note.ui.adapter.NoteAdapter
@@ -23,8 +25,11 @@ import com.dmobileapps.dat.app_note.viewmodel.FolderViewmodel
 import com.dmobileapps.dat.app_note.viewmodel.NoteViewmodel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_list_note.*
-import kotlinx.android.synthetic.main.fragment_list_note.ivBack
 import kotlinx.android.synthetic.main.fragment_list_note.tvFolder
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class ListNoteFragment : BaseFragment(R.layout.fragment_list_note) {
@@ -33,39 +38,66 @@ class ListNoteFragment : BaseFragment(R.layout.fragment_list_note) {
         findNavController().popBackStack()
     }
 
-    lateinit var  noteAdapter:NoteAdapter
+    lateinit var noteAdapter: NoteAdapter
     lateinit var navController: NavController
-    lateinit var listBackup :MutableList<Note>
-    private lateinit var sharedPreference : SharedPreferences
-     var idFolder = 0
+    lateinit var listBackup: MutableList<Note>
+    private lateinit var sharedPreference: SharedPreferences
+    var idFolder = 0
     private val noteViewmodel: NoteViewmodel by lazy {
-        ViewModelProvider(this, NoteViewmodel.NoteViewmodelFactory(requireActivity().application))[NoteViewmodel::class.java]
+        ViewModelProvider(
+            this,
+            NoteViewmodel.NoteViewmodelFactory(requireActivity().application)
+        )[NoteViewmodel::class.java]
     }
     private val folderViewmodel: FolderViewmodel by lazy {
-        ViewModelProvider(this, FolderViewmodel.NoteViewmodelFactory(requireActivity().application))[FolderViewmodel::class.java]
+        ViewModelProvider(
+            this,
+            FolderViewmodel.NoteViewmodelFactory(requireActivity().application)
+        )[FolderViewmodel::class.java]
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedPreference = activity?.getSharedPreferences("NOTE", Context.MODE_PRIVATE)!!
         navController = findNavController()
         initControl()
-        ivBack.setPreventDoubleClick(300){
+        ivBack.setPreventDoubleClick(300) {
             onFragmentBackPressed()
         }
-        tvFolder.setPreventDoubleClick(300){
+        tvFolder.setPreventDoubleClick(300) {
             onFragmentBackPressed()
         }
 
-        addNote.setPreventDoubleClick(300){
-            if(navController != null && navController.currentDestination?.id == R.id.listNoteFragment){
+        addNote.setPreventDoubleClick(300) {
+            showMenu(lnMenuNote.visibility == View.GONE)
+        }
+
+
+        rlAddNote.setPreventDoubleClick(300) {
+            if (navController != null && navController.currentDestination?.id == R.id.listNoteFragment) {
                 Common.checkScreen = false
                 val bundle = Bundle()
-                bundle.putInt("id",idFolder)
-                navController.navigate(R.id.action_listNoteFragment_to_writeNoteFragment,bundle)
+                bundle.putInt("id", idFolder)
+                navController.navigate(
+                    R.id.action_listNoteFragment_to_writeNoteFragment,
+                    bundle
+                )
+            }
+            showMenu(lnMenuNote.visibility == View.GONE)
+        }
+        rlAddCheckList.setPreventDoubleClick(300) {
+            if (navController != null && navController.currentDestination?.id == R.id.listNoteFragment) {
+                Common.checkScreen = false
+                val bundle = Bundle()
+                bundle.putInt("id", idFolder)
+                navController.navigate(
+                    R.id.action_listNoteFragment_to_checkListFragment,
+                    bundle
+                )
             }
         }
 
-        edSearchNote.addTextChangedListener(object:TextWatcher{
+        edSearchNote.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
@@ -80,7 +112,7 @@ class ListNoteFragment : BaseFragment(R.layout.fragment_list_note) {
 
         })
 
-        tvDoneNote.setPreventDoubleClick(300){
+        tvDoneNote.setPreventDoubleClick(300) {
             edSearchNote.visibility = View.VISIBLE
             tvFolders.visibility = View.VISIBLE
             layoutBottomNote.visibility = View.VISIBLE
@@ -91,50 +123,84 @@ class ListNoteFragment : BaseFragment(R.layout.fragment_list_note) {
 
         }
 
-        tvDeleteNote.setPreventDoubleClick(300){
+        tvDeleteNote.setPreventDoubleClick(300) {
             var check = false
-            for(item in listBackup){
-                if(item.isCheck){
+            for (item in listBackup) {
+                if (item.isCheck) {
                     check = true
                 }
             }
-            if(!check){
-                Toast.makeText(activity,getString(R.string.youmustchoosenote),Toast.LENGTH_SHORT).show()
+            if (!check) {
+                Toast.makeText(activity, getString(R.string.youmustchoosenote), Toast.LENGTH_SHORT)
+                    .show()
                 return@setPreventDoubleClick
             }
-           setDialogMutilDelete()
+            setDialogMutilDelete()
         }
 
-        if(Common.checkInterface){
+        if (Common.checkInterface) {
             interfaceBlack()
         }
 
     }
 
-    private fun interfaceBlack(){
-        layoutListnote.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
-        tvFolders.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
-        edSearchNote.setBackgroundResource(R.drawable.custom_background_edittext_black)
-        edSearchNote.setHintTextColor(ContextCompat.getColor(requireContext(),R.color.colorSearchText))
-        edSearchNote.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
-        layoutBottomNote.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorToolbarBlack))
-        layoutFolders.setBackgroundResource(R.drawable.custom_background_reyclewview)
-        tvSize.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
-        layoutDeleteNote.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorToolbarBlack))
+    private fun showMenu(boolean: Boolean) {
+        if (boolean) {
+            YoYo.with(Techniques.FadeInUp).duration(150).onEnd {
+                lnMenuNote?.visibility = View.VISIBLE
+            }.playOn(lnMenuNote)
+        } else {
+            YoYo.with(Techniques.FadeOutDown).duration(150).onEnd {
+                lnMenuNote?.visibility = View.GONE
+            }.playOn(lnMenuNote)
+        }
     }
 
-    private fun deleteNote(note: Note){
+    private fun interfaceBlack() {
+        layoutListnote.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorBlack
+            )
+        )
+        tvFolders.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
+        edSearchNote.setBackgroundResource(R.drawable.custom_background_edittext_black)
+        edSearchNote.setHintTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorSearchText
+            )
+        )
+        edSearchNote.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
+        layoutBottomNote.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorToolbarBlack
+            )
+        )
+        layoutFolders.setBackgroundResource(R.drawable.custom_background_reyclewview)
+        tvSize.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
+        layoutDeleteNote.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorToolbarBlack
+            )
+        )
+    }
+
+    private fun deleteNote(note: Note) {
         noteViewmodel.deleteNote(note)
     }
-    private fun deleteMultiNote(){
-        for(item in listBackup){
-            if(item.isCheck){
+
+    private fun deleteMultiNote() {
+        for (item in listBackup) {
+            if (item.isCheck) {
                 noteViewmodel.deleteNote(item)
             }
         }
     }
 
-    private fun setDialogDelete(note: Note){
+    private fun setDialogDelete(note: Note) {
         AlertDialog.Builder(context)
             .setTitle(getString(R.string.deletenote))
             .setMessage(getString(R.string.areyousure))
@@ -147,7 +213,7 @@ class ListNoteFragment : BaseFragment(R.layout.fragment_list_note) {
             .show()
     }
 
-    private fun setDialogMutilDelete(){
+    private fun setDialogMutilDelete() {
         AlertDialog.Builder(context)
             .setTitle(getString(R.string.deletenote))
             .setMessage(getString(R.string.areyousuremulti))
@@ -178,8 +244,8 @@ class ListNoteFragment : BaseFragment(R.layout.fragment_list_note) {
 
                 noteViewmodel.getAllNote(idFolder).observe(requireActivity(), Observer {
                     try {
-                        tvSize.text = it.size.toString()+" "+getString(R.string.note)
-                    }catch (e:Exception){
+                        tvSize.text = it.size.toString() + " " + getString(R.string.note)
+                    } catch (e: Exception) {
 
                     }
 
@@ -191,48 +257,80 @@ class ListNoteFragment : BaseFragment(R.layout.fragment_list_note) {
 
     }
 
-    private val onItemClick: (Note)->Unit = {
-        if(sharedPreference.getString(it.id.toString(),"")?.isEmpty()!!){
-            if(navController != null && navController.currentDestination?.id == R.id.listNoteFragment){
-                Common.checkScreen = true
-                val bundle = Bundle()
-                bundle.putInt("id",idFolder)
-                bundle.putString("note", Gson().toJson(it))
-                navController.navigate(R.id.action_listNoteFragment_to_writeNoteFragment,bundle)
+    private val onItemClick: (Note) -> Unit = {
+        if (sharedPreference.getString(it.id.toString(), "")?.isEmpty()!!) {
+            if (it.checkList.isNullOrEmpty()) {
+                if (navController != null && navController.currentDestination?.id == R.id.listNoteFragment) {
+                    Common.checkScreen = true
+                    val bundle = Bundle()
+                    bundle.putInt("id", idFolder)
+                    bundle.putString("note", Gson().toJson(it))
+                    navController.navigate(
+                        R.id.action_listNoteFragment_to_writeNoteFragment,
+                        bundle
+                    )
+                }
+            } else {
+                if (navController.currentDestination?.id == R.id.listNoteFragment) {
+                    Common.checkScreen = true
+                    val bundle = Bundle()
+                    bundle.putInt("id", idFolder)
+                    bundle.putString("note", Gson().toJson(it))
+                    navController.navigate(
+                        R.id.action_listNoteFragment_to_checkListFragment,
+                        bundle
+                    )
+                }
             }
-        }else{
-            if(navController.currentDestination?.id == R.id.listNoteFragment){
-                val  bundle  = Bundle()
-                bundle.putString("note", Gson().toJson(it))
-                bundle.putBoolean("check",true)
-                bundle.putInt("id",idFolder)
-                navController.navigate(R.id.action_listNoteFragment_to_passCodeFragment,bundle)
-            }
+
+
+        } else {
+//            if (it.checkList.isNullOrEmpty()) {
+                if (navController.currentDestination?.id == R.id.listNoteFragment) {
+                    val bundle = Bundle()
+                    bundle.putInt("id", idFolder)
+                    bundle.putString("note", Gson().toJson(it))
+                    bundle.putBoolean("check", true)
+                    navController.navigate(R.id.action_listNoteFragment_to_passCodeFragment, bundle)
+                }
+//            } else {
+//                if (navController.currentDestination?.id == R.id.listNoteFragment) {
+//                    Common.checkScreen = true
+//                    val bundle = Bundle()
+//                    bundle.putInt("id", idFolder)
+//                    bundle.putBoolean("check", true)
+//                    bundle.putString("note", Gson().toJson(it))
+//                    navController.navigate(
+//                        R.id.action_listNoteFragment_to_checkListFragment,
+//                        bundle
+//                    )
+//                }
+//            }
         }
 
 
     }
 
 
-    private val onMultiDelete:(MutableList<Note>)->Unit= {
+    private val onMultiDelete: (MutableList<Note>) -> Unit = {
         listBackup = it
 
     }
 
-    private val onDelete:(Note) -> Unit = {
-       setDialogDelete(it)
+    private val onDelete: (Note) -> Unit = {
+        setDialogDelete(it)
     }
 
-    private val onLock:(Note) -> Unit = {
-        if(navController.currentDestination?.id == R.id.listNoteFragment){
-            val  bundle  = Bundle()
+    private val onLock: (Note) -> Unit = {
+        if (navController.currentDestination?.id == R.id.listNoteFragment) {
+            val bundle = Bundle()
             bundle.putString("note", Gson().toJson(it))
-            bundle.putBoolean("check",false)
-            navController.navigate(R.id.action_listNoteFragment_to_passCodeFragment,bundle)
+            bundle.putBoolean("check", false)
+            navController.navigate(R.id.action_listNoteFragment_to_passCodeFragment, bundle)
         }
     }
 
-    private val onItemLongClick: (Note)->Unit ={
+    private val onItemLongClick: (Note) -> Unit = {
         edSearchNote.visibility = View.GONE
         tvFolders.visibility = View.GONE
         layoutBottomNote.visibility = View.GONE

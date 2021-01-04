@@ -107,6 +107,93 @@
 
     </FrameLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/layoutBottomNote"
+        android:background="@color/colorBorder"
+        android:layout_height="0.5dp" />
+
+    <LinearLayout
+        android:id="@+id/lnMenuNote"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:padding="@dimen/img_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/layoutBottomNote">
+
+        <RelativeLayout
+            android:id="@+id/rlAddCheckList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/img_padding">
+
+            <ImageView
+                android:id="@+id/imgCheckList"
+                android:padding="@dimen/img_padding"
+                android:layout_width="@dimen/img_size_normal"
+                android:layout_height="@dimen/img_size_normal"
+                android:src="@drawable/ic_checklist_new"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/check_list" />
+
+            <TextView
+                android:id="@+id/tvCheckList"
+                android:textColor="@color/colorBlack"
+                android:ellipsize="end"
+                android:layout_toEndOf="@+id/imgCheckList"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/img_padding"
+                android:text="@string/check_list"
+                android:maxLines="1"
+                android:textSize="@dimen/text_size_14"
+                android:layout_toRightOf="@+id/imgCheckList" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/colorBlack" />
+
+        <RelativeLayout
+            android:id="@+id/rlAddNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/img_padding">
+
+            <ImageView
+                android:id="@+id/imgNote"
+                android:padding="@dimen/img_padding"
+                android:layout_width="@dimen/img_size_normal"
+                android:layout_height="@dimen/img_size_normal"
+                android:src="@drawable/ic_note_new"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/check_list" />
+
+            <TextView
+                android:id="@+id/tvNote"
+                android:textColor="@color/colorBlack"
+                android:ellipsize="end"
+                android:layout_toEndOf="@+id/imgNote"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/img_padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_note"
+                android:maxLines="1"
+                android:textSize="@dimen/text_size_14"
+                android:layout_toRightOf="@+id/imgNote" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutBottomNote"
         android:layout_width="0dp"
@@ -128,6 +215,8 @@
             android:textColor="@color/colorBlack"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="wrap_content"/>
+
+
         <ImageView
             android:id="@+id/addNote"
             android:layout_width="36dp"

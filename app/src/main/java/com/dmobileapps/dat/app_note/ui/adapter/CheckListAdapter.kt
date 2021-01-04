@@ -2,6 +2,7 @@ package com.dmobileapps.dat.app_note.ui.adapter
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.dmobileapps.dat.app_note.model.CheckList
 import com.dmobileapps.dat.app_note.ui.fragment.checkList.adapter.AdapterImageCheckList
 import com.dmobileapps.dat.app_note.ui.fragment.checkList.adapter.AdapterRecord
 import kotlinx.android.synthetic.main.item_check_list.view.*
+import java.lang.Exception
 
 class CheckListAdapter(
     private val arrCheckList: ArrayList<CheckList>,
@@ -39,6 +41,7 @@ class CheckListAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun onBind(position: Int) {
             val checkListObj = arrCheckList[position]
+            Log.e("TAG", "onBind: $checkListObj" )
             if (checkListObj.title.isNotEmpty()) {
                 itemView.edtTitle.setText(checkListObj.title)
             }
@@ -67,6 +70,28 @@ class CheckListAdapter(
             itemView.edtTitle.setOnFocusChangeListener { v, hasFocus ->
                 onFocusEditText(position, itemView.edtTitle.text.toString())
             }
+            itemView.edtTitle.addTextChangedListener(object :TextWatcher{
+                override fun afterTextChanged(s: Editable?) {
+                    try {
+                        Log.e("TAG", "afterTextChanged: $position" )
+                        arrCheckList[position].title = itemView.edtTitle.text.toString()
+                    }catch (e:Exception){
+                        Log.e("TAG", "afterTextChanged: $e" )
+                    }
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+            })
         }
     }
 

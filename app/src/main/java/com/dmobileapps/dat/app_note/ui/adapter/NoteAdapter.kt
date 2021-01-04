@@ -88,10 +88,10 @@ class NoteAdapter(
             }
             Log.e("TAG", "onBind: ${Gson().toJson(note)}" )
         if (!note.avatar.isNullOrBlank()){
-            itemView.imgThumb.visibility = View.VISIBLE
+            itemView.cvImage.visibility = View.VISIBLE
             ImageUtil.setImage(itemView.imgThumb,note.avatar)
         }else{
-            itemView.imgThumb.visibility = View.GONE
+            itemView.cvImage.visibility = View.GONE
 
         }
 

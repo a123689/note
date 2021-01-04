@@ -30,14 +30,13 @@ import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_check_list.*
-import kotlinx.android.synthetic.main.fragment_check_list.ivBack
-import kotlinx.android.synthetic.main.fragment_write_note.*
 import nv.module.audiorecoder.ui.AudioActivity
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+private const val TAG = "CheckListFragment"
 class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -55,22 +54,28 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     private var avatarNote = ""
 
     var idFolder = 0
-    lateinit var  note: Note
+    lateinit var note: Note
     private val noteViewmodel: NoteViewmodel by lazy {
-        ViewModelProvider(this, NoteViewmodel.NoteViewmodelFactory(requireActivity().application))[NoteViewmodel::class.java]
+        ViewModelProvider(
+            this,
+            NoteViewmodel.NoteViewmodelFactory(requireActivity().application)
+        )[NoteViewmodel::class.java]
     }
 
-    private val folderViewmodel: FolderViewmodel by lazy {
-        ViewModelProvider(this, FolderViewmodel.NoteViewmodelFactory(requireActivity().application))[FolderViewmodel::class.java]
+    private val folderViewModel: FolderViewmodel by lazy {
+        ViewModelProvider(
+            this,
+            FolderViewmodel.NoteViewmodelFactory(requireActivity().application)
+        )[FolderViewmodel::class.java]
     }
 
     override fun onFragmentBackPressed() {
-        if(Common.checkMain){
-        Common.checkMain = false
-        findNavController().popBackStack()
-    }else{
-        findNavController().popBackStack(R.id.listNoteFragment,false)
-    }
+        if (Common.checkMain) {
+            Common.checkMain = false
+            findNavController().popBackStack()
+        } else {
+            findNavController().popBackStack(R.id.listNoteFragment, false)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,7 +83,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         ivBack.setPreventDoubleClick(300) {
             onFragmentBackPressed()
         }
-        btnSave.setPreventDoubleClick(300){
+        btnSave.setPreventDoubleClick(300) {
             saveNote()
         }
         val currentDate: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
@@ -91,52 +96,66 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     }
 
     private fun saveNote() {
-        if(arrCheckList.isNotEmpty()){
-            if(Common.checkScreen){
+        if (arrCheckList.isNotEmpty()) {
+            if (Common.checkScreen) {
                 moveImageToInternal()
                 val currentDate: String =  SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+                if (edtTbTitle.text!=null){
+                    note.content = edtTbTitle.text.toString()
+                }
                 note.date = currentDate
                 note.checkList = arrCheckList
-                note.avatar =avatarNote
+                note.avatar = avatarNote
                 noteViewmodel.updateNote(note)
 
-            }else{
-                val currentDate: String =  SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+            } else {
+                val currentDate: String =
+                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
                 val newNote = Note()
-
                 moveImageToInternal()
+                if (edtTbTitle.text!=null){
+                    newNote.content = edtTbTitle.text.toString()
+                }
                 newNote.date = currentDate
                 newNote.folderId = idFolder
                 newNote.checkList = arrCheckList
-                newNote.avatar =avatarNote
+                newNote.avatar = avatarNote
                 noteViewmodel.insertNote(newNote)
-                noteViewmodel.getAllNote(idFolder).observe(requireActivity(), androidx.lifecycle.Observer {
-                    folderViewmodel.updateFolderById(idFolder,it.size)
-                })
+
+                    noteViewmodel.getAllNote(idFolder).observe(requireActivity(), androidx.lifecycle.Observer {
+                        folderViewModel.updateFolderById(idFolder,it.size)
+                    })
+
+
             }
-
+            AppUtil.hideKeyboard(requireActivity())
             onFragmentBackPressed()
-
-
-        }else{
-            AppUtil.showToast(context,R.string.please_input_content)
+        } else {
+            AppUtil.showToast(context, R.string.please_input_content)
         }
     }
 
     private fun moveImageToInternal() {
-        if (!arrCheckList.isNullOrEmpty()){
-        for (i in 0 until arrCheckList.size){
-            if (!arrCheckList[i].images.isNullOrEmpty()){
-                for (j in 0 until arrCheckList[i].images.size){
-                    if ( arrCheckList[i].images[j].bitmap!=null){
-                        arrCheckList[i].images[j].path = ImageUtil.saveToInternalStorage(requireContext(),arrCheckList[i].images[j])
-                    }else if (arrCheckList[i].images[j].path !=null){
-                        arrCheckList[i].images[j].path = ImageUtil.copyFileToInternal(requireContext(),arrCheckList[i].images[j].path!!,arrCheckList[i].images[j].id)
+        if (!arrCheckList.isNullOrEmpty()) {
+            for (i in 0 until arrCheckList.size) {
+                if (!arrCheckList[i].images.isNullOrEmpty()) {
+                    for (j in 0 until arrCheckList[i].images.size) {
+                        if (arrCheckList[i].images[j].bitmap != null) {
+                            arrCheckList[i].images[j].path = ImageUtil.saveToInternalStorage(
+                                requireContext(),
+                                arrCheckList[i].images[j]
+                            )
+                        } else if (arrCheckList[i].images[j].path != null&&!arrCheckList[i].images[j].path!!.contains("imageDir")) {
+                            arrCheckList[i].images[j].path = ImageUtil.copyFileToInternal(
+                                requireContext(),
+                                arrCheckList[i].images[j].path!!,
+                                arrCheckList[i].images[j].id
+                            )
+                        }
+                        avatarNote = arrCheckList[i].images[j].path!!
                     }
-                    avatarNote =  arrCheckList[i].images[j].path!!
                 }
             }
-        }
         }
     }
 
@@ -144,13 +163,13 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         try {
             idFolder = requireArguments().getInt("id")
             val noteString = requireArguments().getString("note")
-            if (!noteString.isNullOrBlank()){
-                note = Gson().fromJson(noteString,Note::class.java)
+            if (!noteString.isNullOrBlank()) {
+                note = Gson().fromJson(noteString, Note::class.java)
             }
-            Log.e("TAG", "getData: $noteString" )
-            arrCheckList.addAll(note.checkList)
-        }catch (e:Exception){
-            Log.e("TAG", "getData: $e" )
+            if (note!=null&&!note.checkList.isNullOrEmpty()){
+                arrCheckList.addAll(note.checkList)}
+        } catch (e: Exception) {
+            Log.e("TAG", "getData: $e")
         }
     }
 
@@ -173,15 +192,15 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                     adapterCheckList.adapterRecord.currentPlay = 0
                     arrCheckList[positionItem].audios[oldPositionPlay].isPlay = false
                     arrCheckList[positionItem].audios[positionPlay].isPlay = true
-                    playRecord(positionItem, oldPositionPlay, positionPlay)
+                    playRecord(positionItem,  positionPlay)
                 }
                 adapterCheckList.adapterRecord.notifyItemChanged(oldPositionPlay)
                 adapterCheckList.adapterRecord.notifyItemChanged(positionPlay)
             },
             {
                 // delete item
+                adapterCheckList.notifyItemRemoved(it)
                 arrCheckList.removeAt(it)
-                adapterCheckList.notifyDataSetChanged()
             },
             { positionCheckList, positionImage ->
                 // onDeleteImage
@@ -201,7 +220,6 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
 
     private fun playRecord(
         positionItem: Int,
-        oldPositionPlay: Int,
         positionPlay: Int
     ) {
         val url = arrCheckList[positionItem].audios[positionPlay].path
@@ -283,8 +301,8 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         if (arrCheckList.size > 0) {
             idCheckList = arrCheckList.size + 1
         }
-        arrCheckList.add(CheckList(idCheckList))
-        adapterCheckList.notifyDataSetChanged()
+        arrCheckList.add(arrCheckList.size, CheckList(id=idCheckList))
+        adapterCheckList.notifyItemInserted(arrCheckList.size)
     }
 
     override fun onStop() {
