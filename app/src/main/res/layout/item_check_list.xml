@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:focusable="true"
     android:clickable="true"
-    android:background="@color/colorWhite"
+    android:background="@color/colorBlack"
     android:id="@+id/layoutNote"
-    android:layout_marginTop="@dimen/space_screen_small"
+    android:paddingTop="@dimen/space_screen_small"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -16,6 +16,7 @@
         android:layout_marginLeft="@dimen/space_screen_small"
         android:src="@drawable/ic_note_new"
         android:scaleType="centerInside"
+        app:tint="@color/colorAccent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:visibility="visible" />
@@ -26,7 +27,7 @@
         android:layout_height="@dimen/img_size_small"
         android:layout_marginLeft="@dimen/space_screen_small"
         android:src="@drawable/ic_delete_white"
-        app:tint="@color/colorBlack"
+        app:tint="@color/colorAccent"
         android:scaleType="centerInside"
         android:layout_marginEnd="@dimen/space_screen_small"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,11 +40,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_16"
+        android:textColorHint="@color/colorSearchText"
         android:textColor="@color/colorBlack"
         android:hint="@string/input_text"
         android:padding="@dimen/img_padding"
         android:imeOptions="actionNext"
-        android:background="@color/colorWhite"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/icNote"
         app:layout_constraintEnd_toStartOf="@+id/btnDelete"

@@ -3,11 +3,12 @@ package nv.module.audiorecoder.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_audio.*
 import nv.module.audiorecoder.R
 import nv.module.audiorecoder.manager.AudioRecorder
@@ -21,12 +22,9 @@ open class AudioActivity : AppCompatActivity() {
     private var stateAudio = Constant.NONE
     private lateinit var permissionApp: PermissionApp
 
-    companion object {
 
-        fun startActivity(activity: Activity) {
-            val intent = Intent(activity, AudioActivity::class.java)
-            activity.startActivityForResult(intent, REQUEST_AUDIO)
-        }
+    companion object {
+        var checkInterface: Boolean = false
 
         const val REQUEST_AUDIO = 1000
         const val KEY_PATH_AUDIO = "KEY_PATH_AUDIO"
@@ -38,6 +36,11 @@ open class AudioActivity : AppCompatActivity() {
         permissionInit()
         audioRecorder = AudioRecorder(this)
         listener()
+        if (checkInterface) {
+            rlBackground.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlack))
+        } else {
+            rlBackground.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite))
+        }
     }
 
     private fun listener() {

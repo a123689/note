@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,20 +14,20 @@ import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.CheckList
 import com.dmobileapps.dat.app_note.ui.fragment.checkList.adapter.AdapterImageCheckList
 import com.dmobileapps.dat.app_note.ui.fragment.checkList.adapter.AdapterRecord
+import com.dmobileapps.dat.app_note.utils.Common
 import kotlinx.android.synthetic.main.item_check_list.view.*
-import java.lang.Exception
 
 class CheckListAdapter(
     private val arrCheckList: ArrayList<CheckList>,
     private val onFocusEditText: (position: Int, text: String) -> Unit,
-    private val onSetText: (position: Int, text:String) -> Unit,
+    private val onSetText: (position: Int, text: String) -> Unit,
     private val onClickImage: (position: Int) -> Unit,
     private val onClickRecord: (positionItem: Int, oldPositionPlay: Int, positionPlay: Int) -> Unit,
     private val onDeleteItem: (position: Int) -> Unit,
     private val onDeleteImage: (positionCheckList: Int, positionImage: Int) -> Unit,
     private val onDeleteRecord: (positionCheckList: Int, positionRecord: Int) -> Unit
 ) : RecyclerView.Adapter<CheckListAdapter.ViewHolder>() {
-    lateinit var adapterRecord:AdapterRecord
+    lateinit var adapterRecord: AdapterRecord
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -42,7 +43,20 @@ class CheckListAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun onBind(position: Int) {
             val checkListObj = arrCheckList[position]
-            Log.e("TAG", "onBind: $checkListObj" )
+
+
+            if (Common.checkInterface) {
+                itemView.layoutNote.setBackgroundColor( ContextCompat.getColor(itemView.context, R.color.colorBlack) )
+                itemView.edtTitle.setBackgroundColor( ContextCompat.getColor(itemView.context, R.color.colorBlack) )
+                itemView.edtTitle.setTextColor( ContextCompat.getColor(itemView.context, R.color.colorWhite) )
+
+            }else{
+                itemView.layoutNote.setBackgroundColor( ContextCompat.getColor(itemView.context, R.color.colorWhite) )
+                itemView.edtTitle.setBackgroundColor( ContextCompat.getColor(itemView.context, R.color.colorWhite) )
+                itemView.edtTitle.setTextColor( ContextCompat.getColor(itemView.context, R.color.colorBlack) )
+
+            }
+
             if (checkListObj.title.isNotEmpty()) {
                 itemView.edtTitle.setText(checkListObj.title)
             }
@@ -56,12 +70,12 @@ class CheckListAdapter(
                 GridLayoutManager(itemView.context, 3, RecyclerView.VERTICAL, false)
             itemView.rcvImage.adapter = adapterImage
 
-            adapterRecord =   AdapterRecord(checkListObj.audios, { oldPositionPlay, positionPlay ->
-                    onClickRecord(position, oldPositionPlay, positionPlay)
-                }, {
+            adapterRecord = AdapterRecord(checkListObj.audios, { oldPositionPlay, positionPlay ->
+                onClickRecord(position, oldPositionPlay, positionPlay)
+            }, {
 //                on delete
-                    onDeleteRecord(position, it)
-                })
+                onDeleteRecord(position, it)
+            })
             itemView.rcvRecord.layoutManager =
                 LinearLayoutManager(itemView.context, RecyclerView.VERTICAL, false)
             itemView.rcvRecord.adapter = adapterRecord
@@ -71,13 +85,13 @@ class CheckListAdapter(
             itemView.edtTitle.setOnFocusChangeListener { v, hasFocus ->
                 onFocusEditText(position, itemView.edtTitle.text.toString())
             }
-            itemView.edtTitle.addTextChangedListener(object :TextWatcher{
+            itemView.edtTitle.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     try {
-                        onSetText(position,itemView.edtTitle.text.toString())
+                        onSetText(position, itemView.edtTitle.text.toString())
 //                        arrCheckList[position].title = itemView.edtTitle.text.toString()
-                    }catch (e:Exception){
-                        Log.e("TAG", "afterTextChanged: $e" )
+                    } catch (e: Exception) {
+                        Log.e("TAG", "afterTextChanged: $e")
                     }
                 }
 

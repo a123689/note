@@ -2,8 +2,10 @@ package com.dmobileapps.dat.app_note.ui.fragment.checkList
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.ImageObj
+import com.dmobileapps.dat.app_note.utils.Common
 import com.dmobileapps.dat.app_note.utils.DeviceUtil
 import nv.module.brushdraw.ui.BrushUtils
 
@@ -13,9 +15,16 @@ class DrawAct : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_draw)
         initBrush()
+        if(Common.checkInterface){
+            brushUtils?.setColorBrush( ContextCompat.getColor(this,R.color.colorWhite))
+            brushUtils?.setBackground(ContextCompat.getColor(this,R.color.color_black) )
 
-        brushUtils?.setColorBrush(resources.getColor(R.color.color_black))
-        brushUtils?.setBackground(resources.getColor(R.color.colorWhite))
+        }else{
+            brushUtils?.setColorBrush( ContextCompat.getColor(this,R.color.color_black))
+            brushUtils?.setBackground(ContextCompat.getColor(this,R.color.colorWhite) )
+//            brushUtils?.setColorBrush(resources.getColor(R.color.color_black))
+//            brushUtils?.setBackground(resources.getColor(R.color.colorWhite))
+        }
 
     }
     var brushUtils: BrushUtils? = null

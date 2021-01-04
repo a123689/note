@@ -2,6 +2,7 @@ package com.dmobileapps.dat.app_note.ui.fragment.checkList
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -11,6 +12,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,7 +36,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_check_list.*
 import kotlinx.android.synthetic.main.fragment_check_list.ivBack
-import kotlinx.android.synthetic.main.fragment_write_note.*
 import nv.module.audiorecoder.ui.AudioActivity
 import java.io.File
 import java.text.SimpleDateFormat
@@ -88,16 +89,59 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         if(Common.checkInterface){
-            ivBack.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorWhite), android.graphics.PorterDuff.Mode.MULTIPLY);
+            constrainCheckList.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
             toolbar.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
-            edtTbTitle.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
-            edtTbTitle.setHintTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
-            bottom_nav.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.color_black))
-            bottom_nav.itemTextColor = Color.WHITE
+             bottom_nav.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.color_black))
+            val iconsColorStates = ColorStateList(
+                arrayOf(
+                    intArrayOf(-android.R.attr.state_checked),
+                    intArrayOf(android.R.attr.state_checked)
+                ), intArrayOf(
+                    Color.parseColor("#FFFFFF"),
+                    Color.parseColor("#FFFFFF")
+                )
+            )
+
+            val textColorStates = ColorStateList(
+                arrayOf(
+                    intArrayOf(-android.R.attr.state_checked),
+                    intArrayOf(android.R.attr.state_checked)
+                ), intArrayOf(
+                    Color.parseColor("#FFFFFF"),
+                    Color.parseColor("#FFFFFF")
+                )
+            )
+            bottom_nav.itemTextColor = textColorStates
+            bottom_nav.itemIconTintList = iconsColorStates;
         }else{
-            edContent.setTextColor(ContextCompat.getColor(requireActivity(),R.color.colorBlack))
-            Glide.with(requireActivity()).load(R.drawable.background_write).into(ivBackground)
+            constrainCheckList.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+            toolbar.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+             bottom_nav.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+
+            val iconsColorStates = ColorStateList(
+                arrayOf(
+                    intArrayOf(-android.R.attr.state_checked),
+                    intArrayOf(android.R.attr.state_checked)
+                ), intArrayOf(
+                    Color.parseColor("#020202"),
+                    Color.parseColor("#020202")
+                )
+            )
+
+            val textColorStates = ColorStateList(
+                arrayOf(
+                    intArrayOf(-android.R.attr.state_checked),
+                    intArrayOf(android.R.attr.state_checked)
+                ), intArrayOf(
+                    Color.parseColor("#020202"),
+                    Color.parseColor("#020202")
+                )
+            )
+            bottom_nav.itemTextColor = textColorStates
+            bottom_nav.itemIconTintList = iconsColorStates;
         }
 
         ivBack.setPreventDoubleClick(300) {
@@ -346,7 +390,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
             }
 
             R.id.menu_recording -> {
-
+                AudioActivity.checkInterface = Common.checkInterface
                 val intent = Intent(context, AudioActivity::class.java)
                 startActivityForResult(intent, AudioActivity.REQUEST_AUDIO)
 // AudioActivity.startActivity(requireActivity())

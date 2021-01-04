@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.ImageObj
 import com.dmobileapps.dat.app_note.ui.fragment.chooseImage.adapter.AdapterImage
 import com.dmobileapps.dat.app_note.utils.AppUtil
+import com.dmobileapps.dat.app_note.utils.Common
 import com.dmobileapps.dat.app_note.utils.DeviceUtil
 import com.dmobileapps.dat.app_note.utils.setPreventDoubleClick
 import kotlinx.android.synthetic.main.fragment_select_image.*
@@ -28,6 +30,16 @@ class ChooseImageAct : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_select_image)
+
+        if(Common.checkInterface){
+            tbSelectImage.setBackgroundColor(ContextCompat.getColor(this,R.color.colorBlack))
+            constrainSelectImage.setBackgroundColor(ContextCompat.getColor(this,R.color.colorBlack))
+
+        }else{
+
+            tbSelectImage.setBackgroundColor(ContextCompat.getColor(this,R.color.colorWhite))
+            constrainSelectImage.setBackgroundColor(ContextCompat.getColor(this,R.color.colorWhite))
+        }
         tbBack.setPreventDoubleClick(300) {
             DeviceUtil.arrImage.clear()
             finish()
