@@ -38,8 +38,10 @@ open class AudioActivity : AppCompatActivity() {
         listener()
         if (checkInterface) {
             rlBackground.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlack))
+            chronometer.setTextColor(ContextCompat.getColor(this, R.color.colorWhite))
         } else {
             rlBackground.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite))
+            chronometer.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
         }
     }
 

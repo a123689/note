@@ -32,7 +32,7 @@ class CheckListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_check_list, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -40,7 +40,7 @@ class CheckListAdapter(
     }
 
     override fun getItemCount(): Int = arrCheckList.size
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View ) : RecyclerView.ViewHolder(itemView) {
         fun onBind(position: Int) {
             val checkListObj = arrCheckList[position]
 
@@ -82,16 +82,18 @@ class CheckListAdapter(
 
 
             itemView.btnDelete.setOnClickListener { onDeleteItem(position) }
-            itemView.edtTitle.setOnFocusChangeListener { v, hasFocus ->
+//            itemView.edtTitle.setOnFocusChangeListener { v, hasFocus ->
+//                onFocusEditText(position, itemView.edtTitle.text.toString())
+//            }
+            itemView.edtTitle.setOnClickListener {
                 onFocusEditText(position, itemView.edtTitle.text.toString())
             }
             itemView.edtTitle.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     try {
-                        onSetText(position, itemView.edtTitle.text.toString())
-//                        arrCheckList[position].title = itemView.edtTitle.text.toString()
+                            onSetText(position, itemView.edtTitle.text.toString())
+
                     } catch (e: Exception) {
-                        Log.e("TAG", "afterTextChanged: $e")
                     }
                 }
 
@@ -105,9 +107,9 @@ class CheckListAdapter(
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    Log.e("TAG", "onTextChanged: ${s.toString()}" )
                 }
             })
         }
     }
-
 }

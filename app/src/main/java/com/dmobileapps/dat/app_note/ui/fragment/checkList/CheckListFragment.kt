@@ -147,7 +147,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         ivBack.setPreventDoubleClick(300) {
             onFragmentBackPressed()
         }
-        btnSave.setPreventDoubleClick(300) {
+        btnSave.setPreventDoubleClick(1000) {
             saveNote()
         }
         val currentDate: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
@@ -217,6 +217,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                                 requireContext(),
                                 arrCheckList[i].images[j]
                             )
+                            arrCheckList[i].images[j].bitmap = null
                         } else if (arrCheckList[i].images[j].path != null && !arrCheckList[i].images[j].path!!.contains(
                                 "imageDir"
                             )
@@ -393,7 +394,6 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                 AudioActivity.checkInterface = Common.checkInterface
                 val intent = Intent(context, AudioActivity::class.java)
                 startActivityForResult(intent, AudioActivity.REQUEST_AUDIO)
-// AudioActivity.startActivity(requireActivity())
                 IS_CHOOSE = 3
                 isOnClick = true
             }
@@ -411,7 +411,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
             adapterCheckList.notifyItemInserted(POSITION_FOCUS + 1)
         } else {
             arrCheckList.add(arrCheckList.size, CheckList(id = idCheckList))
-            adapterCheckList.notifyItemInserted(arrCheckList.size + 1)
+            adapterCheckList.notifyItemInserted(arrCheckList.size)
         }
     }
 

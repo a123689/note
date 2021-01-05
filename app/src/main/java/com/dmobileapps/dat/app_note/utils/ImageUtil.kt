@@ -101,7 +101,7 @@ object ImageUtil {
                 e.printStackTrace()
             }
         }
-        return directory!!.absolutePath
+        return mypath.absolutePath
     }
 
     private fun getInternalPackage(applicationContext: Context): File? {
