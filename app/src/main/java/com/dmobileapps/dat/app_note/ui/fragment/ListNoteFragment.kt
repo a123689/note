@@ -190,12 +190,22 @@ class ListNoteFragment : BaseFragment(R.layout.fragment_list_note) {
 
     private fun deleteNote(note: Note) {
         noteViewmodel.deleteNote(note)
+        noteViewmodel.getAllNote(idFolder)
+            .observe(requireActivity(), androidx.lifecycle.Observer {
+                folderViewmodel.updateFolderById(idFolder, it.size)
+            })
     }
 
     private fun deleteMultiNote() {
         for (item in listBackup) {
             if (item.isCheck) {
+
                 noteViewmodel.deleteNote(item)
+                noteViewmodel.getAllNote(idFolder)
+                    .observe(requireActivity(), androidx.lifecycle.Observer {
+                        folderViewmodel.updateFolderById(idFolder, it.size)
+                    })
+
             }
         }
     }

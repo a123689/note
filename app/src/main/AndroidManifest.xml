@@ -20,6 +20,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label">
         <activity android:name=".ui.fragment.chooseImage.ChooseImageAct"/>
+        <activity android:name=".ui.fragment.viewImage.ViewImageAct"/>
         <activity android:name=".ui.fragment.checkList.DrawAct"/>
         <activity android:name="nv.module.audiorecoder.ui.AudioActivity"/>
 

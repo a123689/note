@@ -506,7 +506,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 list = it
 
                 if (it.size > 0) {
-                    Log.d("dat123", it[0].id.toString() + "main")
                     idFolder = it[0].id
                 }
 

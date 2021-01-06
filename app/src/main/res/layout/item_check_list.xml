@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:focusable="true"
     android:clickable="true"
-    android:background="@color/colorBlack"
+    android:background="@color/color_black"
     android:id="@+id/layoutNote"
     android:paddingTop="@dimen/space_screen_small"
     android:layout_height="wrap_content">
@@ -44,7 +44,9 @@
         android:textColor="@color/colorBlack"
         android:hint="@string/input_text"
         android:padding="@dimen/img_padding"
+        android:text=""
         android:focusable="true"
+        android:focusedByDefault="true"
         android:imeOptions="actionNext"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/icNote"
@@ -62,6 +64,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/rcvImage" />
 
+
     <View
         android:id="@+id/view"
         app:layout_constraintTop_toBottomOf="@id/rcvRecord"
@@ -69,6 +72,8 @@
         android:layout_marginTop="9dp"
         app:layout_constraintVertical_bias="1"
         android:background="#CCCCCC"
+        android:elevation="2dp"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_height="0.5dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

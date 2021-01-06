@@ -25,6 +25,7 @@ import com.dmobileapps.dat.app_note.model.RecordObj
 import com.dmobileapps.dat.app_note.ui.adapter.CheckListAdapter
 import com.dmobileapps.dat.app_note.ui.fragment.BaseFragment
 import com.dmobileapps.dat.app_note.ui.fragment.chooseImage.ChooseImageAct
+import com.dmobileapps.dat.app_note.ui.fragment.viewImage.ViewImageAct
 import com.dmobileapps.dat.app_note.utils.*
 import com.dmobileapps.dat.app_note.viewmodel.FolderViewmodel
 import com.dmobileapps.dat.app_note.viewmodel.NoteViewmodel
@@ -50,7 +51,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     private val arrCheckList: ArrayList<CheckList> = ArrayList()
     private lateinit var adapterCheckList: CheckListAdapter
     private var IS_CHOOSE = 0
-    private var POSITION_FOCUS = 0
+    private var POSITION_FOCUS = -1
     private var isOnClick = false
     private var isPause = false
 
@@ -254,22 +255,28 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     }
 
     private fun initRcv() {
-        adapterCheckList = CheckListAdapter(arrCheckList, { position, text ->
+        adapterCheckList = CheckListAdapter(arrCheckList,
+            { position, text ->
             //onFocusText
             POSITION_FOCUS = position
+                Log.e("TAG", " text change:$POSITION_FOCUS : $text ")
         },
             {
                 // text change
-                    position, text ->
+                position, text ->
                 arrCheckList[position].title = text
-
             },
             {
+                position, positionImage  ->
                 // Click Image
+               val intent =  Intent(requireContext(), ViewImageAct::class.java)
+                intent.putExtra("arrImage",Gson().toJson(arrCheckList[position].images))
+                intent.putExtra("position",positionImage)
+                startActivity(intent)
+
             },
             { positionItem, oldPositionPlay, positionPlay ->
                 // Click record
-                Log.e("TAG", "initRcv: ")
                 positionCheckListPlay = positionItem
                 positionRecordPlay = positionPlay
                 if (arrCheckList[positionItem].audios[positionPlay].isPlay) {
@@ -300,7 +307,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                 }
                 arrCheckList.removeAt(it)
                 adapterCheckList.notifyItemRemoved(it)
-                adapterCheckList.notifyItemRangeChanged(it, arrCheckList.size)
+//                adapterCheckList.notifyItemRangeChanged(it, arrCheckList.size)
             },
             { positionCheckList, positionImage ->
                 // onDeleteImage
@@ -406,12 +413,16 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         if (arrCheckList.size > 0) {
             idCheckList = arrCheckList.size + 1
         }
-        if (POSITION_FOCUS > 0) {
-            arrCheckList.add(POSITION_FOCUS + 1, CheckList(id = idCheckList))
-            adapterCheckList.notifyItemInserted(POSITION_FOCUS + 1)
+        Log.e(TAG, "addItemCheckList: $POSITION_FOCUS")
+        if (POSITION_FOCUS !=-1) {
+            arrCheckList.add(POSITION_FOCUS +1, CheckList(id = idCheckList))
+            adapterCheckList.positionFocus =POSITION_FOCUS+1
+            adapterCheckList.notifyItemInserted(POSITION_FOCUS+1 )
         } else {
             arrCheckList.add(arrCheckList.size, CheckList(id = idCheckList))
+            adapterCheckList.positionFocus =arrCheckList.size -1
             adapterCheckList.notifyItemInserted(arrCheckList.size)
+            rcvCheckList.scrollToPosition(arrCheckList.size-1)
         }
     }
 
