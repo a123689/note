@@ -360,6 +360,9 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     override fun onResume() {
         super.onResume()
         if (isOnClick) {
+            if (POSITION_FOCUS == -1){
+                POSITION_FOCUS =0
+            }
             if (IS_CHOOSE == 1) {
                 Log.e("TAG", "onResume: ${DeviceUtil.arrImage} ")
                 if (DeviceUtil.arrImage.isNotEmpty()) {
@@ -489,6 +492,9 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                 addItemCheckList()
             }
             if (!requiredValue.isNullOrBlank()) {
+                if (POSITION_FOCUS == -1){
+                    POSITION_FOCUS =0
+                }
                 arrCheckList[POSITION_FOCUS].audios.add(
                     RecordObj(
                         "record${System.currentTimeMillis() / 1000}",
