@@ -19,14 +19,17 @@ class AdapterRecord(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_record, parent, false)
+        val view: View = LayoutInflater.from(parent.context) .inflate(R.layout.item_record, parent, false)
         return ItemRecord(view)
     }
 
     private var oldPositionPlay = 0
     private var positionPlay = 0
-    var currentPlay: Int = 0
+//    var currentPlay: Int = 0
+  private lateinit var itemRecordVH : ItemRecord;
+    fun setCurrentSeekbar( currentPlay: Int){
+        itemRecordVH.updateSeekbar(currentPlay)
+    }
     override fun getItemCount(): Int {
         return arrRecord.size
     }
@@ -35,29 +38,34 @@ class AdapterRecord(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
         (holder as ItemRecord).binDataRecord(position)
 
-    private inner class ItemRecord(view: View) : RecyclerView.ViewHolder(view) {
+      inner class ItemRecord(view: View) : RecyclerView.ViewHolder(view) {
+        private val seekbar = itemView.waveformSeekBar
 
         fun binDataRecord(position: Int) {
             val record = arrRecord[position]
-            Log.e("TAG", "initRcv: $record" )
+            Log.e("TAG", "initRcv: $record")
             if (record.isPlay) {
                 ImageUtil.setImage(itemView.btnPlay, R.drawable.ic_play)
             } else {
                 ImageUtil.setImage(itemView.btnPlay, R.drawable.ic_pause)
             }
             itemView.btnPlay.setOnClickListener {
+                itemRecordVH = this
                 positionPlay = position
                 onClickIteRecord(oldPositionPlay, positionPlay)
                 oldPositionPlay = position
             }
-            Log.e("TAG", "binDataRecord: $currentPlay" )
-            itemView.waveformSeekBar.progress = currentPlay
-            itemView.waveformSeekBar.setOnTouchListener(OnTouchListener { v, event -> true })
+            seekbar.setOnTouchListener(OnTouchListener { v, event -> true })
             itemView.btnDeleteRecord.setOnClickListener {
                 onDeleteIteRecord(position)
             }
 
         }
+          fun  updateSeekbar( currentPlay: Int){
+              seekbar.progress = currentPlay
+
+          }
+
     }
 
 }

@@ -65,10 +65,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     var idFolder = 0
     lateinit var note: Note
     private val noteViewmodel: NoteViewmodel by lazy {
-        ViewModelProvider(
-            this,
-            NoteViewmodel.NoteViewmodelFactory(requireActivity().application)
-        )[NoteViewmodel::class.java]
+        ViewModelProvider( this, NoteViewmodel.NoteViewmodelFactory(requireActivity().application))[NoteViewmodel::class.java]
     }
 
     private val folderViewModel: FolderViewmodel by lazy {
@@ -282,7 +279,8 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                 if (arrCheckList[positionItem].audios[positionPlay].isPlay) {
                     stopSound()
                 } else {
-                    adapterCheckList.adapterRecord.currentPlay = 0
+//                    adapterCheckList.adapterRecord.currentPlay = 0
+                    adapterCheckList.adapterRecord.setCurrentSeekbar(0)
                     arrCheckList[positionItem].audios[oldPositionPlay].isPlay = false
                     arrCheckList[positionItem].audios[positionPlay].isPlay = true
                     playRecord(positionItem, positionPlay)
@@ -348,10 +346,9 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     private val handler = Handler()
     private var runnable: Runnable = object : Runnable {
         override fun run() {
-            adapterCheckList.adapterRecord.currentPlay =
-                player.currentPosition.toFloat().div(player.duration.toFloat()).times(100f).toInt()
-
-            adapterCheckList.adapterRecord.notifyItemChanged(positionRecordPlay)
+            adapterCheckList.adapterRecord.setCurrentSeekbar(player.currentPosition.toFloat().div(player.duration.toFloat()).times(100f).toInt())
+//            adapterCheckList.adapterRecord.currentPlay =  player.currentPosition.toFloat().div(player.duration.toFloat()).times(100f).toInt()
+//            adapterCheckList.adapterRecord.notifyItemChanged(positionRecordPlay)
             handler.postDelayed(this, 200)
         }
     }
@@ -451,7 +448,9 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
 
     private fun stopSound() {
         player.stop()
-        adapterCheckList.adapterRecord.currentPlay = 0
+
+        adapterCheckList.adapterRecord.setCurrentSeekbar(0)
+//        adapterCheckList.adapterRecord.currentPlay = 0
         arrCheckList[positionCheckListPlay].audios[positionRecordPlay].isPlay = false
         adapterCheckList.adapterRecord.notifyItemChanged(positionRecordPlay)
         handler.removeCallbacks(runnable)
