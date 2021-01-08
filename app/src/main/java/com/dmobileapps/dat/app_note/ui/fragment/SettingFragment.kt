@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.adconfigonline.admob.ads.AdmobInterstitialTest
 //import com.adconfigonline.admob.ads.AdmobInterstitialTest
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.utils.setPreventDoubleClick
@@ -50,7 +51,9 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 if(isChecked){
                     editor.putBoolean("interface",true)
-                    showAdsBack()
+                   showAdsBack()
+                    tvSwich.isChecked = true
+
                 }else{
                     showAdsBack()
                     editor.putBoolean("interface",false)
@@ -73,46 +76,46 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
     }
 
     private fun showAdsBack() {
-//        AdmobInterstitialTest().showAdsTimeOut(
-//            activity,
-//            "ca-app-pub-4040515803655174/7238087960",
-//            getString(R.string.loading_ads_2),
-//            object : AdmobInterstitialTest.AdHolderCallback {
-//                override fun onAdFailToLoad(messageError: String?) {
-//                    try{
-//                        if(tvSwich!= null){
-//                            if(tvSwich.isChecked){
-//                                interfaceBlack()
-//                            }else{
-//                                interfaceWhite()
-//                            }
-//                        }
-//                    }catch (e:Exception){
-//                        interfaceBlack()
-//                    }
-//
-//
-//
-//                }
-//
-//                override fun onAdOff() {
-//                }
-//
-//                override fun onAdShow(network: String?, adtype: String?) {
-//                    if(tvSwich != null){
-//                        if(tvSwich.isChecked){
-//                            interfaceBlack()
-//                        }else{
-//                            interfaceWhite()
-//                        }
-//                    }
-//
-//                }
-//
-//                override fun onAdClose(adType: String?) {
-//                }
-//            },
-//            lifecycle,9000)
+        AdmobInterstitialTest().showAdsTimeOut(
+            activity,
+            "ca-app-pub-4040515803655174/7238087960",
+            getString(R.string.loading_ads_2),
+            object : AdmobInterstitialTest.AdHolderCallback {
+                override fun onAdFailToLoad(messageError: String?) {
+                    try{
+                        if(tvSwich!= null){
+                            if(tvSwich.isChecked){
+                                interfaceBlack()
+                            }else{
+                                interfaceWhite()
+                            }
+                        }
+                    }catch (e:Exception){
+                        interfaceBlack()
+                    }
+
+
+
+                }
+
+                override fun onAdOff() {
+                }
+
+                override fun onAdShow(network: String?, adtype: String?) {
+                    if(tvSwich != null){
+                        if(tvSwich.isChecked){
+                            interfaceBlack()
+                        }else{
+                            interfaceWhite()
+                        }
+                    }
+
+                }
+
+                override fun onAdClose(adType: String?) {
+                }
+            },
+            lifecycle,9000)
     }
 
     private fun interfaceBlack(){

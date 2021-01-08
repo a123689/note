@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.adconfigonline.AdHolderOnline
+import com.adconfigonline.server.AdsChild
+import com.adconfigonline.untils.AdDef
 //import com.adconfigonline.AdHolderOnline
 //import com.adconfigonline.server.AdsChild
 //import com.adconfigonline.untils.AdDef
@@ -33,8 +36,8 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
         navController = Navigation.findNavController(view)
         sharedPreference = activity?.getSharedPreferences("NOTE", Context.MODE_PRIVATE)!!
         editor = sharedPreference.edit()
-//        AdHolderOnline(activity).isDebugMode = false
-        getListAD()
+        AdHolderOnline(activity).isDebugMode = false
+       // getListAD()
         if(sharedPreference.getBoolean("splash",false)){
             if ( navController.currentDestination?.id == R.id.splashFragment) {
                 navController.navigate(R.id.action_splashFragment_to_mainFragment)
@@ -59,7 +62,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
     }
 //    private val adsHashMap = HashMap<String, Stack<AdsChild>>()
-    private fun getListAD() {
+//    private fun getListAD() {
 //        val native_main_note = Stack<AdsChild>()
 //        val a = AdsChild(
 //            "ca-app-pub-4040515803655174/7727739213",
@@ -73,5 +76,5 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 //        native_main_note.push(a)
 //        adsHashMap[Common.NATIVE_MAIN_NOTE] = native_main_note
 //        AdHolderOnline(activity).setListAd(adsHashMap)
-    }
+//    }
 }

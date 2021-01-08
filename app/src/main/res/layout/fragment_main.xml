@@ -72,6 +72,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/ads2"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_142sdp"
             android:layout_marginHorizontal="@dimen/_6sdp"
