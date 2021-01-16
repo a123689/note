@@ -25,15 +25,20 @@ class AdapterRecord(
 
     private var oldPositionPlay = 0
     private var positionPlay = 0
-//    var currentPlay: Int = 0
-  private lateinit var itemRecordVH : ItemRecord;
-    fun setCurrentSeekbar( currentPlay: Int){
-        itemRecordVH.updateSeekbar(currentPlay)
-    }
+    var currentPlay: Int = 0
+
     override fun getItemCount(): Int {
         return arrRecord.size
     }
 
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        super.onBindViewHolder(holder, position, payloads)
+        (holder as ItemRecord).binDataRecord(position)
+    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
         (holder as ItemRecord).binDataRecord(position)
@@ -43,14 +48,13 @@ class AdapterRecord(
 
         fun binDataRecord(position: Int) {
             val record = arrRecord[position]
-            Log.e("TAG", "initRcv: $record")
             if (record.isPlay) {
                 ImageUtil.setImage(itemView.btnPlay, R.drawable.ic_play)
             } else {
                 ImageUtil.setImage(itemView.btnPlay, R.drawable.ic_pause)
             }
+            seekbar.progress = currentPlay
             itemView.btnPlay.setOnClickListener {
-                itemRecordVH = this
                 positionPlay = position
                 onClickIteRecord(oldPositionPlay, positionPlay)
                 oldPositionPlay = position
@@ -61,11 +65,9 @@ class AdapterRecord(
             }
 
         }
-          fun  updateSeekbar( currentPlay: Int){
-              seekbar.progress = currentPlay
 
-          }
 
     }
+    class Information()
 
 }

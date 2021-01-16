@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.adconfigonline.AdHolderOnline
-import com.adconfigonline.server.AdsChild
-import com.adconfigonline.untils.AdDef
+//import com.adconfigonline.AdHolderOnline
+//import com.adconfigonline.server.AdsChild
+//import com.adconfigonline.untils.AdDef
 //import com.adconfigonline.AdHolderOnline
 //import com.adconfigonline.server.AdsChild
 //import com.adconfigonline.untils.AdDef
@@ -36,7 +36,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
         navController = Navigation.findNavController(view)
         sharedPreference = activity?.getSharedPreferences("NOTE", Context.MODE_PRIVATE)!!
         editor = sharedPreference.edit()
-        AdHolderOnline(activity).isDebugMode = false
+//        AdHolderOnline(activity).isDebugMode = false
        // getListAD()
         if(sharedPreference.getBoolean("splash",false)){
             if ( navController.currentDestination?.id == R.id.splashFragment) {

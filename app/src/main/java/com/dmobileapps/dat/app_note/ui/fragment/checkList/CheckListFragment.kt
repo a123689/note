@@ -12,18 +12,17 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.CheckList
 import com.dmobileapps.dat.app_note.model.Note
 import com.dmobileapps.dat.app_note.model.RecordObj
 import com.dmobileapps.dat.app_note.ui.adapter.CheckListAdapter
 import com.dmobileapps.dat.app_note.ui.fragment.BaseFragment
+import com.dmobileapps.dat.app_note.ui.fragment.checkList.adapter.AdapterRecord
 import com.dmobileapps.dat.app_note.ui.fragment.chooseImage.ChooseImageAct
 import com.dmobileapps.dat.app_note.ui.fragment.viewImage.ViewImageAct
 import com.dmobileapps.dat.app_note.utils.*
@@ -36,7 +35,6 @@ import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_check_list.*
-import kotlinx.android.synthetic.main.fragment_check_list.ivBack
 import nv.module.audiorecoder.ui.AudioActivity
 import java.io.File
 import java.text.SimpleDateFormat
@@ -65,7 +63,10 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     var idFolder = 0
     lateinit var note: Note
     private val noteViewmodel: NoteViewmodel by lazy {
-        ViewModelProvider( this, NoteViewmodel.NoteViewmodelFactory(requireActivity().application))[NoteViewmodel::class.java]
+        ViewModelProvider(
+            this,
+            NoteViewmodel.NoteViewmodelFactory(requireActivity().application)
+        )[NoteViewmodel::class.java]
     }
 
     private val folderViewModel: FolderViewmodel by lazy {
@@ -89,10 +90,20 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
 
 
 
-        if(Common.checkInterface){
-            constrainCheckList.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
-            toolbar.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
-             bottom_nav.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.color_black))
+        if (Common.checkInterface) {
+            constrainCheckList.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.colorBlack
+                )
+            )
+            toolbar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorBlack))
+            bottom_nav.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_black
+                )
+            )
             val iconsColorStates = ColorStateList(
                 arrayOf(
                     intArrayOf(-android.R.attr.state_checked),
@@ -113,11 +124,21 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                 )
             )
             bottom_nav.itemTextColor = textColorStates
-            bottom_nav.itemIconTintList = iconsColorStates;
-        }else{
-            constrainCheckList.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
-            toolbar.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
-             bottom_nav.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+            bottom_nav.itemIconTintList = iconsColorStates
+        } else {
+            constrainCheckList.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.colorWhite
+                )
+            )
+            toolbar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
+            bottom_nav.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.colorWhite
+                )
+            )
 
             val iconsColorStates = ColorStateList(
                 arrayOf(
@@ -139,7 +160,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                 )
             )
             bottom_nav.itemTextColor = textColorStates
-            bottom_nav.itemIconTintList = iconsColorStates;
+            bottom_nav.itemIconTintList = iconsColorStates
         }
 
         ivBack.setPreventDoubleClick(300) {
@@ -254,21 +275,20 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     private fun initRcv() {
         adapterCheckList = CheckListAdapter(arrCheckList,
             { position, text ->
-            //onFocusText
-            POSITION_FOCUS = position
+                //onFocusText
+                POSITION_FOCUS = position
                 Log.e("TAG", " text change:$POSITION_FOCUS : $text ")
-        },
-            {
-                // text change
-                position, text ->
-                arrCheckList[position].title = text
             },
             {
-                position, positionImage  ->
+                // text change
+                    position, text ->
+                arrCheckList[position].title = text
+            },
+            { position, positionImage ->
                 // Click Image
-               val intent =  Intent(requireContext(), ViewImageAct::class.java)
-                intent.putExtra("arrImage",Gson().toJson(arrCheckList[position].images))
-                intent.putExtra("position",positionImage)
+                val intent = Intent(requireContext(), ViewImageAct::class.java)
+                intent.putExtra("arrImage", Gson().toJson(arrCheckList[position].images))
+                intent.putExtra("position", positionImage)
                 startActivity(intent)
 
             },
@@ -280,17 +300,30 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                     stopSound()
                 } else {
 //                    adapterCheckList.adapterRecord.currentPlay = 0
-                    adapterCheckList.adapterRecord.setCurrentSeekbar(0)
+                    adapterCheckList.adapterRecord.currentPlay = 0
                     arrCheckList[positionItem].audios[oldPositionPlay].isPlay = false
                     arrCheckList[positionItem].audios[positionPlay].isPlay = true
                     playRecord(positionItem, positionPlay)
                 }
-                adapterCheckList.adapterRecord.notifyItemChanged(oldPositionPlay)
-                adapterCheckList.adapterRecord.notifyItemChanged(positionPlay)
+                adapterCheckList.adapterRecord.notifyItemChanged(oldPositionPlay,
+                    AdapterRecord.Information()
+                )
+                adapterCheckList.adapterRecord.notifyItemChanged(positionPlay,
+                    AdapterRecord.Information()
+                )
             },
             {
                 // delete item
-                val checklist = arrCheckList[it]
+var delete = 0
+                if (it<arrCheckList.size){
+                    delete =it
+                }
+                if (it==arrCheckList.size){
+                    delete =0
+                }
+
+
+                val checklist = arrCheckList[delete]
                 if (!checklist.audios.isNullOrEmpty()) {
                     for (audios in checklist.audios) {
                         arrDelete.add(audios.path)
@@ -303,8 +336,8 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                         }
                     }
                 }
-                arrCheckList.removeAt(it)
-                adapterCheckList.notifyItemRemoved(it)
+                arrCheckList.removeAt(delete)
+                adapterCheckList.notifyItemRemoved(delete)
 //                adapterCheckList.notifyItemRangeChanged(it, arrCheckList.size)
             },
             { positionCheckList, positionImage ->
@@ -346,9 +379,10 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     private val handler = Handler()
     private var runnable: Runnable = object : Runnable {
         override fun run() {
-            adapterCheckList.adapterRecord.setCurrentSeekbar(player.currentPosition.toFloat().div(player.duration.toFloat()).times(100f).toInt())
-//            adapterCheckList.adapterRecord.currentPlay =  player.currentPosition.toFloat().div(player.duration.toFloat()).times(100f).toInt()
-//            adapterCheckList.adapterRecord.notifyItemChanged(positionRecordPlay)
+            adapterCheckList.adapterRecord.currentPlay =  player.currentPosition.toFloat().div(player.duration.toFloat()).times(100f).toInt()
+            adapterCheckList.adapterRecord.notifyItemChanged(positionRecordPlay,
+                AdapterRecord.Information()
+            )
             handler.postDelayed(this, 200)
         }
     }
@@ -357,8 +391,8 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     override fun onResume() {
         super.onResume()
         if (isOnClick) {
-            if (POSITION_FOCUS == -1){
-                POSITION_FOCUS =0
+            if (POSITION_FOCUS == -1) {
+                POSITION_FOCUS = 0
             }
             if (IS_CHOOSE == 1) {
                 Log.e("TAG", "onResume: ${DeviceUtil.arrImage} ")
@@ -414,15 +448,20 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
             idCheckList = arrCheckList.size + 1
         }
         Log.e(TAG, "addItemCheckList: $POSITION_FOCUS")
-        if (POSITION_FOCUS !=-1) {
-            arrCheckList.add(POSITION_FOCUS +1, CheckList(id = idCheckList))
-            adapterCheckList.positionFocus =POSITION_FOCUS+1
-            adapterCheckList.notifyItemInserted(POSITION_FOCUS+1 )
+        if (POSITION_FOCUS != -1) {
+            if (arrCheckList.size == 0) {
+                arrCheckList.add(0, CheckList(id = idCheckList))
+                adapterCheckList.positionFocus = 0
+            } else {
+                arrCheckList.add(POSITION_FOCUS + 1, CheckList(id = idCheckList))
+                adapterCheckList.positionFocus = POSITION_FOCUS + 1
+            }
+            adapterCheckList.notifyItemInserted(POSITION_FOCUS + 1)
         } else {
             arrCheckList.add(arrCheckList.size, CheckList(id = idCheckList))
-            adapterCheckList.positionFocus =arrCheckList.size -1
+            adapterCheckList.positionFocus = arrCheckList.size - 1
             adapterCheckList.notifyItemInserted(arrCheckList.size)
-            rcvCheckList.scrollToPosition(arrCheckList.size-1)
+            rcvCheckList.scrollToPosition(arrCheckList.size - 1)
         }
     }
 
@@ -449,10 +488,12 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     private fun stopSound() {
         player.stop()
 
-        adapterCheckList.adapterRecord.setCurrentSeekbar(0)
+        adapterCheckList.adapterRecord.currentPlay = 0
 //        adapterCheckList.adapterRecord.currentPlay = 0
         arrCheckList[positionCheckListPlay].audios[positionRecordPlay].isPlay = false
-        adapterCheckList.adapterRecord.notifyItemChanged(positionRecordPlay)
+        adapterCheckList.adapterRecord.notifyItemChanged(positionRecordPlay,
+            AdapterRecord.Information()
+        )
         handler.removeCallbacks(runnable)
     }
 
@@ -468,7 +509,9 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
 
             override fun onPlayerError(error: ExoPlaybackException) {
                 arrCheckList[positionCheckListPlay].audios[positionRecordPlay].isPlay = false
-                adapterCheckList.adapterRecord.notifyItemChanged(positionRecordPlay)
+                adapterCheckList.adapterRecord.notifyItemChanged(positionRecordPlay,
+                    AdapterRecord.Information()
+                )
             }
 
             override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
@@ -491,8 +534,8 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
                 addItemCheckList()
             }
             if (!requiredValue.isNullOrBlank()) {
-                if (POSITION_FOCUS == -1){
-                    POSITION_FOCUS =0
+                if (POSITION_FOCUS == -1) {
+                    POSITION_FOCUS = 0
                 }
                 arrCheckList[POSITION_FOCUS].audios.add(
                     RecordObj(

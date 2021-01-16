@@ -23,11 +23,11 @@ abstract class NoteDatabase : RoomDatabase() {
         private var instance: NoteDatabase? = null
 
 
-        private val MIGRATION = object : Migration(1, 2) {
+        private val MIGRATION = object : Migration(6, 9) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.apply {
-                    execSQL("ALTER TABLE note_table ADD COLUMN avatar String DEFAULT ''")
-                    execSQL("ALTER TABLE note_table ADD COLUMN checkList String DEFAULT ''")
+                    execSQL("ALTER TABLE note_table ADD COLUMN avatar TEXT DEFAULT ''")
+                    execSQL("ALTER TABLE note_table ADD COLUMN checkList TEXT DEFAULT ''")
                 }
             }
         }
