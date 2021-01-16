@@ -11,8 +11,8 @@ android {
         applicationId "com.dmobileapps.dat.app_note"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 8
-        versionName "1.0.7"
+        versionCode 9
+        versionName "1.0.8"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -26,16 +26,16 @@ abstract class NoteDatabase : RoomDatabase() {
         private val MIGRATION = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.apply {
-                    execSQL("ALTER TABLE widgets ADD COLUMN avatar String DEFAULT ''")
-                    execSQL("ALTER TABLE widgets ADD COLUMN checkList String DEFAULT ''")
+                    execSQL("ALTER TABLE note_table ADD COLUMN avatar String DEFAULT ''")
+                    execSQL("ALTER TABLE note_table ADD COLUMN checkList String DEFAULT ''")
                 }
             }
         }
         fun getInstance(context: Context): NoteDatabase {
             if (instance == null) {
                 instance =  Room.databaseBuilder(context, NoteDatabase::class.java, "NoteDatabase6")
-                        .addMigrations(MIGRATION)
-                        .build()
+                    .addMigrations(MIGRATION)
+                    .build()
             }
             return instance!!
         }
