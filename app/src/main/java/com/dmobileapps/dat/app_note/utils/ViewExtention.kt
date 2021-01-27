@@ -1,5 +1,6 @@
 package com.dmobileapps.dat.app_note.utils
 
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.Rect
 import android.os.SystemClock
@@ -7,6 +8,7 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import com.dmobileapps.dat.app_note.R
 
 fun View.shake() {
@@ -27,6 +29,19 @@ fun View.setPreventDoubleClick(debounceTime: Long, action: () -> Unit) {
             lastClickTime = SystemClock.elapsedRealtime()
         }
     })
+}
+
+fun View.showKeyboard() {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+}
+
+/**
+ * Use everywhere except from Activity (Custom View, Fragment, Dialogs, DialogFragments).
+ */
+fun View.hideKeyboard() {
+    val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
 }
 
 fun View.setPreventDoubleClickScaleView(debounceTime: Long, action: () -> Unit) {

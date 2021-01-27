@@ -28,6 +28,7 @@ import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.model.Folder
 import com.dmobileapps.dat.app_note.ui.adapter.FolderAdapter
 import com.dmobileapps.dat.app_note.utils.Common
+import com.dmobileapps.dat.app_note.utils.hideKeyboard
 import com.dmobileapps.dat.app_note.utils.setPreventDoubleClick
 import com.dmobileapps.dat.app_note.viewmodel.FolderViewmodel
 import kotlinx.android.synthetic.main.dialog_add_folder.view.*
@@ -212,7 +213,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         if (Common.checkInterface) {
             interfaceBlack()
         }
-
+        edSearch.clearFocus()
+        view.hideKeyboard()
         loadBanner()
     }
 

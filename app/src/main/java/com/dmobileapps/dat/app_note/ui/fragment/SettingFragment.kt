@@ -17,7 +17,11 @@ import androidx.navigation.fragment.findNavController
 //import com.adconfigonline.admob.ads.AdmobInterstitialTest
 //import com.adconfigonline.admob.ads.AdmobInterstitialTest
 import com.dmobileapps.dat.app_note.R
+import com.dmobileapps.dat.app_note.utils.Common
 import com.dmobileapps.dat.app_note.utils.setPreventDoubleClick
+import com.test.dialognew.DialogLib
+import com.test.dialognew.DialogNewInterface
+import com.test.dialognew.RateCallback
 import kotlinx.android.synthetic.main.fragment_setting.*
 
 
@@ -25,38 +29,84 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
     override fun onFragmentBackPressed() {
         findNavController().popBackStack()
     }
-    private lateinit var sharedPreference : SharedPreferences
+
+    private lateinit var sharedPreference: SharedPreferences
     lateinit var navController: NavController
+    val editor by lazy {
+        sharedPreference.edit()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
         sharedPreference = activity?.getSharedPreferences("NOTE", Context.MODE_PRIVATE)!!
-        val editor = sharedPreference.edit()
 
-        if(sharedPreference.getBoolean("interface",false)){
+        if (sharedPreference.getBoolean("interface", false)) {
             interfaceBlack()
         }
 
-        ivBack.setPreventDoubleClick(300){
+        ivBack.setPreventDoubleClick(300) {
             onFragmentBackPressed()
         }
-        layoutRating.setPreventDoubleClick(300){
-            openMarket(requireContext(), requireActivity().packageName)
+        layoutRating.setPreventDoubleClick(300) {
+            DialogLib.getInstance().showDialogRate(context, object : DialogNewInterface {
+                override fun onRate(rate: Int) {
+                    if(rate < 4){
+                        sendEmailMoree(
+                            requireContext(),
+                            arrayOf("khoanglang270102@gmail.com"),
+                            "Feedback to Note",
+                            "",
+                        )
+                    }else{
+                        openMarket(requireContext(), requireActivity().packageName)
+                    }
+                    editor.putBoolean("rate",true)
+                    editor.apply()
+
+                }
+
+                override fun onFB(choice: Int) {
+
+                    editor.putBoolean("rate",true)
+                    editor.apply()
+                }
+
+                override fun onCancel() {
+
+                }
+
+                override fun onCancelFb() {
+
+                }
+
+            }, object : RateCallback {
+                override fun onFBShow() {
+                    editor.putBoolean("rate",true)
+
+                }
+
+            })
+
         }
-        layoutFeedback.setPreventDoubleClick(300){
-            sendEmailMoree(requireContext(), arrayOf("khoanglang270102@gmail.com"),"Feedback to Note","",)
+        layoutFeedback.setPreventDoubleClick(300) {
+            sendEmailMoree(
+                requireContext(),
+                arrayOf("khoanglang270102@gmail.com"),
+                "Feedback to Note",
+                "",
+            )
         }
 
-        tvSwich.setOnCheckedChangeListener(object :CompoundButton.OnCheckedChangeListener{
+        tvSwich.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                if(isChecked){
-                    editor.putBoolean("interface",true)
-                   showAdsBack()
+                if (isChecked) {
+                    editor.putBoolean("interface", true)
+                    showAdsBack()
                     tvSwich.isChecked = true
 
-                }else{
+                } else {
                     showAdsBack()
-                    editor.putBoolean("interface",false)
+                    editor.putBoolean("interface", false)
                     tvSwich.isChecked = false
 
                 }
@@ -67,15 +117,24 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
 
         })
 
-        layoutPolicy.setPreventDoubleClick(300){
-            if(navController.currentDestination?.id == R.id.settingFragment){
+        layoutPolicy.setPreventDoubleClick(300) {
+            if (navController.currentDestination?.id == R.id.settingFragment) {
                 navController.navigate(R.id.action_settingFragment_to_policyFragment)
             }
         }
 
     }
 
+
+
     private fun showAdsBack() {
+        if (tvSwich != null) {
+            if (tvSwich.isChecked) {
+                interfaceBlack()
+            } else {
+                interfaceWhite()
+            }
+        }
 //        AdmobInterstitialTest().showAdsTimeOut(
 //            activity,
 //            "ca-app-pub-4040515803655174/7238087960",
@@ -118,43 +177,58 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
 //            lifecycle,9000)
     }
 
-    private fun interfaceBlack(){
-        layout_setting.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
+    private fun interfaceBlack() {
+        layout_setting.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorBlack
+            )
+        )
         ivRate.setImageResource(R.drawable.ic_rate_white)
         ivFeedback.setImageResource(R.drawable.ic_feedback_white)
         ivVersion.setImageResource(R.drawable.ic_version_white)
         ivNight.setImageResource(R.drawable.ic_night_white)
         ivPolicy.setImageResource(R.drawable.ic_policy_white)
-        tvRating.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
-        tvFeedback.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
-        tvInterface.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
-        tvVersion.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
-        tvPolicy.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+        tvRating.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
+        tvFeedback.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
+        tvInterface.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
+        tvVersion.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
+        tvPolicy.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
         ivMore1.setImageResource(R.drawable.ic_more_white)
         ivMore2.setImageResource(R.drawable.ic_more_white)
         ivMore3.setImageResource(R.drawable.ic_more_white)
-        view1.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
+        view1.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorBlack))
         tvSwich.isChecked = true
-        toolBar.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorToolbarBlack))
+        toolBar.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorToolbarBlack
+            )
+        )
     }
 
-    private fun interfaceWhite(){
-        layout_setting.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+    private fun interfaceWhite() {
+        layout_setting.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorWhite
+            )
+        )
         ivRate.setImageResource(R.drawable.ic_baseline_rate_review_24)
         ivFeedback.setImageResource(R.drawable.ic_baseline_feedback_24)
         ivVersion.setImageResource(R.drawable.ic_version)
         ivNight.setImageResource(R.drawable.ic_night)
         ivPolicy.setImageResource(R.drawable.ic_baseline_policy_24)
-        tvRating.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
-        tvFeedback.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
-        tvInterface.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
-        tvVersion.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
-        tvPolicy.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorBlack))
+        tvRating.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBlack))
+        tvFeedback.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBlack))
+        tvInterface.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBlack))
+        tvVersion.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBlack))
+        tvPolicy.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBlack))
         ivMore1.setImageResource(R.drawable.ic_more_white)
         ivMore2.setImageResource(R.drawable.ic_more_white)
         ivMore3.setImageResource(R.drawable.ic_more_white)
-        view1.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorView))
-        toolBar.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorWhite))
+        view1.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorView))
+        toolBar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
     }
 
     private fun openMarket(context: Context, packageName: String) {

@@ -5,4 +5,5 @@ object Common{
     var checkMain = false
     var checkInterface = false
     const val NATIVE_MAIN_NOTE = "NATIVE_MAIN_NOTE"
+    var IS_SHOW_RATE_IN_SESSION = false
 }

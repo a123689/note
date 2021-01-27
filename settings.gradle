@@ -1,3 +1,5 @@
+include ':commonRes'
+include ':dialogNew'
 include ':AudioRecoder'
 include ':BrushDraw'
 include ':app'

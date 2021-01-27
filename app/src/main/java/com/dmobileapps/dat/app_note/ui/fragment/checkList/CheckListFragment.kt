@@ -1,11 +1,16 @@
 package com.dmobileapps.dat.app_note.ui.fragment.checkList
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.StrictMode
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -34,6 +39,9 @@ import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
+import com.test.dialognew.DialogLib
+import com.test.dialognew.DialogNewInterface
+import com.test.dialognew.RateCallback
 import kotlinx.android.synthetic.main.fragment_check_list.*
 import nv.module.audiorecoder.ui.AudioActivity
 import java.io.File
@@ -75,6 +83,10 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
             FolderViewmodel.NoteViewmodelFactory(requireActivity().application)
         )[FolderViewmodel::class.java]
     }
+    val editor by lazy {
+        sharedPreference.edit()
+    }
+    private lateinit var sharedPreference: SharedPreferences
 
     override fun onFragmentBackPressed() {
         if (Common.checkMain) {
@@ -88,7 +100,7 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        sharedPreference = activity?.getSharedPreferences("NOTE", Context.MODE_PRIVATE)!!
 
         if (Common.checkInterface) {
             constrainCheckList.setBackgroundColor(
@@ -168,6 +180,8 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         }
         btnSave.setPreventDoubleClick(1000) {
             saveNote()
+            showDialogRate()
+
         }
         val currentDate: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
         tvTime.text = currentDate
@@ -177,7 +191,113 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         getData()
 
     }
+    private fun openMarket(context: Context, packageName: String) {
+        val i = Intent(Intent.ACTION_VIEW)
+        try {
+            i.data = Uri.parse("market://details?id=$packageName")
+            context.startActivity(i)
+        } catch (ex: ActivityNotFoundException) {
+            openBrowser(
+                context,
+                "https://play.google.com/store/apps/details?id=\"" + packageName
+            )
+        }
+    }
 
+    private fun showDialogRate() {
+        val isShowRateInSession = Common.IS_SHOW_RATE_IN_SESSION
+        val isRate = sharedPreference.getBoolean("rate", false)
+
+        if (isRate) {
+            //do nothing
+        } else if (!isRate && !isShowRateInSession) {
+            //show dialog rate
+
+            Common.IS_SHOW_RATE_IN_SESSION = true
+            DialogLib.getInstance().showDialogRate(context, object : DialogNewInterface {
+                override fun onRate(rate: Int) {
+                    if(rate < 4){
+                        sendEmailMoree(
+                            requireContext(),
+                            arrayOf("khoanglang270102@gmail.com"),
+                            "Feedback to Note",
+                            "",
+                        )
+                    }else{
+                        openMarket(requireContext(), requireActivity().packageName)
+                    }
+                    editor.putBoolean("rate", true)
+                    editor.apply()
+                }
+
+                override fun onFB(choice: Int) {
+
+                    editor.putBoolean("rate", true)
+                    editor.apply()
+                }
+
+                override fun onCancel() {
+
+                }
+
+                override fun onCancelFb() {
+
+                }
+
+            }, object : RateCallback {
+                override fun onFBShow() {
+                    editor.putBoolean("rate", true)
+                    editor.apply()
+
+                }
+
+            })
+        }
+
+    }
+
+    private fun openBrowser(context: Context, url: String) {
+        var url = url
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "http://$url"
+        }
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        try {
+            context.startActivity(browserIntent)
+        } catch (ex: java.lang.Exception) {
+            ex.printStackTrace()
+        }
+    }
+
+    private fun sendEmailMoree(
+        context: Context,
+        mail: Array<String>,
+        subject: String,
+        body: String
+    ) {
+        disableExposure()
+        val intent = Intent(Intent.ACTION_SENDTO)
+        intent.data = Uri.parse("mailto:") // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, mail)
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        intent.putExtra(Intent.EXTRA_TEXT, body)
+        if (intent.resolveActivity(context.packageManager) != null) {
+            context.startActivity(intent)
+        } else {
+            Toast.makeText(context, "you need install gmail", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun disableExposure() {
+        if (Build.VERSION.SDK_INT >= 24) {
+            try {
+                val m = StrictMode::class.java.getMethod("disableDeathOnFileUriExposure")
+                m.invoke(null)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
     private fun saveNote() {
         if (arrCheckList.isNotEmpty()) {
             if (Common.checkScreen) {
