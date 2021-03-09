@@ -15,6 +15,8 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -37,6 +39,9 @@ import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.MediaSourceFactory
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.test.dialognew.DialogLib
@@ -96,10 +101,57 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
             findNavController().popBackStack(R.id.listNoteFragment, false)
         }
     }
+    override fun onCreate(@Nullable savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
+        // This callback will only be called when MyFragment is at least Started.
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    if (mInterstitialAd.isLoaded) {
+                        mInterstitialAd.show()
+                    } else {
+                        onFragmentBackPressed()
+                    }
+
+                    mInterstitialAd.adListener = object: AdListener() {
+                        override fun onAdLoaded() {
+                            // dialog.dismiss()
+                        }
+
+                        override fun onAdFailedToLoad(errorCode: Int) {
+                            onFragmentBackPressed()
+                        }
+
+                        override fun onAdOpened() {
+                            onFragmentBackPressed()
+                        }
+
+                        override fun onAdClicked() {
+                            // Code to be executed when the user clicks on an ad.
+                        }
+
+                        override fun onAdLeftApplication() {
+                            // Code to be executed when the user has left the app.
+                        }
+
+                        override fun onAdClosed() {
+                            // Code to be executed when the interstitial ad is closed.
+                        }
+                    }
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+
+        // The callback can be enabled or disabled here or in handleOnBackPressed()
+    }
+
+    private lateinit var mInterstitialAd: InterstitialAd
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        mInterstitialAd = InterstitialAd(activity)
+        mInterstitialAd.adUnitId = "ca-app-pub-4040515803655174/6031715796"
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
         sharedPreference = activity?.getSharedPreferences("NOTE", Context.MODE_PRIVATE)!!
 
         if (Common.checkInterface) {
@@ -176,11 +228,72 @@ class CheckListFragment : BaseFragment(R.layout.fragment_check_list),
         }
 
         ivBack.setPreventDoubleClick(300) {
-            onFragmentBackPressed()
+            if (mInterstitialAd.isLoaded) {
+                mInterstitialAd.show()
+            } else {
+                onFragmentBackPressed()
+            }
+
+            mInterstitialAd.adListener = object: AdListener() {
+                override fun onAdLoaded() {
+                    // dialog.dismiss()
+                }
+
+                override fun onAdFailedToLoad(errorCode: Int) {
+                    onFragmentBackPressed()
+                }
+
+                override fun onAdOpened() {
+                    onFragmentBackPressed()
+                }
+
+                override fun onAdClicked() {
+                    // Code to be executed when the user clicks on an ad.
+                }
+
+                override fun onAdLeftApplication() {
+                    // Code to be executed when the user has left the app.
+                }
+
+                override fun onAdClosed() {
+                    // Code to be executed when the interstitial ad is closed.
+                }
+            }
         }
         btnSave.setPreventDoubleClick(1000) {
-            saveNote()
-            showDialogRate()
+            if (mInterstitialAd.isLoaded) {
+                mInterstitialAd.show()
+            } else {
+                saveNote()
+               // showDialogRate()
+            }
+            mInterstitialAd.adListener = object: AdListener() {
+                override fun onAdLoaded() {
+                    // dialog.dismiss()
+                }
+
+                override fun onAdFailedToLoad(errorCode: Int) {
+                    saveNote()
+                   // showDialogRate()
+                }
+
+                override fun onAdOpened() {
+                    saveNote()
+                   // showDialogRate()
+                }
+
+                override fun onAdClicked() {
+                    // Code to be executed when the user clicks on an ad.
+                }
+
+                override fun onAdLeftApplication() {
+                    // Code to be executed when the user has left the app.
+                }
+
+                override fun onAdClosed() {
+                    // Code to be executed when the interstitial ad is closed.
+                }
+            }
 
         }
         val currentDate: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())

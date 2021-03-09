@@ -11,6 +11,8 @@ import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.annotation.Nullable
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -22,13 +24,14 @@ import com.dmobileapps.dat.app_note.utils.hideKeyboard
 import com.dmobileapps.dat.app_note.utils.setPreventDoubleClick
 import com.dmobileapps.dat.app_note.viewmodel.FolderViewmodel
 import com.dmobileapps.dat.app_note.viewmodel.NoteViewmodel
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.gson.Gson
 import com.test.dialognew.DialogLib
 import com.test.dialognew.DialogNewInterface
 import com.test.dialognew.RateCallback
 import kotlinx.android.synthetic.main.fragment_write_note.*
-import kotlinx.android.synthetic.main.fragment_write_note.ivBack
-import kotlinx.android.synthetic.main.fragment_write_note.tvFolder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -42,6 +45,53 @@ class WriteNoteFragment : BaseFragment(R.layout.fragment_write_note) {
         } else {
             findNavController().popBackStack(R.id.listNoteFragment, false)
         }
+
+    }
+
+    override fun onCreate(@Nullable savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // This callback will only be called when MyFragment is at least Started.
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    if (mInterstitialAd.isLoaded) {
+                        mInterstitialAd.show()
+                    } else {
+                        view?.hideKeyboard()
+                        onFragmentBackPressed()
+                    }
+                    mInterstitialAd.adListener = object: AdListener() {
+                        override fun onAdLoaded() {
+
+                        }
+
+                        override fun onAdFailedToLoad(errorCode: Int) {
+                            view?.hideKeyboard()
+                            onFragmentBackPressed()
+                        }
+
+                        override fun onAdOpened() {
+                            view?.hideKeyboard()
+                            onFragmentBackPressed()
+                        }
+
+                        override fun onAdClicked() {
+                            // Code to be executed when the user clicks on an ad.
+                        }
+
+                        override fun onAdLeftApplication() {
+                            // Code to be executed when the user has left the app.
+                        }
+
+                        override fun onAdClosed() {
+                            // Code to be executed when the interstitial ad is closed.
+                        }
+                    }
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+
 
     }
 
@@ -64,9 +114,13 @@ class WriteNoteFragment : BaseFragment(R.layout.fragment_write_note) {
             FolderViewmodel.NoteViewmodelFactory(requireActivity().application)
         )[FolderViewmodel::class.java]
     }
-
+    private lateinit var mInterstitialAd: InterstitialAd
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        mInterstitialAd = InterstitialAd(activity)
+        mInterstitialAd.adUnitId = "ca-app-pub-4040515803655174/2797309680"
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
         sharedPreference = activity?.getSharedPreferences("NOTE", Context.MODE_PRIVATE)!!
         if (Common.checkInterface) {
             layoutWrite.setBackgroundColor(
@@ -93,43 +147,152 @@ class WriteNoteFragment : BaseFragment(R.layout.fragment_write_note) {
 
 
         tvDone.setPreventDoubleClick(300) {
-            if (edContent.text.toString().isNotEmpty()) {
-                edContent.clearFocus()
-                view.hideKeyboard()
-                if (Common.checkScreen) {
-                    Log.d("dat123", "zxc")
-                    val currentDate: String =
-                        SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
-                    note.date = currentDate
-                    note.content = edContent.text.toString()
-                    noteViewmodel.updateNote(note)
 
-                } else {
-                    val currentDate: String =
-                        SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
-                    val note = Note(
-                        content = edContent.text.toString(),
-                        date = currentDate,
-                        folderId = idFolder
-                    )
-                    noteViewmodel.insertNote(note)
-                    noteViewmodel.getAllNote(idFolder)
-                        .observe(requireActivity(), androidx.lifecycle.Observer {
-                            folderViewmodel.updateFolderById(idFolder, it.size)
-                        })
-                }
-                onFragmentBackPressed()
-                showDialogRate()
+            if (mInterstitialAd.isLoaded) {
+                mInterstitialAd.show()
+            } else {
+
+                doneNote()
             }
+            mInterstitialAd.adListener = object: AdListener() {
+                override fun onAdLoaded() {
+                   // dialog.dismiss()
+                }
+
+                override fun onAdFailedToLoad(errorCode: Int) {
+
+                    doneNote()
+                }
+
+                override fun onAdOpened() {
+
+                    doneNote()
+                }
+
+                override fun onAdClicked() {
+                    // Code to be executed when the user clicks on an ad.
+                }
+
+                override fun onAdLeftApplication() {
+                    // Code to be executed when the user has left the app.
+                }
+
+                override fun onAdClosed() {
+                    // Code to be executed when the interstitial ad is closed.
+                }
+            }
+
+
+
         }
+
         ivBack.setPreventDoubleClick(300) {
-            view.hideKeyboard()
-            onFragmentBackPressed()
+
+            if (mInterstitialAd.isLoaded) {
+                mInterstitialAd.show()
+            } else {
+                view.hideKeyboard()
+                onFragmentBackPressed()
+            }
+            mInterstitialAd.adListener = object: AdListener() {
+                override fun onAdLoaded() {
+
+                }
+
+                override fun onAdFailedToLoad(errorCode: Int) {
+                    view.hideKeyboard()
+                    onFragmentBackPressed()
+                }
+
+                override fun onAdOpened() {
+                    view.hideKeyboard()
+                    onFragmentBackPressed()
+                }
+
+                override fun onAdClicked() {
+                    // Code to be executed when the user clicks on an ad.
+                }
+
+                override fun onAdLeftApplication() {
+                    // Code to be executed when the user has left the app.
+                }
+
+                override fun onAdClosed() {
+                    // Code to be executed when the interstitial ad is closed.
+                }
+            }
+
+
         }
 
         tvFolder.setPreventDoubleClick(300) {
-            view.hideKeyboard()
+
+            if (mInterstitialAd.isLoaded) {
+                mInterstitialAd.show()
+            } else {
+                view.hideKeyboard()
+                onFragmentBackPressed()
+            }
+            mInterstitialAd.adListener = object: AdListener() {
+                override fun onAdLoaded() {
+
+                }
+
+                override fun onAdFailedToLoad(errorCode: Int) {
+                    view.hideKeyboard()
+                    onFragmentBackPressed()
+                }
+
+                override fun onAdOpened() {
+                    view.hideKeyboard()
+                    onFragmentBackPressed()
+                }
+
+                override fun onAdClicked() {
+                    // Code to be executed when the user clicks on an ad.
+                }
+
+                override fun onAdLeftApplication() {
+                    // Code to be executed when the user has left the app.
+                }
+
+                override fun onAdClosed() {
+                    // Code to be executed when the interstitial ad is closed.
+                }
+            }
+
+        }
+    }
+
+    private fun doneNote(){
+        if (edContent.text.toString().isNotEmpty()) {
+            edContent.clearFocus()
+            view?.hideKeyboard()
+            if (Common.checkScreen) {
+                Log.d("dat123", "zxc")
+                val currentDate: String =
+                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+                note.date = currentDate
+                note.content = edContent.text.toString()
+                noteViewmodel.updateNote(note)
+
+            } else {
+                val currentDate: String =
+                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+                val note = Note(
+                    content = edContent.text.toString(),
+                    date = currentDate,
+                    folderId = idFolder
+                )
+                noteViewmodel.insertNote(note)
+                noteViewmodel.getAllNote(idFolder)
+                    .observe(requireActivity(), androidx.lifecycle.Observer {
+                        folderViewmodel.updateFolderById(idFolder, it.size)
+                    })
+            }
             onFragmentBackPressed()
+            //showDialogRate()
+
         }
     }
 

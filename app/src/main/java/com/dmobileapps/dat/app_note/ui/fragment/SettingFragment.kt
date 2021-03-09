@@ -135,46 +135,7 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
                 interfaceWhite()
             }
         }
-//        AdmobInterstitialTest().showAdsTimeOut(
-//            activity,
-//            "ca-app-pub-4040515803655174/7238087960",
-//            getString(R.string.loading_ads_2),
-//            object : AdmobInterstitialTest.AdHolderCallback {
-//                override fun onAdFailToLoad(messageError: String?) {
-//                    try{
-//                        if(tvSwich!= null){
-//                            if(tvSwich.isChecked){
-//                                interfaceBlack()
-//                            }else{
-//                                interfaceWhite()
-//                            }
-//                        }
-//                    }catch (e:Exception){
-//                        interfaceBlack()
-//                    }
-//
-//
-//
-//                }
-//
-//                override fun onAdOff() {
-//                }
-//
-//                override fun onAdShow(network: String?, adtype: String?) {
-//                    if(tvSwich != null){
-//                        if(tvSwich.isChecked){
-//                            interfaceBlack()
-//                        }else{
-//                            interfaceWhite()
-//                        }
-//                    }
-//
-//                }
-//
-//                override fun onAdClose(adType: String?) {
-//                }
-//            },
-//            lifecycle,9000)
+
     }
 
     private fun interfaceBlack() {
