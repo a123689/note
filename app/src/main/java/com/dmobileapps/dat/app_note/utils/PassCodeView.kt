@@ -81,6 +81,8 @@ class PassCodeView @JvmOverloads constructor(
                 )
             } else
                 canvas?.drawCircle(i * (size + space) + startPos, size / 2f, size / 2f, paint)
+                //canvas?.drawLine(0f,)
+
         }
     }
 
