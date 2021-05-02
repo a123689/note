@@ -4,10 +4,13 @@ package com.dmobileapps.dat.app_note.ui.fragment
 //import com.adconfigonline.untils.AdDef
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -76,6 +79,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
         ivNewFolder.setPreventDoubleClick(300) {
             setDialog()
+        }
+        btnPhotoEditor.setPreventDoubleClick(300) {
+            openMarket(requireContext(), "com.dmobileapps.photoeditor")
         }
 
         layoutDialogBottom.setPreventDoubleClick(300) {
@@ -216,7 +222,31 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         loadBanner()
     }
 
+    private fun openMarket(context: Context, packageName: String) {
+        val i = Intent(Intent.ACTION_VIEW)
+        try {
+            i.data = Uri.parse("market://details?id=$packageName")
+            context.startActivity(i)
+        } catch (ex: ActivityNotFoundException) {
+            openBrowser(
+                context,
+                "https://play.google.com/store/apps/details?id=\"" + packageName
+            )
+        }
+    }
 
+    private fun openBrowser(context: Context, url: String) {
+        var url = url
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "http://$url"
+        }
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        try {
+            context.startActivity(browserIntent)
+        } catch (ex: java.lang.Exception) {
+            ex.printStackTrace()
+        }
+    }
     private fun interfaceBlack() {
         layoutMain.setBackgroundColor(
             ContextCompat.getColor(
@@ -226,6 +256,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         )
         ivSetting.setImageResource(R.drawable.ic_settings_white)
         tvFolder.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
+        tvMoreApp.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))
         edSearch.setBackgroundResource(R.drawable.custom_background_edittext_black)
         edSearch.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.colorSearchText))
         edSearch.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite))

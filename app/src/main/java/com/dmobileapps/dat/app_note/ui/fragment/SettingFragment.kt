@@ -14,8 +14,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-//import com.adconfigonline.admob.ads.AdmobInterstitialTest
-//import com.adconfigonline.admob.ads.AdmobInterstitialTest
 import com.dmobileapps.dat.app_note.R
 import com.dmobileapps.dat.app_note.utils.setPreventDoubleClick
 import kotlinx.android.synthetic.main.fragment_setting.*
@@ -46,7 +44,11 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
         layoutFeedback.setPreventDoubleClick(300){
             sendEmailMoree(requireContext(), arrayOf("khoanglang270102@gmail.com"),"Feedback to Note","",)
         }
-
+        layoutPolicy.setPreventDoubleClick(300){
+            if(navController.currentDestination?.id == R.id.settingFragment){
+                navController.navigate(R.id.action_settingFragment_to_policyFragment)
+            }
+        }
         tvSwich.setOnCheckedChangeListener(object :CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 if(isChecked){
@@ -67,11 +69,7 @@ class SettingFragment : BaseFragment(R.layout.fragment_setting) {
 
         })
 
-        layoutPolicy.setPreventDoubleClick(300){
-            if(navController.currentDestination?.id == R.id.settingFragment){
-                navController.navigate(R.id.action_settingFragment_to_policyFragment)
-            }
-        }
+
 
     }
 
