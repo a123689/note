@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/custom_background_dialog_rate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="312:405"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.86">
+
+        <TextView
+            android:id="@+id/tvRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/mulish_bold"
+            android:text="@string/rate_us"
+            android:textAllCaps="true"
+            android:textColor="#323B42"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintDimensionRatio="148:126"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvRate"
+            app:layout_constraintWidth_percent="0.55" />
+
+        <LinearLayout
+            android:id="@+id/layoutText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivImage">
+
+            <TextView
+                android:id="@+id/tvContents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/mulish_regular"
+                android:gravity="center"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:text="@string/if_like_app"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layoutRate"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:weightSum="5"
+            app:layout_constraintDimensionRatio="210:52"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutText"
+            app:layout_constraintWidth_percent="0.67">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/ivWave1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_ellipse"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/ivStar1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_un_star_up" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/ivWave2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_ellipse"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/ivStar2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_un_star_up" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/ivWave3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_ellipse"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/ivStar3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_un_star_up" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/ivWave4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_ellipse"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/ivStar4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_un_star_up" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/ivWave5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_ellipse"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/ivStar5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_un_star_up" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="3dp"
+                    android:src="@drawable/ic_offer_5star" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="28dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_rate_plus"
+            app:layout_constraintEnd_toEndOf="@id/layoutRate"
+            app:layout_constraintTop_toBottomOf="@id/layoutRate" />
+
+        <TextView
+            android:id="@+id/imThbest"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:singleLine="true"
+            android:text="@string/the_best_we_can_get"
+            android:textColor="#EB4747"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/img"
+            app:layout_constraintTop_toBottomOf="@id/layoutRate" />
+
+        <TextView
+            android:id="@+id/btnRate"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/custom_button_rate"
+            android:fontFamily="@font/mulish_semibold"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:text="@string/submit"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="280:40"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imThbest"
+            app:layout_constraintWidth_percent="0.88" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/ivCancel"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="6dp"
+        android:padding="4dp"
+        android:src="@drawable/ic_cancel_dialog_module"
+        app:layout_constraintBottom_toTopOf="@id/layout"
+        app:layout_constraintEnd_toEndOf="@id/layout"
+        app:layout_constraintTop_toTopOf="@id/layout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
